@@ -1,3 +1,4 @@
+// lib/domain/entities.dart
 enum Pos { PG, SG, SF, PF, C }
 
 class Player {
@@ -5,11 +6,13 @@ class Player {
   String name;
   int age;
   Pos pos;
-  int overall;
-  int potential;
-  int form;        // -10..+10
-  double greed;    // 0..1
-  int marketability; // 0..100
+  int overall;        // 40..99
+  int potential;      // 40..99
+  int form;           // -10..+10
+  double greed;       // 0..1
+  int marketability;  // 0..100
+  int? teamId;        // null => free agent
+
   Player({
     required this.id,
     required this.name,
@@ -20,6 +23,7 @@ class Player {
     this.form = 0,
     this.greed = 0.5,
     this.marketability = 50,
+    this.teamId,
   });
 }
 
@@ -29,6 +33,7 @@ class Team {
   String city;
   int capUsed;
   List<int> roster; // player ids
+
   Team({
     required this.id,
     required this.name,
@@ -41,15 +46,36 @@ class Team {
 class Offer {
   int teamId;
   int playerId;
-  int salary;
-  int years;
-  int bonus;
+  int salary;        // /an
+  int years;         // 1..4
+  int bonus;         // prime signature
+  int createdWeek;
+  int expiresWeek;
+
   Offer({
     required this.teamId,
     required this.playerId,
     required this.salary,
     required this.years,
     this.bonus = 0,
+    required this.createdWeek,
+    required this.expiresWeek,
+  });
+}
+
+class Contract {
+  int playerId;
+  int teamId;
+  List<int> salaryPerYear;
+  int signingBonus;
+  int startWeek;
+
+  Contract({
+    required this.playerId,
+    required this.teamId,
+    required this.salaryPerYear,
+    required this.signingBonus,
+    required this.startWeek,
   });
 }
 
@@ -66,10 +92,21 @@ class LeagueState {
   List<Player> players;
   List<Team> teams;
   AgentProfile agent;
+
+  // 👇 nouveaux champs utilisés par la Home/Market/Négociation
+  List<Offer> offers;
+  List<Contract> contracts;
+  List<String> recentEvents;
+
   LeagueState({
     required this.week,
     required this.players,
     required this.teams,
     required this.agent,
-  });
+    List<Offer>? offers,
+    List<Contract>? contracts,
+    List<String>? recentEvents,
+  })  : offers = offers ?? [],
+        contracts = contracts ?? [],
+        recentEvents = recentEvents ?? [];
 }

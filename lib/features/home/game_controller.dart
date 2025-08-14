@@ -4,6 +4,7 @@ import '../../domain/entities.dart';
 import '../../domain/usecases/advance_week.dart';
 import '../../domain/services/world_generator.dart';
 
+
 class GameState {
   final LeagueState league;
   final String lastSummary;
@@ -15,30 +16,25 @@ class GameState {
 }
 
 class GameController extends StateNotifier<GameState> {
-  GameController()
-      : super(GameState(league: WorldGenerator(Random(42)).generate()));
+  GameController() : super(GameState(league: WorldGenerator(Random(42)).generate()));
 
-  /// Crée une nouvelle partie et remplace l'état courant
   void newGame({String agentName = 'Agent'}) {
     final world = WorldGenerator(Random()).generate();
     world.agent.reputation = 10;
-    state = GameState(
-      league: world,
-      lastSummary: 'Nouvelle partie pour $agentName',
-    );
+    state = GameState(league: world, lastSummary: 'Nouvelle partie pour $agentName');
   }
 
-  /// Avance d'une semaine et met à jour le résumé
   void nextWeek() {
     final res = advanceWeek(state.league, rng: Random(state.league.week));
-    state = state.copyWith(
-      lastSummary: 'Offres générées: ${res.offersGenerated}',
-    );
+    state = state.copyWith(lastSummary: 'Offres générées: ${res.offersGenerated}');
+  }
+
+  // (utilisé par NegotiationScreen)
+  void refreshAfterSign(String summary) {
+    state = state.copyWith(lastSummary: summary);
   }
 }
 
 final gameControllerProvider =
-StateNotifierProvider<GameController, GameState>(
-      (ref) => GameController(),
-);
+StateNotifierProvider<GameController, GameState>((ref) => GameController());
 

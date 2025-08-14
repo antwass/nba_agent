@@ -1,42 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'game_controller.dart';
 
-// on réutilise les providers du Start pour le slot et la sauvegarde meta
+import 'game_controller.dart';
 import '../start/start_screen.dart' show currentSlotIdProvider, saveServiceProvider;
 import '../start/save_game_meta.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
+  // Méthode de classe (pas de _ pour éviter le warning local)
+  Future<void> nextWeekWithAutosave(BuildContext context, WidgetRef ref) async {
+    // 1) avancer la semaine
+    ref.read(gameControllerProvider.notifier).nextWeek();
+
+    // 2) autosave meta du slot courant (si on vient d'un slot)
+    final slotId = ref.read(currentSlotIdProvider);
+    if (slotId != null) {
+      final svc = ref.read(saveServiceProvider);
+      final meta = SaveGameMeta(
+        id: slotId,
+        name: 'Agent', // TODO: stocker nom dans LeagueState.agent si tu veux l’afficher
+        week: ref.read(gameControllerProvider).league.week,
+        updatedAt: DateTime.now(),
+      );
+      await svc.upsertSlot(meta);
+    }
+
+    // 3) petit feedback
+    if (context.mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Semaine suivante…')));
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameControllerProvider);
-    final controller = ref.read(gameControllerProvider.notifier);
-
-    Future<void> nextWeekWithAutosave() async {
-      controller.nextWeek();
-
-      final slotId = ref.read(currentSlotIdProvider);
-      if (slotId != null) {
-        final svc = ref.read(saveServiceProvider);
-        await svc.upsertSlot(
-          SaveGameMeta(
-            id: slotId,
-            name: 'Agent', // TODO: stocker le vrai nom dans LeagueState.agent
-            week: ref.read(gameControllerProvider).league.week,
-            updatedAt: DateTime.now(),
-          ),
-        );
-      }
-      // feedback léger
-      if (context.mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Semaine suivante…')));
-      }
-    }
-
-    // exemple simple de contexte : fenêtre Free Agency (mock)
     final isFAWindow = (game.league.week >= 18 && game.league.week <= 28);
 
     return Scaffold(
@@ -47,7 +46,7 @@ class HomeScreen extends ConsumerWidget {
       body: CustomScrollView(
         slivers: [
           if (isFAWindow)
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: _BannerInfo(
                 text: 'Fenêtre Free Agency ouverte — attendez plus d’offres !',
                 icon: Icons.campaign_outlined,
@@ -87,13 +86,7 @@ class HomeScreen extends ConsumerWidget {
                   Text('Événements récents',
                       style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 8),
-                  _RecentEvents(
-                    items: const [
-                      'Rumeurs: besoin de meneurs à Coast City',
-                      'Ton client #1 a gagné +1 OVR',
-                      'Le marché s’active (2 nouvelles offres attendues)',
-                    ],
-                  ),
+                  _RecentEvents(items: game.league.recentEvents),
                   const SizedBox(height: 80), // espace pour le FAB
                 ],
               ),
@@ -102,7 +95,7 @@ class HomeScreen extends ConsumerWidget {
         ],
       ),
       floatingActionButton: FilledButton.icon(
-        onPressed: nextWeekWithAutosave,
+        onPressed: () => nextWeekWithAutosave(context, ref),
         icon: const Icon(Icons.fast_forward),
         label: const Text('Semaine suivante'),
       ),
@@ -110,7 +103,7 @@ class HomeScreen extends ConsumerWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: 0,
         onDestinationSelected: (i) {
-          // Pour l’instant, simple feedback; on branchera les écrans plus tard.
+          // Remplace par navigation réelle quand tes écrans seront prêts
           _todo(context, 'Navigation $i');
         },
         destinations: const [
@@ -329,8 +322,8 @@ class _RecentEvents extends StatelessWidget {
 }
 
 String _fmtMoney(int n) {
-  // format simple, on mettra un vrai NumberFormat plus tard
   final s = n.abs().toString();
-  final withSpaces = s.replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (m) => '${m[1]} ');
+  final withSpaces =
+  s.replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (m) => '${m[1]} ');
   return (n < 0 ? '-€' : '€') + withSpaces;
 }
