@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'game_controller.dart';
 import '../start/start_screen.dart' show currentSlotIdProvider, saveServiceProvider;
 import '../start/save_game_meta.dart';
+import '../clients/clients_screen.dart';
+import '../market/market_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -77,8 +79,18 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   const SizedBox(height: 12),
                   _QuickActions(
-                    onOpenClients: () => _todo(context, 'Clients'),
-                    onOpenMarket: () => _todo(context, 'Marché'),
+                    onOpenClients: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const ClientsScreen()),
+                      );
+                    },
+                    onOpenMarket: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const MarketScreen()),
+                      );
+                    },
                     onOpenOffers: () => _todo(context, 'Offres'),
                     onOpenFinance: () => _todo(context, 'Finances'),
                   ),
@@ -100,11 +112,26 @@ class HomeScreen extends ConsumerWidget {
         label: const Text('Semaine suivante'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+      // ✅ Un SEUL onDestinationSelected qui gère tous les cas
       bottomNavigationBar: NavigationBar(
         selectedIndex: 0,
         onDestinationSelected: (i) {
-          // Remplace par navigation réelle quand tes écrans seront prêts
-          _todo(context, 'Navigation $i');
+          if (i == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ClientsScreen()),
+            );
+          } else if (i == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const MarketScreen()),
+            );
+          } else if (i == 3) {
+            _todo(context, 'Finances');
+          } else {
+            // i == 0 => Accueil (déjà dessus)
+          }
         },
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Accueil'),

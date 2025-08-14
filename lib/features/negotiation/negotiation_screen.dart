@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../domain/entities.dart';
-import '../home/game_controller.dart';
 import '../../domain/usecases/sign_contract.dart';
+import '../home/game_controller.dart';
 
 class NegotiationScreen extends ConsumerStatefulWidget {
   const NegotiationScreen({super.key, required this.offer});
@@ -26,29 +27,30 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
   }
 
   double _acceptProb(Player p) {
+    // Estimation très simple : mieux que l’offre de base => monte la proba
     final ask = (p.overall * p.overall * 4000);
     final delta = (salary - ask) / ask;
-    // un peu de personality: greed pousse la barre
-    final greed = p.greed; // 0..1
-    final base = 0.5 + delta * 0.9 - 0.2 * greed;
+    final base = 0.5 + delta * 0.9 - 0.2 * p.greed; // greed baisse la proba
     return base.clamp(0.05, 0.98);
   }
 
   @override
   Widget build(BuildContext context) {
     final league = ref.watch(gameControllerProvider).league;
-    final player = league.players.firstWhere((x) => x.id == widget.offer.playerId);
-    final p = _acceptProb(player);
+    final p = league.players.firstWhere((x) => x.id == widget.offer.playerId);
+    final prob = _acceptProb(p);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Négociation')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Text('${player.name} (${player.pos.name}) • OVR ${player.overall}'),
-          const SizedBox(height: 8),
+          Text('${p.name} (${p.pos.name}) • OVR ${p.overall}',
+              style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 6),
           Text('Offre initiale: ${widget.offer.salary ~/ 1000}k€/an • ${widget.offer.years} ans'),
           const SizedBox(height: 12),
+
           _SliderTile(
             label: 'Salaire/an',
             value: salary,
@@ -78,10 +80,12 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
               ),
             ],
           ),
+
           const SizedBox(height: 12),
-          LinearProgressIndicator(value: p),
+          LinearProgressIndicator(value: prob),
           const SizedBox(height: 4),
-          Text('Probabilité estimée: ${(p*100).round()}%'),
+          Text('Probabilité estimée: ${(prob * 100).round()}%'),
+
           const SizedBox(height: 16),
           FilledButton.icon(
             onPressed: () {
@@ -91,9 +95,8 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
                 agreedSalary: salary.round(),
                 agreedYears: years,
                 agreedBonus: bonus.round(),
-                commissionRate: 0.07,
+                commissionRate: 0.07, // 7% de commission
               );
-              // met à jour l'état UI
               ref.read(gameControllerProvider.notifier).refreshAfterSign(res.summary);
               if (context.mounted) Navigator.pop(context);
             },
@@ -102,10 +105,9 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
           ),
           const SizedBox(height: 8),
           OutlinedButton.icon(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Contre-offre envoyée (MVP – visuel)')));
-            },
+            onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Contre-offre envoyée (MVP visuel)')),
+            ),
             icon: const Icon(Icons.swap_horiz),
             label: const Text('Contre-offre'),
           ),
