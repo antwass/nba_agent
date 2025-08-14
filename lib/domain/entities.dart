@@ -86,17 +86,18 @@ class AgentProfile {
   AgentProfile({this.cash = 0, this.reputation = 10, List<int>? clients})
       : clients = clients ?? [];
 }
-
 class LeagueState {
   int week;
   List<Player> players;
   List<Team> teams;
   AgentProfile agent;
 
-  // 👇 nouveaux champs utilisés par la Home/Market/Négociation
   List<Offer> offers;
   List<Contract> contracts;
   List<String> recentEvents;
+
+  // 👇 nouveau : journal de mouvements financiers
+  List<FinanceEntry> ledger;
 
   LeagueState({
     required this.week,
@@ -106,7 +107,16 @@ class LeagueState {
     List<Offer>? offers,
     List<Contract>? contracts,
     List<String>? recentEvents,
+    List<FinanceEntry>? ledger,
   })  : offers = offers ?? [],
         contracts = contracts ?? [],
-        recentEvents = recentEvents ?? [];
+        recentEvents = recentEvents ?? [],
+        ledger = ledger ?? [];
+}
+
+class FinanceEntry {
+  final int week;      // semaine où l’évènement a eu lieu
+  final String label;  // ex: "Commission: J. Doe (2 ans)"
+  final int amount;    // en € (positif = revenu, négatif = dépense)
+  const FinanceEntry({required this.week, required this.label, required this.amount});
 }

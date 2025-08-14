@@ -6,6 +6,8 @@ import '../start/start_screen.dart' show currentSlotIdProvider, saveServiceProvi
 import '../start/save_game_meta.dart';
 import '../clients/clients_screen.dart';
 import '../market/market_screen.dart';
+import '../negotiation/offers_screen.dart';
+import '../finance/finance_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -80,19 +82,17 @@ class HomeScreen extends ConsumerWidget {
                   const SizedBox(height: 12),
                   _QuickActions(
                     onOpenClients: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const ClientsScreen()),
-                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const ClientsScreen()));
                     },
                     onOpenMarket: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const MarketScreen()),
-                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const MarketScreen()));
                     },
-                    onOpenOffers: () => _todo(context, 'Offres'),
-                    onOpenFinance: () => _todo(context, 'Finances'),
+                    onOpenOffers: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const OffersScreen()));
+                    },
+                    onOpenFinance: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const FinanceScreen()));
+                    },
                   ),
                   const SizedBox(height: 16),
                   Text('Événements récents',
@@ -128,7 +128,10 @@ class HomeScreen extends ConsumerWidget {
               MaterialPageRoute(builder: (_) => const MarketScreen()),
             );
           } else if (i == 3) {
-            _todo(context, 'Finances');
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FinanceScreen()),
+            );
           } else {
             // i == 0 => Accueil (déjà dessus)
           }
@@ -142,10 +145,6 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
   }
-}
-
-void _todo(BuildContext ctx, String label) {
-  ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(content: Text('$label — bientôt')));
 }
 
 class _BannerInfo extends StatelessWidget {
