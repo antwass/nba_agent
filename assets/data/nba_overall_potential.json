@@ -1,0 +1,2202 @@
+[
+    {
+        "nom": "Myles Turner",
+        "Overall": 84,
+        "potential": 84
+    },
+    {
+        "nom": "Dejounte Murray",
+        "Overall": 84,
+        "potential": 86
+    },
+    {
+        "nom": "Aaron Holiday",
+        "Overall": 75,
+        "potential": 76
+    },
+    {
+        "nom": "KJ Simpson",
+        "Overall": 74,
+        "potential": 79
+    },
+    {
+        "nom": "Nae’Qwan Tomlin",
+        "Overall": 68,
+        "potential": 71
+    },
+    {
+        "nom": "KJ Martin",
+        "Overall": 75,
+        "potential": 78
+    },
+    {
+        "nom": "Spencer Jones",
+        "Overall": 67,
+        "potential": 71
+    },
+    {
+        "nom": "Jimmy Butler",
+        "Overall": 87,
+        "potential": 93
+    },
+    {
+        "nom": "Pelle Larsson",
+        "Overall": 75,
+        "potential": 77
+    },
+    {
+        "nom": "Jonas Valanciunas",
+        "Overall": 81,
+        "potential": 84
+    },
+    {
+        "nom": "Anthony Edwards",
+        "Overall": 94,
+        "potential": 95
+    },
+    {
+        "nom": "Jarrett Allen",
+        "Overall": 86,
+        "potential": 87
+    },
+    {
+        "nom": "Moses Moody",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Jae’Sean Tate",
+        "Overall": 73,
+        "potential": 79
+    },
+    {
+        "nom": "Ariel Hukporti",
+        "Overall": 70,
+        "potential": 71
+    },
+    {
+        "nom": "Daeqwon Plowden",
+        "Overall": 68,
+        "potential": 72
+    },
+    {
+        "nom": "Patrick Williams",
+        "Overall": 76,
+        "potential": 82
+    },
+    {
+        "nom": "Bobby Portis",
+        "Overall": 83,
+        "potential": 83
+    },
+    {
+        "nom": "Georges Niang",
+        "Overall": 77,
+        "potential": 77
+    },
+    {
+        "nom": "Leonard Miller",
+        "Overall": 70,
+        "potential": 78
+    },
+    {
+        "nom": "Matas Buzelis",
+        "Overall": 79,
+        "potential": 83
+    },
+    {
+        "nom": "Jamison Battle",
+        "Overall": 74,
+        "potential": 75
+    },
+    {
+        "nom": "Ziaire Williams",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Tyrese Martin",
+        "Overall": 76,
+        "potential": 77
+    },
+    {
+        "nom": "Mouhamed Gueye",
+        "Overall": 74,
+        "potential": 76
+    },
+    {
+        "nom": "Keon Ellis",
+        "Overall": 78,
+        "potential": 80
+    },
+    {
+        "nom": "Goga Bitadze",
+        "Overall": 79,
+        "potential": 80
+    },
+    {
+        "nom": "Ayo Dosunmu",
+        "Overall": 78,
+        "potential": 79
+    },
+    {
+        "nom": "Jerami Grant",
+        "Overall": 79,
+        "potential": 83
+    },
+    {
+        "nom": "Jeremy Sochan",
+        "Overall": 79,
+        "potential": 83
+    },
+    {
+        "nom": "Devin Vassell",
+        "Overall": 83,
+        "potential": 83
+    },
+    {
+        "nom": "Enrique Freeman",
+        "Overall": 69,
+        "potential": 77
+    },
+    {
+        "nom": "Moritz Wagner",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Herbert Jones",
+        "Overall": 82,
+        "potential": 84
+    },
+    {
+        "nom": "Jalen Johnson",
+        "Overall": 85,
+        "potential": 88
+    },
+    {
+        "nom": "Julius Randle",
+        "Overall": 86,
+        "potential": 87
+    },
+    {
+        "nom": "Emanuel Miller",
+        "Overall": 68,
+        "potential": 72
+    },
+    {
+        "nom": "Craig Porter",
+        "Overall": 74,
+        "potential": 79
+    },
+    {
+        "nom": "Tre Mann",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Onyeka Okongwu",
+        "Overall": 84,
+        "potential": 84
+    },
+    {
+        "nom": "Luguentz Dort",
+        "Overall": 82,
+        "potential": 82
+    },
+    {
+        "nom": "Sandro Mamukelashvili",
+        "Overall": 78,
+        "potential": 80
+    },
+    {
+        "nom": "Riley Minix",
+        "Overall": 67,
+        "potential": 72
+    },
+    {
+        "nom": "Daniss Jenkins",
+        "Overall": 67,
+        "potential": 70
+    },
+    {
+        "nom": "Adem Bona",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Terry Rozier III",
+        "Overall": 75,
+        "potential": 82
+    },
+    {
+        "nom": "Tyler Smith",
+        "Overall": 69,
+        "potential": 80
+    },
+    {
+        "nom": "Mike Conley",
+        "Overall": 79,
+        "potential": 83
+    },
+    {
+        "nom": "Malik Monk",
+        "Overall": 83,
+        "potential": 83
+    },
+    {
+        "nom": "Anthony Davis",
+        "Overall": 95,
+        "potential": 95
+    },
+    {
+        "nom": "Donovan Clingan",
+        "Overall": 80,
+        "potential": 85
+    },
+    {
+        "nom": "Jericho Sims",
+        "Overall": 72,
+        "potential": 76
+    },
+    {
+        "nom": "Oscar Tshiebwe",
+        "Overall": 71,
+        "potential": 75
+    },
+    {
+        "nom": "Peyton Watson",
+        "Overall": 77,
+        "potential": 80
+    },
+    {
+        "nom": "Jalen Williams",
+        "Overall": 89,
+        "potential": 92
+    },
+    {
+        "nom": "Harrison Ingram",
+        "Overall": 69,
+        "potential": 78
+    },
+    {
+        "nom": "Alexandre Sarr",
+        "Overall": 83,
+        "potential": 89
+    },
+    {
+        "nom": "Nick Smith Jr.",
+        "Overall": 77,
+        "potential": 83
+    },
+    {
+        "nom": "Nic Claxton",
+        "Overall": 82,
+        "potential": 85
+    },
+    {
+        "nom": "Zion Williamson",
+        "Overall": 89,
+        "potential": 90
+    },
+    {
+        "nom": "Ja Morant",
+        "Overall": 92,
+        "potential": 96
+    },
+    {
+        "nom": "Isaiah Crawford",
+        "Overall": 68,
+        "potential": 73
+    },
+    {
+        "nom": "Brandon Clarke",
+        "Overall": 80,
+        "potential": 80
+    },
+    {
+        "nom": "Taylor Hendricks",
+        "Overall": 76,
+        "potential": 81
+    },
+    {
+        "nom": "Kyle Anderson",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Grant Williams",
+        "Overall": 76,
+        "potential": 77
+    },
+    {
+        "nom": "Elijah Harkless",
+        "Overall": 67,
+        "potential": 72
+    },
+    {
+        "nom": "Tre Johnson",
+        "Overall": 75,
+        "potential": null
+    },
+    {
+        "nom": "Duop Reath",
+        "Overall": 75,
+        "potential": 75
+    },
+    {
+        "nom": "Chris Livingston",
+        "Overall": 69,
+        "potential": 74
+    },
+    {
+        "nom": "Jordan Clarkson",
+        "Overall": 80,
+        "potential": 81
+    },
+    {
+        "nom": "Kon Knueppel",
+        "Overall": 75,
+        "potential": null
+    },
+    {
+        "nom": "Ousmane Dieng",
+        "Overall": 74,
+        "potential": 82
+    },
+    {
+        "nom": "Tyler Herro",
+        "Overall": 88,
+        "potential": 89
+    },
+    {
+        "nom": "Miles Bridges",
+        "Overall": 83,
+        "potential": 84
+    },
+    {
+        "nom": "Gui Santos",
+        "Overall": 75,
+        "potential": 76
+    },
+    {
+        "nom": "Tolu Smith",
+        "Overall": 67,
+        "potential": 72
+    },
+    {
+        "nom": "Coby White",
+        "Overall": 85,
+        "potential": 85
+    },
+    {
+        "nom": "Dru Smith",
+        "Overall": 73,
+        "potential": 73
+    },
+    {
+        "nom": "D’Angelo Russell",
+        "Overall": 79,
+        "potential": 84
+    },
+    {
+        "nom": "Michael Porter Jr.",
+        "Overall": 83,
+        "potential": 85
+    },
+    {
+        "nom": "Pacome Dadiet",
+        "Overall": 69,
+        "potential": 79
+    },
+    {
+        "nom": "Blake Wesley",
+        "Overall": 72,
+        "potential": 80
+    },
+    {
+        "nom": "Bub Carrington",
+        "Overall": 79,
+        "potential": 83
+    },
+    {
+        "nom": "Amen Thompson",
+        "Overall": 87,
+        "potential": 92
+    },
+    {
+        "nom": "Quinten Post",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Andre Drummond",
+        "Overall": 78,
+        "potential": 80
+    },
+    {
+        "nom": "Jaylen Brown",
+        "Overall": 91,
+        "potential": 93
+    },
+    {
+        "nom": "Terrence Shannon Jr.",
+        "Overall": 75,
+        "potential": 81
+    },
+    {
+        "nom": "Justin Champagnie",
+        "Overall": 78,
+        "potential": 79
+    },
+    {
+        "nom": "Julian Champagnie",
+        "Overall": 75,
+        "potential": 77
+    },
+    {
+        "nom": "Aaron Gordon",
+        "Overall": 84,
+        "potential": 84
+    },
+    {
+        "nom": "Dylan Harper",
+        "Overall": 78,
+        "potential": null
+    },
+    {
+        "nom": "Scotty Pippen Jr.",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Bronny James",
+        "Overall": 68,
+        "potential": 82
+    },
+    {
+        "nom": "Jonathan Kuminga",
+        "Overall": 81,
+        "potential": 82
+    },
+    {
+        "nom": "Trendon Watford",
+        "Overall": 76,
+        "potential": 76
+    },
+    {
+        "nom": "Scottie Barnes",
+        "Overall": 85,
+        "potential": 90
+    },
+    {
+        "nom": "Terance Mann",
+        "Overall": 77,
+        "potential": 77
+    },
+    {
+        "nom": "Reece Beekman",
+        "Overall": 69,
+        "potential": 74
+    },
+    {
+        "nom": "Bennedict Mathurin",
+        "Overall": 81,
+        "potential": 84
+    },
+    {
+        "nom": "Desmond Bane",
+        "Overall": 86,
+        "potential": 87
+    },
+    {
+        "nom": "Tyrese Maxey",
+        "Overall": 87,
+        "potential": 89
+    },
+    {
+        "nom": "Simone Fontecchio",
+        "Overall": 74,
+        "potential": 76
+    },
+    {
+        "nom": "Jaime Jaquez Jr.",
+        "Overall": 76,
+        "potential": 83
+    },
+    {
+        "nom": "Matisse Thybulle",
+        "Overall": 75,
+        "potential": 79
+    },
+    {
+        "nom": "Evan Mobley",
+        "Overall": 92,
+        "potential": 97
+    },
+    {
+        "nom": "Devin Booker",
+        "Overall": 90,
+        "potential": 94
+    },
+    {
+        "nom": "Caris LeVert",
+        "Overall": 80,
+        "potential": 81
+    },
+    {
+        "nom": "Miles McBride",
+        "Overall": 78,
+        "potential": 80
+    },
+    {
+        "nom": "Vince Williams Jr.",
+        "Overall": 75,
+        "potential": 76
+    },
+    {
+        "nom": "Steven Adams",
+        "Overall": 77,
+        "potential": 83
+    },
+    {
+        "nom": "Tyrese Haliburton",
+        "Overall": 90,
+        "potential": 90
+    },
+    {
+        "nom": "Cason Wallace",
+        "Overall": 79,
+        "potential": 82
+    },
+    {
+        "nom": "Ronald Holland II",
+        "Overall": 76,
+        "potential": 83
+    },
+    {
+        "nom": "Tyler Kolek",
+        "Overall": 74,
+        "potential": 79
+    },
+    {
+        "nom": "Aaron Nesmith",
+        "Overall": 81,
+        "potential": 81
+    },
+    {
+        "nom": "Egor Demin",
+        "Overall": 72,
+        "potential": null
+    },
+    {
+        "nom": "Malaki Branham",
+        "Overall": 74,
+        "potential": 82
+    },
+    {
+        "nom": "Dalton Knecht",
+        "Overall": 77,
+        "potential": 83
+    },
+    {
+        "nom": "Julian Strawther",
+        "Overall": 76,
+        "potential": 82
+    },
+    {
+        "nom": "Keon Johnson",
+        "Overall": 77,
+        "potential": 77
+    },
+    {
+        "nom": "Brandon Williams",
+        "Overall": 77,
+        "potential": 77
+    },
+    {
+        "nom": "Luke Kornet",
+        "Overall": 78,
+        "potential": 78
+    },
+    {
+        "nom": "LaMelo Ball",
+        "Overall": 88,
+        "potential": 92
+    },
+    {
+        "nom": "Kentavious Caldwell-Pope",
+        "Overall": 76,
+        "potential": 76
+    },
+    {
+        "nom": "Jordan Poole",
+        "Overall": 83,
+        "potential": 86
+    },
+    {
+        "nom": "Harrison Barnes",
+        "Overall": 79,
+        "potential": 81
+    },
+    {
+        "nom": "Buddy Hield",
+        "Overall": 77,
+        "potential": 82
+    },
+    {
+        "nom": "De’Andre Hunter",
+        "Overall": 82,
+        "potential": 84
+    },
+    {
+        "nom": "Nikola Jokic",
+        "Overall": 98,
+        "potential": 99
+    },
+    {
+        "nom": "Ajay Mitchell",
+        "Overall": 76,
+        "potential": 82
+    },
+    {
+        "nom": "Yuki  Kawamura",
+        "Overall": 67,
+        "potential": 70
+    },
+    {
+        "nom": "Jaylen Wells",
+        "Overall": 78,
+        "potential": 84
+    },
+    {
+        "nom": "Dante Exum",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Bam Adebayo",
+        "Overall": 89,
+        "potential": 90
+    },
+    {
+        "nom": "Bruce Brown",
+        "Overall": 76,
+        "potential": 80
+    },
+    {
+        "nom": "Trey Murphy III",
+        "Overall": 84,
+        "potential": 84
+    },
+    {
+        "nom": "Rocco Zikarsky",
+        "Overall": 68,
+        "potential": null
+    },
+    {
+        "nom": "Javon Small",
+        "Overall": 69,
+        "potential": null
+    },
+    {
+        "nom": "Isaiah Joe",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Drew Timme",
+        "Overall": 71,
+        "potential": 75
+    },
+    {
+        "nom": "Stephon Castle",
+        "Overall": 84,
+        "potential": 93
+    },
+    {
+        "nom": "Jabari Smith Jr.",
+        "Overall": 82,
+        "potential": 87
+    },
+    {
+        "nom": "Brandon Ingram",
+        "Overall": 86,
+        "potential": 88
+    },
+    {
+        "nom": "Jay Huff",
+        "Overall": 76,
+        "potential": 76
+    },
+    {
+        "nom": "Kelly Olynyk",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Corey Kispert",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Tristen Newton",
+        "Overall": 68,
+        "potential": 77
+    },
+    {
+        "nom": "Victor Wembanyama",
+        "Overall": 94,
+        "potential": 99
+    },
+    {
+        "nom": "Marcus Sasser",
+        "Overall": 76,
+        "potential": 83
+    },
+    {
+        "nom": "Jalen Green",
+        "Overall": 86,
+        "potential": 90
+    },
+    {
+        "nom": "Quentin Grimes",
+        "Overall": 85,
+        "potential": 85
+    },
+    {
+        "nom": "Shai Gilgeous-Alexander",
+        "Overall": 98,
+        "potential": 98
+    },
+    {
+        "nom": "Kyle Kuzma",
+        "Overall": 80,
+        "potential": 84
+    },
+    {
+        "nom": "Day’Ron Sharpe",
+        "Overall": 77,
+        "potential": 78
+    },
+    {
+        "nom": "Dillon Brooks",
+        "Overall": 83,
+        "potential": 83
+    },
+    {
+        "nom": "Jaylin Williams",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Pete Nance",
+        "Overall": 67,
+        "potential": 78
+    },
+    {
+        "nom": "Yang Hansen",
+        "Overall": 70,
+        "potential": null
+    },
+    {
+        "nom": "Domantas Sabonis",
+        "Overall": 88,
+        "potential": 89
+    },
+    {
+        "nom": "Franz Wagner",
+        "Overall": 89,
+        "potential": 90
+    },
+    {
+        "nom": "Max Strus",
+        "Overall": 79,
+        "potential": 80
+    },
+    {
+        "nom": "Pascal Siakam",
+        "Overall": 87,
+        "potential": 88
+    },
+    {
+        "nom": "Giannis Antetokounmpo",
+        "Overall": 98,
+        "potential": 98
+    },
+    {
+        "nom": "Khaman Maluach",
+        "Overall": 74,
+        "potential": null
+    },
+    {
+        "nom": "Kyle Filipowski",
+        "Overall": 80,
+        "potential": 81
+    },
+    {
+        "nom": "Tre Jones",
+        "Overall": 79,
+        "potential": 80
+    },
+    {
+        "nom": "Aaron Wiggins",
+        "Overall": 79,
+        "potential": 80
+    },
+    {
+        "nom": "Marvin Bagley III",
+        "Overall": 75,
+        "potential": 79
+    },
+    {
+        "nom": "Christian Braun",
+        "Overall": 83,
+        "potential": 83
+    },
+    {
+        "nom": "Branden Carlson",
+        "Overall": 71,
+        "potential": 71
+    },
+    {
+        "nom": "Brandon Miller",
+        "Overall": 82,
+        "potential": 90
+    },
+    {
+        "nom": "Cameron Johnson",
+        "Overall": 84,
+        "potential": 86
+    },
+    {
+        "nom": "Kevin Durant",
+        "Overall": 93,
+        "potential": 99
+    },
+    {
+        "nom": "Khris Middleton",
+        "Overall": 81,
+        "potential": 87
+    },
+    {
+        "nom": "Isaiah Jackson",
+        "Overall": 76,
+        "potential": 79
+    },
+    {
+        "nom": "Isaiah Hartenstein",
+        "Overall": 84,
+        "potential": 85
+    },
+    {
+        "nom": "Dillon Jones",
+        "Overall": 69,
+        "potential": 77
+    },
+    {
+        "nom": "Duncan Robinson",
+        "Overall": 77,
+        "potential": 78
+    },
+    {
+        "nom": "Jaylen Clark",
+        "Overall": 75,
+        "potential": 80
+    },
+    {
+        "nom": "Gabe Vincent",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Xavier Tillman",
+        "Overall": 70,
+        "potential": 78
+    },
+    {
+        "nom": "Vit Krejci",
+        "Overall": 76,
+        "potential": 76
+    },
+    {
+        "nom": "Orlando Robinson",
+        "Overall": 76,
+        "potential": 77
+    },
+    {
+        "nom": "DaRon Holmes II",
+        "Overall": 71,
+        "potential": 79
+    },
+    {
+        "nom": "A.J. Lawson",
+        "Overall": 75,
+        "potential": 77
+    },
+    {
+        "nom": "Mason Plumlee",
+        "Overall": 76,
+        "potential": 79
+    },
+    {
+        "nom": "Ochai Agbaji",
+        "Overall": 76,
+        "potential": 79
+    },
+    {
+        "nom": "Luka Garza",
+        "Overall": 72,
+        "potential": 73
+    },
+    {
+        "nom": "Rayan Rupert",
+        "Overall": 72,
+        "potential": 77
+    },
+    {
+        "nom": "Spencer Dinwiddie",
+        "Overall": 79,
+        "potential": 81
+    },
+    {
+        "nom": "Jonathan Mogbo",
+        "Overall": 76,
+        "potential": 82
+    },
+    {
+        "nom": "Luke Kennard",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Reed Sheppard",
+        "Overall": 72,
+        "potential": 81
+    },
+    {
+        "nom": "Trae Young",
+        "Overall": 91,
+        "potential": 91
+    },
+    {
+        "nom": "Johnny Furphy",
+        "Overall": 70,
+        "potential": 80
+    },
+    {
+        "nom": "Royce O’Neale",
+        "Overall": 77,
+        "potential": 78
+    },
+    {
+        "nom": "Cooper Flagg",
+        "Overall": 82,
+        "potential": null
+    },
+    {
+        "nom": "Jaden McDaniels",
+        "Overall": 83,
+        "potential": 85
+    },
+    {
+        "nom": "Jalen Smith",
+        "Overall": 78,
+        "potential": 79
+    },
+    {
+        "nom": "Jabari Walker",
+        "Overall": 76,
+        "potential": 78
+    },
+    {
+        "nom": "Josh Okogie",
+        "Overall": 77,
+        "potential": 78
+    },
+    {
+        "nom": "Andrew Wiggins",
+        "Overall": 81,
+        "potential": 85
+    },
+    {
+        "nom": "Draymond Green",
+        "Overall": 84,
+        "potential": 88
+    },
+    {
+        "nom": "AJ Johnson",
+        "Overall": 75,
+        "potential": 80
+    },
+    {
+        "nom": "Tyson Etienne",
+        "Overall": 71,
+        "potential": 74
+    },
+    {
+        "nom": "Donovan Mitchell",
+        "Overall": 94,
+        "potential": 94
+    },
+    {
+        "nom": "Dalen Terry",
+        "Overall": 74,
+        "potential": 78
+    },
+    {
+        "nom": "Jamaree Bouyea",
+        "Overall": 67,
+        "potential": 72
+    },
+    {
+        "nom": "Daniel Gafford",
+        "Overall": 83,
+        "potential": 83
+    },
+    {
+        "nom": "Clint Capela",
+        "Overall": 80,
+        "potential": 85
+    },
+    {
+        "nom": "KyShawn George",
+        "Overall": 79,
+        "potential": 84
+    },
+    {
+        "nom": "Obi Toppin",
+        "Overall": 82,
+        "potential": 82
+    },
+    {
+        "nom": "Javonte Green",
+        "Overall": 74,
+        "potential": 77
+    },
+    {
+        "nom": "Moussa Diabate",
+        "Overall": 76,
+        "potential": 76
+    },
+    {
+        "nom": "Jevon Carter",
+        "Overall": 74,
+        "potential": 74
+    },
+    {
+        "nom": "Mitchell Robinson",
+        "Overall": 80,
+        "potential": 82
+    },
+    {
+        "nom": "Fred VanVleet",
+        "Overall": 80,
+        "potential": 84
+    },
+    {
+        "nom": "LeBron James",
+        "Overall": 96,
+        "potential": 99
+    },
+    {
+        "nom": "Maxi Kleber",
+        "Overall": 72,
+        "potential": 76
+    },
+    {
+        "nom": "Jaren Jackson Jr.",
+        "Overall": 90,
+        "potential": 91
+    },
+    {
+        "nom": "Grayson Allen",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Nickeil Alexander-Walker",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Chet Holmgren",
+        "Overall": 87,
+        "potential": 94
+    },
+    {
+        "nom": "DeMar DeRozan",
+        "Overall": 87,
+        "potential": 89
+    },
+    {
+        "nom": "Tim Hardaway Jr.",
+        "Overall": 80,
+        "potential": 80
+    },
+    {
+        "nom": "Donte DiVincenzo",
+        "Overall": 79,
+        "potential": 80
+    },
+    {
+        "nom": "Dominick Barlow",
+        "Overall": 73,
+        "potential": 73
+    },
+    {
+        "nom": "Jett Howard",
+        "Overall": 73,
+        "potential": 82
+    },
+    {
+        "nom": "Davion Mitchell",
+        "Overall": 78,
+        "potential": 83
+    },
+    {
+        "nom": "Dennis Schroder",
+        "Overall": 78,
+        "potential": 80
+    },
+    {
+        "nom": "Shaedon Sharpe",
+        "Overall": 82,
+        "potential": 85
+    },
+    {
+        "nom": "Doug McDermott",
+        "Overall": 71,
+        "potential": 76
+    },
+    {
+        "nom": "Jose Alvarado",
+        "Overall": 78,
+        "potential": 80
+    },
+    {
+        "nom": "Hunter Tyson",
+        "Overall": 70,
+        "potential": 79
+    },
+    {
+        "nom": "Immanuel Quickley",
+        "Overall": 83,
+        "potential": 83
+    },
+    {
+        "nom": "Joe Ingles",
+        "Overall": 73,
+        "potential": 77
+    },
+    {
+        "nom": "Mikal Bridges",
+        "Overall": 86,
+        "potential": 87
+    },
+    {
+        "nom": "Naz Reid",
+        "Overall": 82,
+        "potential": 84
+    },
+    {
+        "nom": "Jahmai Mashack",
+        "Overall": 68,
+        "potential": null
+    },
+    {
+        "nom": "Paul George",
+        "Overall": 83,
+        "potential": 90
+    },
+    {
+        "nom": "James Wiseman",
+        "Overall": 75,
+        "potential": 82
+    },
+    {
+        "nom": "JD Davison",
+        "Overall": 69,
+        "potential": 76
+    },
+    {
+        "nom": "Kenrich Williams",
+        "Overall": 78,
+        "potential": 78
+    },
+    {
+        "nom": "Keegan Murray",
+        "Overall": 81,
+        "potential": 85
+    },
+    {
+        "nom": "Jakob Poeltl",
+        "Overall": 83,
+        "potential": 84
+    },
+    {
+        "nom": "Zach Collins",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Ulrich Chomche",
+        "Overall": 68,
+        "potential": 77
+    },
+    {
+        "nom": "Garrett Temple",
+        "Overall": 70,
+        "potential": 73
+    },
+    {
+        "nom": "Brice Sensabaugh",
+        "Overall": 77,
+        "potential": 81
+    },
+    {
+        "nom": "Zach Edey",
+        "Overall": 81,
+        "potential": 85
+    },
+    {
+        "nom": "Deandre Ayton",
+        "Overall": 83,
+        "potential": 83
+    },
+    {
+        "nom": "Santi Aldama",
+        "Overall": 80,
+        "potential": 81
+    },
+    {
+        "nom": "Darius Garland",
+        "Overall": 88,
+        "potential": 89
+    },
+    {
+        "nom": "Keyonte George",
+        "Overall": 81,
+        "potential": 84
+    },
+    {
+        "nom": "Bryce McGowens",
+        "Overall": 71,
+        "potential": 77
+    },
+    {
+        "nom": "Tony Bradley",
+        "Overall": 72,
+        "potential": 75
+    },
+    {
+        "nom": "Stephen Curry",
+        "Overall": 95,
+        "potential": 99
+    },
+    {
+        "nom": "Kevon Harris",
+        "Overall": 68,
+        "potential": 70
+    },
+    {
+        "nom": "GG Jackson",
+        "Overall": 76,
+        "potential": 82
+    },
+    {
+        "nom": "Tari Eason",
+        "Overall": 83,
+        "potential": 86
+    },
+    {
+        "nom": "Josh Green",
+        "Overall": 75,
+        "potential": 76
+    },
+    {
+        "nom": "Kobe Bufkin",
+        "Overall": 73,
+        "potential": 82
+    },
+    {
+        "nom": "Jamal Shead",
+        "Overall": 76,
+        "potential": 79
+    },
+    {
+        "nom": "Tobias Harris",
+        "Overall": 81,
+        "potential": 83
+    },
+    {
+        "nom": "Kyle Lowry",
+        "Overall": 75,
+        "potential": 85
+    },
+    {
+        "nom": "Deni Avdija",
+        "Overall": 86,
+        "potential": 86
+    },
+    {
+        "nom": "Joel Embiid",
+        "Overall": 93,
+        "potential": 95
+    },
+    {
+        "nom": "Kevon Looney",
+        "Overall": 77,
+        "potential": 77
+    },
+    {
+        "nom": "Trey Alexander",
+        "Overall": 68,
+        "potential": 75
+    },
+    {
+        "nom": "Jared Butler",
+        "Overall": 75,
+        "potential": 76
+    },
+    {
+        "nom": "Jordan Goodwin",
+        "Overall": 76,
+        "potential": 76
+    },
+    {
+        "nom": "Tidjane Salaun",
+        "Overall": 73,
+        "potential": 81
+    },
+    {
+        "nom": "Jarred Vanderbilt",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Zaccharie Risacher",
+        "Overall": 81,
+        "potential": 89
+    },
+    {
+        "nom": "Kelly Oubre Jr.",
+        "Overall": 80,
+        "potential": 80
+    },
+    {
+        "nom": "Jayson Tatum",
+        "Overall": 95,
+        "potential": 97
+    },
+    {
+        "nom": "C.J. McCollum",
+        "Overall": 84,
+        "potential": 87
+    },
+    {
+        "nom": "Andre Jackson Jr.",
+        "Overall": 74,
+        "potential": 78
+    },
+    {
+        "nom": "Jake LaRavia",
+        "Overall": 76,
+        "potential": 79
+    },
+    {
+        "nom": "Jonathan Isaac",
+        "Overall": 76,
+        "potential": 79
+    },
+    {
+        "nom": "Taran Armstrong",
+        "Overall": 67,
+        "potential": 71
+    },
+    {
+        "nom": "Jusuf Nurkic",
+        "Overall": 78,
+        "potential": 82
+    },
+    {
+        "nom": "Gary Harris",
+        "Overall": 72,
+        "potential": 76
+    },
+    {
+        "nom": "Jalen Duren",
+        "Overall": 84,
+        "potential": 84
+    },
+    {
+        "nom": "Dwight Powell",
+        "Overall": 72,
+        "potential": 79
+    },
+    {
+        "nom": "Tristan Vukcevic",
+        "Overall": 75,
+        "potential": 78
+    },
+    {
+        "nom": "Caleb Martin",
+        "Overall": 75,
+        "potential": 79
+    },
+    {
+        "nom": "Justin Edwards",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Nick Richards",
+        "Overall": 78,
+        "potential": 79
+    },
+    {
+        "nom": "Dariq Whitehead",
+        "Overall": 72,
+        "potential": 79
+    },
+    {
+        "nom": "Keaton Wallace",
+        "Overall": 72,
+        "potential": 75
+    },
+    {
+        "nom": "Naji Marshall",
+        "Overall": 81,
+        "potential": 81
+    },
+    {
+        "nom": "Kevin Love",
+        "Overall": 76,
+        "potential": 82
+    },
+    {
+        "nom": "Svi Mykhailiuk",
+        "Overall": 72,
+        "potential": 76
+    },
+    {
+        "nom": "Kevin Huerter",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Colby Jones",
+        "Overall": 74,
+        "potential": 78
+    },
+    {
+        "nom": "Devin Carter",
+        "Overall": 74,
+        "potential": 83
+    },
+    {
+        "nom": "Ace Bailey",
+        "Overall": 77,
+        "potential": null
+    },
+    {
+        "nom": "Lauri Markkanen",
+        "Overall": 84,
+        "potential": 86
+    },
+    {
+        "nom": "Kristaps Porzingis",
+        "Overall": 88,
+        "potential": 88
+    },
+    {
+        "nom": "Jalen Pickett",
+        "Overall": 72,
+        "potential": 75
+    },
+    {
+        "nom": "Bobi Klintman",
+        "Overall": 69,
+        "potential": 79
+    },
+    {
+        "nom": "Dyson Daniels",
+        "Overall": 85,
+        "potential": 88
+    },
+    {
+        "nom": "Toumani Camara",
+        "Overall": 82,
+        "potential": 84
+    },
+    {
+        "nom": "Ryan Rollins",
+        "Overall": 77,
+        "potential": 77
+    },
+    {
+        "nom": "Wendell Carter Jr.",
+        "Overall": 79,
+        "potential": 83
+    },
+    {
+        "nom": "Haywood Highsmith",
+        "Overall": 75,
+        "potential": 78
+    },
+    {
+        "nom": "Saddiq Bey",
+        "Overall": 77,
+        "potential": 80
+    },
+    {
+        "nom": "Jaxson Hayes",
+        "Overall": 78,
+        "potential": 78
+    },
+    {
+        "nom": "Josh Hart",
+        "Overall": 84,
+        "potential": 85
+    },
+    {
+        "nom": "Jared McCain",
+        "Overall": 80,
+        "potential": 88
+    },
+    {
+        "nom": "Damian Lillard",
+        "Overall": 91,
+        "potential": 94
+    },
+    {
+        "nom": "Jalen Brunson",
+        "Overall": 93,
+        "potential": 93
+    },
+    {
+        "nom": "Zeke Nnaji",
+        "Overall": 75,
+        "potential": 78
+    },
+    {
+        "nom": "Jrue Holiday",
+        "Overall": 85,
+        "potential": 86
+    },
+    {
+        "nom": "Alex Caruso",
+        "Overall": 80,
+        "potential": 82
+    },
+    {
+        "nom": "Jeff Green",
+        "Overall": 74,
+        "potential": 76
+    },
+    {
+        "nom": "Jaden Hardy",
+        "Overall": 75,
+        "potential": 80
+    },
+    {
+        "nom": "DaQuan Jeffries",
+        "Overall": 74,
+        "potential": 74
+    },
+    {
+        "nom": "Dorian Finney-Smith",
+        "Overall": 76,
+        "potential": 78
+    },
+    {
+        "nom": "PJ Hall",
+        "Overall": 68,
+        "potential": 77
+    },
+    {
+        "nom": "Larry Nance Jr.",
+        "Overall": 77,
+        "potential": 78
+    },
+    {
+        "nom": "Tristan da Silva",
+        "Overall": 75,
+        "potential": 80
+    },
+    {
+        "nom": "Lonzo Ball",
+        "Overall": 78,
+        "potential": 83
+    },
+    {
+        "nom": "Drew Eubanks",
+        "Overall": 77,
+        "potential": 78
+    },
+    {
+        "nom": "AJ Green",
+        "Overall": 76,
+        "potential": 80
+    },
+    {
+        "nom": "Collin Sexton",
+        "Overall": 83,
+        "potential": 84
+    },
+    {
+        "nom": "N’Faly Dante",
+        "Overall": 68,
+        "potential": 76
+    },
+    {
+        "nom": "Thomas Bryant",
+        "Overall": 76,
+        "potential": 76
+    },
+    {
+        "nom": "Kevin McCullar",
+        "Overall": 69,
+        "potential": 78
+    },
+    {
+        "nom": "OG Anunoby",
+        "Overall": 87,
+        "potential": 87
+    },
+    {
+        "nom": "Ryan Dunn",
+        "Overall": 77,
+        "potential": 80
+    },
+    {
+        "nom": "Jackson Rowe",
+        "Overall": 68,
+        "potential": 70
+    },
+    {
+        "nom": "Marcus Smart",
+        "Overall": 79,
+        "potential": 82
+    },
+    {
+        "nom": "Isaiah Livers",
+        "Overall": 72,
+        "potential": 74
+    },
+    {
+        "nom": "Anthony Black",
+        "Overall": 80,
+        "potential": 84
+    },
+    {
+        "nom": "Paolo Banchero",
+        "Overall": 90,
+        "potential": 94
+    },
+    {
+        "nom": "Keshad Johnson",
+        "Overall": 69,
+        "potential": 78
+    },
+    {
+        "nom": "Jalen Suggs",
+        "Overall": 84,
+        "potential": 85
+    },
+    {
+        "nom": "Luka Doncic",
+        "Overall": 96,
+        "potential": 99
+    },
+    {
+        "nom": "Sam Merrill",
+        "Overall": 75,
+        "potential": 75
+    },
+    {
+        "nom": "Andrew Nembhard",
+        "Overall": 83,
+        "potential": 84
+    },
+    {
+        "nom": "Jalen Wilson",
+        "Overall": 76,
+        "potential": 76
+    },
+    {
+        "nom": "Cam Whitmore",
+        "Overall": 78,
+        "potential": 83
+    },
+    {
+        "nom": "Cody Williams",
+        "Overall": 72,
+        "potential": 81
+    },
+    {
+        "nom": "Alperen Sengun",
+        "Overall": 87,
+        "potential": 89
+    },
+    {
+        "nom": "Kris Murray",
+        "Overall": 73,
+        "potential": 80
+    },
+    {
+        "nom": "Derrick White",
+        "Overall": 87,
+        "potential": 88
+    },
+    {
+        "nom": "Kevin Porter Jr.",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Ausar Thompson",
+        "Overall": 83,
+        "potential": 84
+    },
+    {
+        "nom": "Norman Powell",
+        "Overall": 87,
+        "potential": 87
+    },
+    {
+        "nom": "Isaiah Stewart",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Keldon Johnson",
+        "Overall": 80,
+        "potential": 83
+    },
+    {
+        "nom": "Cam Spencer",
+        "Overall": 68,
+        "potential": 77
+    },
+    {
+        "nom": "Collin Gillespie",
+        "Overall": 74,
+        "potential": 76
+    },
+    {
+        "nom": "Jacob Toppin",
+        "Overall": 67,
+        "potential": 76
+    },
+    {
+        "nom": "Rob Dillingham",
+        "Overall": 75,
+        "potential": 83
+    },
+    {
+        "nom": "De’Aaron Fox",
+        "Overall": 86,
+        "potential": 89
+    },
+    {
+        "nom": "Chris Boucher",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Pat Connaughton",
+        "Overall": 74,
+        "potential": 77
+    },
+    {
+        "nom": "Tosan Evbuomwan",
+        "Overall": 72,
+        "potential": 73
+    },
+    {
+        "nom": "Terence Davis",
+        "Overall": 71,
+        "potential": 78
+    },
+    {
+        "nom": "Isaac Okoro",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Dean Wade",
+        "Overall": 74,
+        "potential": 76
+    },
+    {
+        "nom": "Nikola Topic",
+        "Overall": 72,
+        "potential": 84
+    },
+    {
+        "nom": "Cole Anthony",
+        "Overall": 79,
+        "potential": 81
+    },
+    {
+        "nom": "Taurean Prince",
+        "Overall": 76,
+        "potential": 76
+    },
+    {
+        "nom": "Gradey Dick",
+        "Overall": 79,
+        "potential": 84
+    },
+    {
+        "nom": "Lindy Waters III",
+        "Overall": 74,
+        "potential": 79
+    },
+    {
+        "nom": "Anfernee Simons",
+        "Overall": 82,
+        "potential": 84
+    },
+    {
+        "nom": "RayJ Dennis",
+        "Overall": 67,
+        "potential": 72
+    },
+    {
+        "nom": "Robert Williams III",
+        "Overall": 81,
+        "potential": 83
+    },
+    {
+        "nom": "Klay Thompson",
+        "Overall": 80,
+        "potential": 90
+    },
+    {
+        "nom": "Kyrie Irving",
+        "Overall": 92,
+        "potential": 92
+    },
+    {
+        "nom": "Christian Koloko",
+        "Overall": 72,
+        "potential": 78
+    },
+    {
+        "nom": "Bilal Coulibaly",
+        "Overall": 80,
+        "potential": 87
+    },
+    {
+        "nom": "Isaiah Stevens",
+        "Overall": 68,
+        "potential": 70
+    },
+    {
+        "nom": "Eric Gordon",
+        "Overall": 75,
+        "potential": 76
+    },
+    {
+        "nom": "Drew  Peterson",
+        "Overall": 70,
+        "potential": 72
+    },
+    {
+        "nom": "Max Christie",
+        "Overall": 77,
+        "potential": 78
+    },
+    {
+        "nom": "Karlo Matkovic",
+        "Overall": 78,
+        "potential": 79
+    },
+    {
+        "nom": "Cam Thomas",
+        "Overall": 84,
+        "potential": 84
+    },
+    {
+        "nom": "Nikola Jovic",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Tyus Jones",
+        "Overall": 77,
+        "potential": 79
+    },
+    {
+        "nom": "Sam Hauser",
+        "Overall": 78,
+        "potential": 78
+    },
+    {
+        "nom": "Jeremiah Fears",
+        "Overall": 73,
+        "potential": null
+    },
+    {
+        "nom": "Josh Minott",
+        "Overall": 72,
+        "potential": 76
+    },
+    {
+        "nom": "Neemias Queta",
+        "Overall": 76,
+        "potential": 79
+    },
+    {
+        "nom": "Nikola Vucevic",
+        "Overall": 84,
+        "potential": 84
+    },
+    {
+        "nom": "Jarace Walker",
+        "Overall": 76,
+        "potential": 84
+    },
+    {
+        "nom": "Rudy Gobert",
+        "Overall": 86,
+        "potential": 87
+    },
+    {
+        "nom": "Josh Giddey",
+        "Overall": 85,
+        "potential": 85
+    },
+    {
+        "nom": "Noah Clowney",
+        "Overall": 74,
+        "potential": 80
+    },
+    {
+        "nom": "Payton Pritchard",
+        "Overall": 83,
+        "potential": 84
+    },
+    {
+        "nom": "Jaylon Tyson",
+        "Overall": 74,
+        "potential": 83
+    },
+    {
+        "nom": "Caleb Houstan",
+        "Overall": 74,
+        "potential": 78
+    },
+    {
+        "nom": "Baylor Scheierman",
+        "Overall": 71,
+        "potential": 79
+    },
+    {
+        "nom": "Jamal Cain",
+        "Overall": 71,
+        "potential": 71
+    },
+    {
+        "nom": "Scoot Henderson",
+        "Overall": 80,
+        "potential": 86
+    },
+    {
+        "nom": "Kessler Edwards",
+        "Overall": 75,
+        "potential": 75
+    },
+    {
+        "nom": "Dario Saric",
+        "Overall": 74,
+        "potential": 77
+    },
+    {
+        "nom": "Jordan Hawkins",
+        "Overall": 75,
+        "potential": 80
+    },
+    {
+        "nom": "VJ Edgecombe",
+        "Overall": 76,
+        "potential": null
+    },
+    {
+        "nom": "Ty Jerome",
+        "Overall": 83,
+        "potential": 84
+    },
+    {
+        "nom": "Gary Trent Jr.",
+        "Overall": 79,
+        "potential": 80
+    },
+    {
+        "nom": "Trayce Jackson-Davis",
+        "Overall": 76,
+        "potential": 80
+    },
+    {
+        "nom": "Luke Travers",
+        "Overall": 69,
+        "potential": 76
+    },
+    {
+        "nom": "Isaac Jones",
+        "Overall": 74,
+        "potential": 77
+    },
+    {
+        "nom": "P.J. Washington",
+        "Overall": 81,
+        "potential": 81
+    },
+    {
+        "nom": "T.J. McConnell",
+        "Overall": 80,
+        "potential": 80
+    },
+    {
+        "nom": "Mark Williams",
+        "Overall": 83,
+        "potential": 83
+    },
+    {
+        "nom": "Austin Reaves",
+        "Overall": 87,
+        "potential": 87
+    },
+    {
+        "nom": "Isaiah Collier",
+        "Overall": 79,
+        "potential": 82
+    },
+    {
+        "nom": "Julian Phillips",
+        "Overall": 73,
+        "potential": 75
+    },
+    {
+        "nom": "Yves Missi",
+        "Overall": 80,
+        "potential": 84
+    },
+    {
+        "nom": "Antonio Reeves",
+        "Overall": 73,
+        "potential": 77
+    },
+    {
+        "nom": "John Konchar",
+        "Overall": 73,
+        "potential": 76
+    },
+    {
+        "nom": "Brandin Podziemski",
+        "Overall": 81,
+        "potential": 82
+    },
+    {
+        "nom": "Jamal Murray",
+        "Overall": 87,
+        "potential": 88
+    },
+    {
+        "nom": "Ben Sheppard",
+        "Overall": 74,
+        "potential": 80
+    },
+    {
+        "nom": "Ja’Kobe Walter",
+        "Overall": 77,
+        "potential": 82
+    },
+    {
+        "nom": "Jock Landale",
+        "Overall": 77,
+        "potential": 77
+    },
+    {
+        "nom": "Sidy Cissoko",
+        "Overall": 70,
+        "potential": 76
+    },
+    {
+        "nom": "Zach LaVine",
+        "Overall": 88,
+        "potential": 88
+    },
+    {
+        "nom": "Collin Murray-Boyles",
+        "Overall": 72,
+        "potential": null
+    },
+    {
+        "nom": "Olivier-Maxence Prosper",
+        "Overall": 74,
+        "potential": 80
+    },
+    {
+        "nom": "Dereck Lively II",
+        "Overall": 83,
+        "potential": 85
+    },
+    {
+        "nom": "Paul Reed",
+        "Overall": 74,
+        "potential": 75
+    },
+    {
+        "nom": "Jaden Ivey",
+        "Overall": 82,
+        "potential": 83
+    },
+    {
+        "nom": "Karl-Anthony Towns",
+        "Overall": 93,
+        "potential": 93
+    },
+    {
+        "nom": "Cade Cunningham",
+        "Overall": 92,
+        "potential": 96
+    },
+    {
+        "nom": "Guerschon Yabusele",
+        "Overall": 79,
+        "potential": 79
+    },
+    {
+        "nom": "Jordan Walsh",
+        "Overall": 70,
+        "potential": 78
+    },
+    {
+        "nom": "Walker Kessler",
+        "Overall": 83,
+        "potential": 86
+    },
+    {
+        "nom": "Kel’el Ware",
+        "Overall": 80,
+        "potential": 85
+    },
+    {
+        "nom": "Oso Ighodaro",
+        "Overall": 74,
+        "potential": 79
+    },
+    {
+        "nom": "R.J. Barrett",
+        "Overall": 83,
+        "potential": 86
+    },
+    {
+        "nom": "Rui Hachimura",
+        "Overall": 81,
+        "potential": 82
+    }
+]

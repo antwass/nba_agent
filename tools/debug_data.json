@@ -1,0 +1,1801 @@
+{
+    "props": {
+        "isBrowserSupported": true,
+        "pageProps": {
+            "device": false,
+            "nav": {
+                "dropdownNav": [
+                    {
+                        "name": "rumors",
+                        "attributes": {
+                            "display": "Rumors",
+                            "url": "/rumors/"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "news-analysis",
+                        "attributes": {
+                            "display": "News & Analysis",
+                            "url": "/news-analysis/"
+                        },
+                        "children": [
+                            {
+                                "name": "intel",
+                                "attributes": {
+                                    "display": "Intel",
+                                    "url": "/news-analysis/intel/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "free-agency",
+                                "attributes": {
+                                    "display": "Free Agency",
+                                    "url": "/news-analysis/free-agency/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "draft",
+                                "attributes": {
+                                    "display": "Draft",
+                                    "url": "/news-analysis/draft/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "interviews",
+                                "attributes": {
+                                    "display": "Interviews",
+                                    "url": "/news-analysis/interviews/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "nba-greats",
+                                "attributes": {
+                                    "display": "NBA Greats",
+                                    "url": "/news-analysis/nba-greats/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "data",
+                                "attributes": {
+                                    "display": "Data",
+                                    "url": "/news-analysis/data/"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "salaries",
+                        "attributes": {
+                            "display": "Salaries",
+                            "url": "/salaries/players/"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "player-rankings",
+                        "attributes": {
+                            "display": "Player Rankings",
+                            "url": "/rankings/players/"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "nba-2k-rankings",
+                        "attributes": {
+                            "display": "NBA 2K Rankings",
+                            "url": "/nba-2k/players/"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "free-agency",
+                        "attributes": {
+                            "display": "Free Agency",
+                            "url": "/news-analysis/free-agency/"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "nba-scouting-report",
+                        "attributes": {
+                            "display": "Scouting Reports",
+                            "url": "/nba-scouting-reports/players/",
+                            "visibility": "DropDownOnly"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "usa-today-sports",
+                        "attributes": {
+                            "display": "USA TODAY Sports",
+                            "url": "https://www.usatoday.com/sports/",
+                            "type": "svg",
+                            "icon": "external",
+                            "visibility": "DropDownOnly"
+                        },
+                        "children": []
+                    }
+                ],
+                "spreadNav": [
+                    {
+                        "name": "rumors",
+                        "attributes": {
+                            "display": "Rumors",
+                            "url": "/rumors/"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "news-analysis",
+                        "attributes": {
+                            "display": "News & Analysis",
+                            "url": "/news-analysis/"
+                        },
+                        "children": [
+                            {
+                                "name": "intel",
+                                "attributes": {
+                                    "display": "Intel",
+                                    "url": "/news-analysis/intel/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "free-agency",
+                                "attributes": {
+                                    "display": "Free Agency",
+                                    "url": "/news-analysis/free-agency/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "draft",
+                                "attributes": {
+                                    "display": "Draft",
+                                    "url": "/news-analysis/draft/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "interviews",
+                                "attributes": {
+                                    "display": "Interviews",
+                                    "url": "/news-analysis/interviews/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "nba-greats",
+                                "attributes": {
+                                    "display": "NBA Greats",
+                                    "url": "/news-analysis/nba-greats/"
+                                },
+                                "children": []
+                            },
+                            {
+                                "name": "data",
+                                "attributes": {
+                                    "display": "Data",
+                                    "url": "/news-analysis/data/"
+                                },
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "salaries",
+                        "attributes": {
+                            "display": "Salaries",
+                            "url": "/salaries/players/"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "player-rankings",
+                        "attributes": {
+                            "display": "Player Rankings",
+                            "url": "/rankings/players/"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "nba-2k-rankings",
+                        "attributes": {
+                            "display": "NBA 2K Rankings",
+                            "url": "/nba-2k/players/"
+                        },
+                        "children": []
+                    },
+                    {
+                        "name": "free-agency",
+                        "attributes": {
+                            "display": "Free Agency",
+                            "url": "/news-analysis/free-agency/"
+                        },
+                        "children": []
+                    }
+                ]
+            },
+            "environment": {
+                "environment": "production",
+                "hostName": "hoops-hype-us-east1-664912083968.us-east1.run.app",
+                "resolvedUrl": "/nba-2k/players/",
+                "sendPageView": true
+            },
+            "dehydratedState": {
+                "mutations": [],
+                "queries": [
+                    {
+                        "state": {
+                            "data": {
+                                "__typename": "Query",
+                                "videoGameRatings": {
+                                    "__typename": "SearchVideoGameRatings",
+                                    "videoGameRatings": [
+                                        {
+                                            "__typename": "VideoGameRatings",
+                                            "season": 2024,
+                                            "videoGameID": "nba-2k25"
+                                        }
+                                    ]
+                                }
+                            },
+                            "dataUpdateCount": 1,
+                            "dataUpdatedAt": 1755300485272,
+                            "error": null,
+                            "errorUpdateCount": 0,
+                            "errorUpdatedAt": 0,
+                            "fetchFailureCount": 0,
+                            "fetchFailureReason": null,
+                            "fetchMeta": null,
+                            "isInvalidated": false,
+                            "status": "success",
+                            "fetchStatus": "idle"
+                        },
+                        "queryKey": [
+                            1,
+                            "player",
+                            "nba2k",
+                            "videoGamesSeason"
+                        ],
+                        "queryHash": "[1,\"player\",\"nba2k\",\"videoGamesSeason\"]"
+                    },
+                    {
+                        "state": {
+                            "data": {
+                                "__typename": "Query",
+                                "sportsMeta": {
+                                    "__typename": "SearchSportsmeta",
+                                    "numResults": 26,
+                                    "sportsMeta": [
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2025
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2024
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2023
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2022
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2021
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2020
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2019
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2018
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2017
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2016
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2015
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2014
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2013
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2012
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2011
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2010
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2009
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2008
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2007
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2006
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2005
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2004
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2003
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2002
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2001
+                                        },
+                                        {
+                                            "__typename": "Sportsmeta",
+                                            "defaults": {
+                                                "__typename": "SportsmetaDefaults",
+                                                "season": 2025
+                                            },
+                                            "season": 2000
+                                        }
+                                    ]
+                                }
+                            },
+                            "dataUpdateCount": 1,
+                            "dataUpdatedAt": 1755300485290,
+                            "error": null,
+                            "errorUpdateCount": 0,
+                            "errorUpdatedAt": 0,
+                            "fetchFailureCount": 0,
+                            "fetchFailureReason": null,
+                            "fetchMeta": null,
+                            "isInvalidated": false,
+                            "status": "success",
+                            "fetchStatus": "idle"
+                        },
+                        "queryKey": [
+                            "NBA"
+                        ],
+                        "queryHash": "[\"NBA\"]"
+                    },
+                    {
+                        "state": {
+                            "data": {
+                                "__typename": "Query",
+                                "teams": {
+                                    "__typename": "SearchTeams",
+                                    "teams": [
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Atlanta Hawks",
+                                            "id": "1",
+                                            "location": "Atlanta",
+                                            "nickname": "Hawks",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#E03A3E",
+                                                "secondary": "#C1D32F"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/1.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/1a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Boston Celtics",
+                                            "id": "2",
+                                            "location": "Boston",
+                                            "nickname": "Celtics",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#007A33",
+                                                "secondary": "#BA9653"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/2.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/2a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Brooklyn Nets",
+                                            "id": "17",
+                                            "location": "Brooklyn",
+                                            "nickname": "Nets",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#000000",
+                                                "secondary": "#FFFFFF"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/17.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/17a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Candace's Rising Stars",
+                                            "id": "44922",
+                                            "location": "Candace's",
+                                            "nickname": "Rising Stars",
+                                            "isAllStar": true,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "",
+                                                "secondary": ""
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/44922.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/44922a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Charlotte Hornets",
+                                            "id": "5312",
+                                            "location": "Charlotte",
+                                            "nickname": "Hornets",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#1D1160",
+                                                "secondary": "#00788C"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/5312.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/5312a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Chicago Bulls",
+                                            "id": "4",
+                                            "location": "Chicago",
+                                            "nickname": "Bulls",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#CE1141",
+                                                "secondary": "#000000"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/4.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/4a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Chuck's Global Stars",
+                                            "id": "44919",
+                                            "location": "Chuck's",
+                                            "nickname": "Global Stars",
+                                            "isAllStar": true,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "",
+                                                "secondary": ""
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/44919.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/44919a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Cleveland Cavaliers",
+                                            "id": "5",
+                                            "location": "Cleveland",
+                                            "nickname": "Cavaliers",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#860038",
+                                                "secondary": "#041E42"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/5.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/5a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Dallas Mavericks",
+                                            "id": "6",
+                                            "location": "Dallas",
+                                            "nickname": "Mavericks",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#00538C",
+                                                "secondary": "#002B5E"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/6.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/6a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Denver Nuggets",
+                                            "id": "7",
+                                            "location": "Denver",
+                                            "nickname": "Nuggets",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#0E2240",
+                                                "secondary": "#FEC524"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/7.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/7a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Detroit Pistons",
+                                            "id": "8",
+                                            "location": "Detroit",
+                                            "nickname": "Pistons",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#C8102E",
+                                                "secondary": "#1D42BA"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/8.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/8a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Golden State Warriors",
+                                            "id": "9",
+                                            "location": "Golden State",
+                                            "nickname": "Warriors",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#1D428A",
+                                                "secondary": "#FFC72C"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/9.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/9a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Houston Rockets",
+                                            "id": "10",
+                                            "location": "Houston",
+                                            "nickname": "Rockets",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#CE1141",
+                                                "secondary": "#000000"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/10.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/10a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Indiana Pacers",
+                                            "id": "11",
+                                            "location": "Indiana",
+                                            "nickname": "Pacers",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#002D62",
+                                                "secondary": "#FDBB30"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/11.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/11a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Kenny's Young Stars",
+                                            "id": "44921",
+                                            "location": "Kenny's",
+                                            "nickname": "Young Stars",
+                                            "isAllStar": true,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "",
+                                                "secondary": ""
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/44921.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/44921a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Los Angeles Clippers",
+                                            "id": "12",
+                                            "location": "Los Angeles",
+                                            "nickname": "Clippers",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#C8102E",
+                                                "secondary": "#1D428A"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/12.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/12a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Los Angeles Lakers",
+                                            "id": "13",
+                                            "location": "Los Angeles",
+                                            "nickname": "Lakers",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#552583",
+                                                "secondary": "#FDB927"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/13.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/13a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Memphis Grizzlies",
+                                            "id": "29",
+                                            "location": "Memphis",
+                                            "nickname": "Grizzlies",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#5D76A9",
+                                                "secondary": "#12173F"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/29.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/29a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Miami Heat",
+                                            "id": "14",
+                                            "location": "Miami",
+                                            "nickname": "Heat",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#98002E",
+                                                "secondary": "#F9A01B"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/14.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/14a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Milwaukee Bucks",
+                                            "id": "15",
+                                            "location": "Milwaukee",
+                                            "nickname": "Bucks",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#00471B",
+                                                "secondary": "#EEE1C6"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/15.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/15a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Minnesota Timberwolves",
+                                            "id": "16",
+                                            "location": "Minnesota",
+                                            "nickname": "Timberwolves",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#0C2340",
+                                                "secondary": "#236192"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/16.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/16a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "New Orleans Pelicans",
+                                            "id": "3",
+                                            "location": "New Orleans",
+                                            "nickname": "Pelicans",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#0C2340",
+                                                "secondary": "#C8102E"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/3.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/3a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "New York Knicks",
+                                            "id": "18",
+                                            "location": "New York",
+                                            "nickname": "Knicks",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#006BB6",
+                                                "secondary": "#F58426"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/18.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/18a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Oklahoma City Thunder",
+                                            "id": "25",
+                                            "location": "Oklahoma City",
+                                            "nickname": "Thunder",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#007AC1",
+                                                "secondary": "#EF3B24"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/25.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/25a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Orlando Magic",
+                                            "id": "19",
+                                            "location": "Orlando",
+                                            "nickname": "Magic",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#0077C0",
+                                                "secondary": "#C4CED4"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/19.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/19a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Philadelphia 76ers",
+                                            "id": "20",
+                                            "location": "Philadelphia",
+                                            "nickname": "76ers",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#006BB6",
+                                                "secondary": "#ED174C"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/20.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/20a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Phoenix Suns",
+                                            "id": "21",
+                                            "location": "Phoenix",
+                                            "nickname": "Suns",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#1D1160",
+                                                "secondary": "#E56020"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/21.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/21a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Portland Trail Blazers",
+                                            "id": "22",
+                                            "location": "Portland",
+                                            "nickname": "Trail Blazers",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#E03A3E",
+                                                "secondary": "#000000"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/22.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/22a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Sacramento Kings",
+                                            "id": "23",
+                                            "location": "Sacramento",
+                                            "nickname": "Kings",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#5A2D81",
+                                                "secondary": "#63727A"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/23.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/23a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "San Antonio Spurs",
+                                            "id": "24",
+                                            "location": "San Antonio",
+                                            "nickname": "Spurs",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#C4CED4",
+                                                "secondary": "#000000"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/24.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/24a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Shaq's OGS",
+                                            "id": "44920",
+                                            "location": "Shaq's",
+                                            "nickname": "OGS",
+                                            "isAllStar": true,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "",
+                                                "secondary": ""
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/44920.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/44920a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Team East All-Stars",
+                                            "id": "53",
+                                            "location": "Team East",
+                                            "nickname": "All-Stars",
+                                            "isAllStar": true,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "",
+                                                "secondary": ""
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/53.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/53a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Team West All-Stars",
+                                            "id": "54",
+                                            "location": "Team West",
+                                            "nickname": "All-Stars",
+                                            "isAllStar": true,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "",
+                                                "secondary": ""
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/54.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/54a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Toronto Raptors",
+                                            "id": "28",
+                                            "location": "Toronto",
+                                            "nickname": "Raptors",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#CE1141",
+                                                "secondary": "#000000"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/28.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/28a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Utah Jazz",
+                                            "id": "26",
+                                            "location": "Utah",
+                                            "nickname": "Jazz",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#002B5C",
+                                                "secondary": "#00471B"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/26.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/26a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        },
+                                        {
+                                            "__typename": "Teams",
+                                            "teamName": "Washington Wizards",
+                                            "id": "27",
+                                            "location": "Washington",
+                                            "nickname": "Wizards",
+                                            "isAllStar": false,
+                                            "colors": {
+                                                "__typename": "TeamsColors",
+                                                "primary": "#002B5C",
+                                                "secondary": "#E31837"
+                                            },
+                                            "logo": {
+                                                "__typename": "TeamsLogo",
+                                                "url": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/27.png",
+                                                "alternateURL": "https://www.gannett-cdn.com/content-pipeline-sports-images/sports2/nba/logos/27a.png"
+                                            },
+                                            "season": {
+                                                "__typename": "Season",
+                                                "year": 2024
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "dataUpdateCount": 1,
+                            "dataUpdatedAt": 1755300485350,
+                            "error": null,
+                            "errorUpdateCount": 0,
+                            "errorUpdatedAt": 0,
+                            "fetchFailureCount": 0,
+                            "fetchFailureReason": null,
+                            "fetchMeta": null,
+                            "isInvalidated": false,
+                            "status": "success",
+                            "fetchStatus": "idle"
+                        },
+                        "queryKey": [
+                            "NBA",
+                            2024,
+                            "teamsOnNba2kPlayerTab"
+                        ],
+                        "queryHash": "[\"NBA\",2024,\"teamsOnNba2kPlayerTab\"]"
+                    },
+                    {
+                        "state": {
+                            "data": {
+                                "pages": [
+                                    {
+                                        "__typename": "Query",
+                                        "videoGameRatings": {
+                                            "__typename": "SearchVideoGameRatings",
+                                            "cursor": "[2024,89,\"Damian Lillard\"]",
+                                            "numResults": 502,
+                                            "videoGameRatings": [
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 97,
+                                                    "updateDate": "2025-07-09T13:01:49.575571Z",
+                                                    "sortName": "Giannis Antetokounmpo",
+                                                    "playerID": "739957",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Giannis",
+                                                        "lastName": "Antetokounmpo",
+                                                        "id": "739957",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "15"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 97,
+                                                    "updateDate": "2025-07-09T13:01:49.592339Z",
+                                                    "sortName": "Luka Doncic",
+                                                    "playerID": "1121277",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Luka",
+                                                        "lastName": "Doncic",
+                                                        "id": "1121277",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "13"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 97,
+                                                    "updateDate": "2025-07-09T13:01:49.612767Z",
+                                                    "sortName": "Nikola Jokic",
+                                                    "playerID": "830650",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Nikola",
+                                                        "lastName": "Jokic",
+                                                        "id": "830650",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "7"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 96,
+                                                    "updateDate": "2025-07-09T13:01:49.594581Z",
+                                                    "sortName": "Joel Embiid",
+                                                    "playerID": "794508",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Joel",
+                                                        "lastName": "Embiid",
+                                                        "id": "794508",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "20"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 96,
+                                                    "updateDate": "2025-07-09T13:01:49.599059Z",
+                                                    "sortName": "Shai Gilgeous-Alexander",
+                                                    "playerID": "1067856",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Shai",
+                                                        "lastName": "Gilgeous-Alexander",
+                                                        "id": "1067856",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "25"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 95,
+                                                    "updateDate": "2025-07-09T13:01:49.643105Z",
+                                                    "sortName": "Jayson Tatum",
+                                                    "playerID": "937647",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Jayson",
+                                                        "lastName": "Tatum",
+                                                        "id": "937647",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "2"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 95,
+                                                    "updateDate": "2025-07-09T13:01:49.610474Z",
+                                                    "sortName": "LeBron James",
+                                                    "playerID": "214152",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "LeBron",
+                                                        "lastName": "James",
+                                                        "id": "214152",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "13"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 95,
+                                                    "updateDate": "2025-07-09T13:01:49.589696Z",
+                                                    "sortName": "Stephen Curry",
+                                                    "playerID": "338365",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Stephen",
+                                                        "lastName": "Curry",
+                                                        "id": "338365",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "9"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 94,
+                                                    "updateDate": "2025-07-09T13:01:49.590149Z",
+                                                    "sortName": "Anthony Davis",
+                                                    "playerID": "603096",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Anthony",
+                                                        "lastName": "Davis",
+                                                        "id": "603096",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "6"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 94,
+                                                    "updateDate": "2025-07-09T13:01:49.593941Z",
+                                                    "sortName": "Kevin Durant",
+                                                    "playerID": "329525",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Kevin",
+                                                        "lastName": "Durant",
+                                                        "id": "329525",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "21"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 93,
+                                                    "updateDate": "2025-07-09T13:01:49.594158Z",
+                                                    "sortName": "Anthony Edwards",
+                                                    "playerID": "1175367",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Anthony",
+                                                        "lastName": "Edwards",
+                                                        "id": "1175367",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "16"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 93,
+                                                    "updateDate": "2025-07-09T13:01:49.581581Z",
+                                                    "sortName": "Devin Booker",
+                                                    "playerID": "845564",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Devin",
+                                                        "lastName": "Booker",
+                                                        "id": "845564",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "21"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 93,
+                                                    "updateDate": "2025-07-09T13:01:49.583627Z",
+                                                    "sortName": "Jalen Brunson",
+                                                    "playerID": "887914",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Jalen",
+                                                        "lastName": "Brunson",
+                                                        "id": "887914",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "18"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 92,
+                                                    "updateDate": "2025-07-09T13:01:49.625052Z",
+                                                    "sortName": "Donovan Mitchell",
+                                                    "playerID": "879707",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Donovan",
+                                                        "lastName": "Mitchell",
+                                                        "id": "879707",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "5"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 92,
+                                                    "updateDate": "2025-07-09T13:01:49.583535Z",
+                                                    "sortName": "Jaylen Brown",
+                                                    "playerID": "883436",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Jaylen",
+                                                        "lastName": "Brown",
+                                                        "id": "883436",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "2"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 92,
+                                                    "updateDate": "2025-07-09T13:01:49.617243Z",
+                                                    "sortName": "Kawhi Leonard",
+                                                    "playerID": "512591",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Kawhi",
+                                                        "lastName": "Leonard",
+                                                        "id": "512591",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "12"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 92,
+                                                    "updateDate": "2025-07-09T13:01:49.609082Z",
+                                                    "sortName": "Kyrie Irving",
+                                                    "playerID": "551768",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Kyrie",
+                                                        "lastName": "Irving",
+                                                        "id": "551768",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "6"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 91,
+                                                    "updateDate": "2025-07-09T13:01:49.649853Z",
+                                                    "sortName": "Victor Wembanyama",
+                                                    "playerID": "1373356",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Victor",
+                                                        "lastName": "Wembanyama",
+                                                        "id": "1373356",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "24"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 90,
+                                                    "updateDate": "2025-07-09T13:01:49.62586Z",
+                                                    "sortName": "Ja Morant",
+                                                    "playerID": "1065906",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Ja",
+                                                        "lastName": "Morant",
+                                                        "id": "1065906",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "29"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 90,
+                                                    "updateDate": "2025-07-09T13:01:49.601993Z",
+                                                    "sortName": "Tyrese Haliburton",
+                                                    "playerID": "1132825",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Tyrese",
+                                                        "lastName": "Haliburton",
+                                                        "id": "1132825",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "11"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "__typename": "VideoGameRatings",
+                                                    "videoGameDisplayName": "NBA 2K25",
+                                                    "rating": 89,
+                                                    "updateDate": "2025-07-09T13:01:49.617865Z",
+                                                    "sortName": "Damian Lillard",
+                                                    "playerID": "463121",
+                                                    "fullPlayer": {
+                                                        "__typename": "Players",
+                                                        "firstName": "Damian",
+                                                        "lastName": "Lillard",
+                                                        "id": "463121",
+                                                        "team": {
+                                                            "__typename": "PlayersTeam",
+                                                            "id": "15"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "pageParams": [
+                                    null
+                                ]
+                            },
+                            "dataUpdateCount": 1,
+                            "dataUpdatedAt": 1755300485424,
+                            "error": null,
+                            "errorUpdateCount": 0,
+                            "errorUpdatedAt": 0,
+                            "fetchFailureCount": 0,
+                            "fetchFailureReason": null,
+                            "fetchMeta": null,
+                            "isInvalidated": false,
+                            "status": "success",
+                            "fetchStatus": "idle"
+                        },
+                        "queryKey": [
+                            21,
+                            "nba-2k25"
+                        ],
+                        "queryHash": "[21,\"nba-2k25\"]"
+                    }
+                ]
+            },
+            "initialReduxState": {
+                "page": {
+                    "seo": {
+                        "title": "NBA 2K Ratings & Player Rankings | HoopsHype",
+                        "description": "Check out the latest NBA 2K ratings, player rankings, and comparisons for every team.",
+                        "canonical": "https://hoops-hype-us-east1-664912083968.us-east1.run.app/nba-2k/players/"
+                    }
+                },
+                "variables": {
+                    "league": "NBA",
+                    "season": 2024,
+                    "seasons": [
+                        2025,
+                        2024,
+                        2023,
+                        2022,
+                        2021,
+                        2020,
+                        2019,
+                        2018,
+                        2017,
+                        2016,
+                        2015,
+                        2014,
+                        2013,
+                        2012,
+                        2011,
+                        2010,
+                        2009,
+                        2008,
+                        2007,
+                        2006,
+                        2005,
+                        2004,
+                        2003,
+                        2002,
+                        2001,
+                        2000
+                    ],
+                    "teamId": ""
+                }
+            }
+        },
+        "__N_SSP": true
+    },
+    "page": "/nba-2k/players",
+    "query": {},
+    "buildId": "bP_VtAmO5GKuiQ9sfSB0G",
+    "isFallback": false,
+    "isExperimentalCompile": false,
+    "dynamicIds": [
+        6501,
+        2205
+    ],
+    "gssp": true,
+    "appGip": true,
+    "scriptLoader": []
+}
