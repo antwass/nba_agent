@@ -63,7 +63,7 @@ class StartScreen extends ConsumerWidget {
                         color: Theme.of(context)
                             .colorScheme
                             .onPrimary
-                            .withOpacity(0.9),
+                            .withValues(alpha: 0.9),
                       ),
                     ),
                   ),
@@ -195,7 +195,7 @@ class _BackgroundGradient extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [c.primary, c.primary.withOpacity(0.6), c.surface],
+          colors: [c.primary, c.primary.withValues(alpha: 0.6), c.surface],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -220,7 +220,7 @@ class _PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Theme.of(context).colorScheme;
-    final bg = filled ? c.primaryContainer : Colors.white.withOpacity(0.85);
+    final bg = filled ? c.primaryContainer : Colors.white.withValues(alpha: 0.85);
     final fg = filled ? c.onPrimaryContainer : Colors.black87;
 
     return SizedBox(
@@ -262,11 +262,11 @@ class _SavesSheet extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 6),
       decoration: BoxDecoration(
-        color: c.surface.withOpacity(0.96),
+        color: c.surface.withValues(alpha: 0.96),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           )

@@ -2,17 +2,23 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../domain/usecases/approach_player.dart';
+import '../home/game_controller.dart';
+import '../negotiation/approach_email_screen.dart';
 
-class MarketScreen extends StatefulWidget {
+
+class MarketScreen extends ConsumerStatefulWidget {
   const MarketScreen({Key? key}) : super(key: key);
 
   @override
-  State<MarketScreen> createState() => _MarketScreenState();
+  ConsumerState<MarketScreen> createState() => _MarketScreenState();
 }
 
-class _MarketScreenState extends State<MarketScreen> {
+class _MarketScreenState extends ConsumerState<MarketScreen> {
   List<Map<String, dynamic>> _allPlayers = [];
   List<Map<String, dynamic>> _visible = [];
+  bool _isFiltering = false;
 
   // Filtres
   String _query = '';
@@ -49,6 +55,8 @@ class _MarketScreenState extends State<MarketScreen> {
   }
 
   void _applyFilters() {
+    setState(() => _isFiltering = true);
+    
     Iterable<Map<String, dynamic>> res = _allPlayers;
 
     if (_query.trim().isNotEmpty) {
@@ -59,8 +67,30 @@ class _MarketScreenState extends State<MarketScreen> {
     if (_pos != 'Tous') {
       res = res.where((p) {
         final prim = (p['position_primary'] ?? '').toString().toUpperCase();
-        final sec  = (p['position_secondary'] ?? '').toString().toUpperCase();
-        return prim == _pos || sec == _pos;
+        final sec = (p['position_secondary'] ?? '').toString().toUpperCase();
+        
+        // Gestion des formats variés de positions
+        bool matchesPosition(String position) {
+          // Nettoyer et normaliser
+          position = position.replaceAll('-', '').trim();
+          
+          switch (_pos) {
+            case 'PG':
+              return position.contains('PG') || position == 'G' || position.contains('POINT');
+            case 'SG':
+              return position.contains('SG') || (position == 'G' && !prim.contains('P')) || position.contains('SHOOT');
+            case 'SF':
+              return position.contains('SF') || position == 'F' || position.contains('SMALL');
+            case 'PF':
+              return position.contains('PF') || (position == 'F' && !prim.contains('S')) || position.contains('POWER');
+            case 'C':
+              return position.contains('C') || position == 'CENTER';
+            default:
+              return false;
+          }
+        }
+        
+        return matchesPosition(prim) || matchesPosition(sec);
       });
     }
 
@@ -89,9 +119,6 @@ class _MarketScreenState extends State<MarketScreen> {
       case 'OVR ↑':
         list.sort((a, b) => ovr(a).compareTo(ovr(b)));
         break;
-      case 'POT ↓':
-        list.sort((a, b) => pot(b).compareTo(pot(a)));
-        break;
       case 'Âge ↓':
         list.sort((a, b) => age(b).compareTo(age(a)));
         break;
@@ -100,7 +127,10 @@ class _MarketScreenState extends State<MarketScreen> {
         break;
     }
 
-    setState(() => _visible = list);
+    setState(() {
+      _visible = list;
+      _isFiltering = false;
+    });
   }
 
   @override
@@ -170,7 +200,7 @@ class _MarketScreenState extends State<MarketScreen> {
                       flex: 1,
                       child: _Dropdown(
                         value: _sort,
-                        items: const ['OVR ↓', 'OVR ↑', 'POT ↓', 'Âge ↓', 'Âge ↑'],
+                        items: const ['OVR ↓', 'OVR ↑', 'Âge ↓', 'Âge ↑'],
                         onChanged: (v) {
                           _sort = v!;
                           _applyFilters();
@@ -197,11 +227,22 @@ class _MarketScreenState extends State<MarketScreen> {
           const Divider(height: 1),
           // Liste
           Expanded(
-            child: ListView.separated(
-              itemCount: _visible.length,
-              separatorBuilder: (_, __) => const Divider(height: 1),
-              itemBuilder: (context, i) => _PlayerTile(player: _visible[i]),
-            ),
+            child: _isFiltering 
+              ? const Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemCount: _visible.length,
+                  itemBuilder: (context, i) {
+                    if (i > 0 && i < _visible.length) {
+                      return Column(
+                        children: [
+                          const Divider(height: 1),
+                          _PlayerTile(player: _visible[i]),
+                        ],
+                      );
+                    }
+                    return _PlayerTile(player: _visible[i]);
+                  },
+                ),
           ),
         ],
       ),
@@ -227,6 +268,7 @@ class _Dropdown extends StatelessWidget {
     return DropdownButtonFormField<String>(
       value: value,
       isDense: true,
+      isExpanded: true,
       onChanged: onChanged,
       decoration: InputDecoration(
         labelText: label,
@@ -234,6 +276,18 @@ class _Dropdown extends StatelessWidget {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       ),
+      selectedItemBuilder: (BuildContext context) {
+        return items.map<Widget>((String item) {
+          return Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              item,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          );
+        }).toList();
+      },
       items: items.map((e) => DropdownMenuItem(
         value: e, 
         child: Text(
@@ -246,34 +300,99 @@ class _Dropdown extends StatelessWidget {
   }
 }
 
-class _PlayerTile extends StatelessWidget {
+class _PlayerTile extends ConsumerWidget {
   const _PlayerTile({required this.player});
   final Map<String, dynamic> player;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final game = ref.watch(gameControllerProvider);
     final ratings = (player['ratings'] ?? const {}) as Map;
     final bio = (player['bio'] ?? const {}) as Map;
     final team = (player['team'] ?? const {}) as Map;
 
-    final ovr = (ratings['overall'] ?? 0).toString();
-    final pot = (ratings['potential'] ?? 0).toString();
+    final ovr = (ratings['overall'] ?? 0) as int;
     final age = (bio['age'] is num) ? (bio['age'] as num).toInt() : null;
 
     final name = (player['full_name'] ?? 'Inconnu').toString();
     final pos = (player['position_primary'] ?? '??').toString();
     final tName = (team['team_name'] ?? 'Sans équipe').toString();
 
+    // Calcul de la probabilité
+    final probability = game.league != null 
+      ? (calculateApproachProbability(
+          reputation: game.league!.agent.reputation,
+          playerOverall: ovr,
+        ) * 100).round()
+      : 0;
+
     return ListTile(
       leading: CircleAvatar(child: Text(pos)),
       title: Text('$name  •  OVR $ovr'),
-      subtitle: Text('Âge ${age ?? '-'}  •  POT $pot  •  $tName'),
+      subtitle: Text('Âge ${age ?? '-'}  •  $tName'),
       trailing: TextButton(
-        child: const Text('Approcher'),
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Approcher $name — à venir')),
+        child: Text('Approcher ($probability%)'),
+        onPressed: game.league == null ? null : () async {
+          // Dialog de confirmation
+          final confirm = await showDialog<bool>(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Approcher $name'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Voulez-vous proposer vos services à ce joueur ?'),
+                  const SizedBox(height: 12),
+                  Text('Probabilité de succès : $probability%'),
+                  Text('OVR : $ovr'),
+                  if (game.league!.agent.clients.length >= 8)
+                    const Text(
+                      '\nAttention : Vous approchez de la limite de 10 clients.',
+                      style: TextStyle(color: Colors.orange),
+                    ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text('Annuler'),
+                ),
+                FilledButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: const Text('Approcher'),
+                ),
+              ],
+            ),
           );
+
+          if (confirm == true && context.mounted) {
+            // Trouver l'ID du joueur dans la league
+            final leaguePlayer = game.league!.players.firstWhere(
+              (p) => p.name == name && p.overall == ovr,
+              orElse: () => game.league!.players.first,
+            );
+            
+            final result = approachPlayer(
+              league: game.league!,
+              playerId: leaguePlayer.id,
+            );
+            
+            ref.read(gameControllerProvider.notifier).approachPlayer(
+              leaguePlayer.id,
+              result,
+            );
+            
+            // Afficher le résultat
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(result.message),
+                  backgroundColor: result.success ? Colors.green : Colors.orange,
+                ),
+              );
+            }
+          }
         },
       ),
     );

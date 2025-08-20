@@ -1,8 +1,10 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities.dart';
 import '../../domain/usecases/sign_contract.dart';
+import '../../domain/usecases/negotiate_contract.dart';
 import '../home/game_controller.dart';
 
 class NegotiationScreen extends ConsumerStatefulWidget {
@@ -17,6 +19,11 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
   late double salary;
   late double bonus;
   late int years;
+  
+  late NegotiationEngine engine;
+  List<NegotiationRound> rounds = [];
+  int roundCount = 0;
+  bool dealClosed = false;
 
   @override
   void initState() {
@@ -24,14 +31,88 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
     salary = widget.offer.salary.toDouble();
     bonus  = widget.offer.bonus.toDouble();
     years  = widget.offer.years;
+    
+    final league = ref.read(gameControllerProvider).league!;
+    final player = league.players.firstWhere((x) => x.id == widget.offer.playerId);
+    final team = league.teams.firstWhere((x) => x.id == widget.offer.teamId);
+    
+    engine = NegotiationEngine(player: player, team: team);
+    
+    // Première offre de l'équipe
+    rounds.add(NegotiationRound(
+      salary: widget.offer.salary,
+      years: widget.offer.years,
+      bonus: widget.offer.bonus,
+      isPlayerOffer: false,
+      message: "Voici notre offre initiale.",
+    ));
   }
 
   double _acceptProb(Player p) {
-    // Estimation très simple : mieux que l’offre de base => monte la proba
+    // Estimation très simple : mieux que l'offre de base => monte la proba
     final ask = (p.overall * p.overall * 4000);
     final delta = (salary - ask) / ask;
     final base = 0.5 + delta * 0.9 - 0.2 * p.greed; // greed baisse la proba
     return base.clamp(0.05, 0.98);
+  }
+
+  void _submitOffer() {
+    if (dealClosed || roundCount >= 3) return;
+    
+    setState(() {
+      roundCount++;
+      
+      // Évaluation de l'offre
+      final score = engine.evaluateOffer(salary.round(), years, bonus.round());
+      
+      if (score > 0.75 || roundCount >= 3) {
+        // Offre acceptée !
+        dealClosed = true;
+        rounds.add(NegotiationRound(
+          salary: salary.round(),
+          years: years,
+          bonus: bonus.round(),
+          isPlayerOffer: false,
+          message: "Deal accepté ! Félicitations !",
+        ));
+      } else if (score < 0.4) {
+        // Offre refusée, négociation terminée
+        dealClosed = true;
+        rounds.add(NegotiationRound(
+          salary: salary.round(),
+          years: years,
+          bonus: bonus.round(),
+          isPlayerOffer: false,
+          message: "L'écart est trop important. Négociation terminée.",
+        ));
+      } else {
+        // Contre-offre
+        final counter = engine.generateCounterOffer(
+          salary.round(), 
+          years, 
+          bonus.round()
+        );
+        rounds.add(counter);
+        
+        // Mise à jour des sliders avec la contre-offre
+        salary = counter.salary.toDouble();
+        years = counter.years;
+        bonus = counter.bonus.toDouble();
+      }
+    });
+  }
+
+  void _finalizeContract() {
+    final res = signContract(
+      league: ref.read(gameControllerProvider).league!,
+      offer: widget.offer,
+      agreedSalary: salary.round(),
+      agreedYears: years,
+      agreedBonus: bonus.round(),
+      commissionRate: 0.07,
+    );
+    ref.read(gameControllerProvider.notifier).refreshAfterSign(res.summary);
+    if (context.mounted) Navigator.pop(context);
   }
 
   @override
@@ -59,6 +140,21 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
           const SizedBox(height: 6),
           Text('Offre initiale: ${widget.offer.salary ~/ 1000}k€/an • ${widget.offer.years} ans'),
           const SizedBox(height: 12),
+
+          // Historique de négociation
+          if (rounds.isNotEmpty) ...[
+            Card(
+              child: Column(
+                children: rounds.map((r) => ListTile(
+                  leading: Icon(r.isPlayerOffer ? Icons.person : Icons.business),
+                  title: Text('${r.salary ~/ 1000}k€/an × ${r.years} ans'),
+                  subtitle: Text(r.message),
+                  dense: true,
+                )).toList(),
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
 
           _SliderTile(
             label: 'Salaire/an',
@@ -96,30 +192,20 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
           Text('Probabilité estimée: ${(prob * 100).round()}%'),
 
           const SizedBox(height: 16),
-          FilledButton.icon(
-            onPressed: () {
-              final res = signContract(
-                league: ref.read(gameControllerProvider).league!,
-                offer: widget.offer,
-                agreedSalary: salary.round(),
-                agreedYears: years,
-                agreedBonus: bonus.round(),
-                commissionRate: 0.07, // 7% de commission
-              );
-              ref.read(gameControllerProvider.notifier).refreshAfterSign(res.summary);
-              if (context.mounted) Navigator.pop(context);
-            },
-            icon: const Icon(Icons.check),
-            label: const Text('Accepter'),
-          ),
-          const SizedBox(height: 8),
-          OutlinedButton.icon(
-            onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Contre-offre envoyée (MVP visuel)')),
+          if (!dealClosed) ...[
+            FilledButton.icon(
+              onPressed: roundCount < 3 ? _submitOffer : null,
+              icon: const Icon(Icons.send),
+              label: Text(roundCount == 0 ? 'Proposer' : 'Contre-proposer (${3-roundCount} restant)'),
             ),
-            icon: const Icon(Icons.swap_horiz),
-            label: const Text('Contre-offre'),
-          ),
+          ] else if (rounds.last.message.contains('accepté')) ...[
+            FilledButton.icon(
+              onPressed: _finalizeContract,
+              icon: const Icon(Icons.check),
+              label: const Text('Signer le contrat'),
+            ),
+          ],
+          const SizedBox(height: 8),
           TextButton.icon(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.close),

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities.dart';
 import '../../domain/usecases/advance_week.dart';
+import '../../domain/usecases/approach_player.dart';
 import '../../domain/services/world_generator.dart';
 
 
@@ -62,6 +63,10 @@ class GameController extends StateNotifier<GameState> {
   // (utilisé par NegotiationScreen)
   void refreshAfterSign(String summary) {
     state = state.copyWith(lastSummary: summary);
+  }
+
+  void approachPlayer(int playerId, ApproachResult result) {
+    state = state.copyWith(lastSummary: result.message);
   }
 }
 
