@@ -1,17 +1,22 @@
 // lib/domain/entities.dart
+
 enum Pos { PG, SG, SF, PF, C }
 
 class Player {
-  int id;
+  final int id;
   String name;
   int age;
   Pos pos;
-  int overall;        // 40..99
-  int potential;      // 40..99
-  int form;           // -10..+10
-  double greed;       // 0..1
-  int marketability;  // 0..100
-  int? teamId;        // null => free agent
+  int overall;
+  int potential;
+  int form;
+  double greed;
+  int marketability;
+
+  // Champs optionnels utiles au gameplay
+  int? teamId;             // équipe actuelle dans ton monde fictif
+  String? extId;           // id externe (id BDD NBA)
+  int? representativeId;   // null = sans agent, sinon id de l’agent (toi)
 
   Player({
     required this.id,
@@ -20,10 +25,12 @@ class Player {
     required this.pos,
     required this.overall,
     required this.potential,
-    this.form = 0,
-    this.greed = 0.5,
-    this.marketability = 50,
+    required this.form,
+    required this.greed,
+    required this.marketability,
     this.teamId,
+    this.extId,
+    this.representativeId,
   });
 }
 
