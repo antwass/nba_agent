@@ -156,14 +156,15 @@ class StartScreen extends ConsumerWidget {
     if (slotId == null) return;
 
     // 1) créer le monde
-    ref.read(gameControllerProvider.notifier)
+    await ref.read(gameControllerProvider.notifier)
         .newGame(agentName: nameCtrl.text.trim().isEmpty ? 'Agent' : nameCtrl.text.trim());
 
     // 2) meta initiale
+    final gameState = ref.read(gameControllerProvider);
     final meta = SaveGameMeta(
       id: slotId,
       name: nameCtrl.text.trim().isEmpty ? 'Agent' : nameCtrl.text.trim(),
-      week: ref.read(gameControllerProvider).league.week,
+      week: gameState.league?.week ?? 1,
       updatedAt: DateTime.now(),
     );
     await ref.read(saveServiceProvider).upsertSlot(meta);

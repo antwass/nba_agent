@@ -8,7 +8,16 @@ class ClientsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final league = ref.watch(gameControllerProvider).league;
+    final game = ref.watch(gameControllerProvider);
+    
+    if (game.league == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Mes clients')),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    
+    final league = game.league!;
 
     // Récupère les joueurs clients de l'agent
     final clientPlayers = league.players
@@ -58,7 +67,16 @@ class PlayerDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final league = ref.watch(gameControllerProvider).league;
+    final game = ref.watch(gameControllerProvider);
+    
+    if (game.league == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Détails joueur')),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    
+    final league = game.league!;
     final p = league.players.firstWhere((x) => x.id == playerId);
     final teamLabel = () {
       if (p.teamId == null) return 'FA (Libre)';

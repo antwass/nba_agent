@@ -36,7 +36,16 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final league = ref.watch(gameControllerProvider).league;
+    final game = ref.watch(gameControllerProvider);
+    
+    if (game.league == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Négociation')),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    
+    final league = game.league!;
     final p = league.players.firstWhere((x) => x.id == widget.offer.playerId);
     final prob = _acceptProb(p);
 
@@ -90,7 +99,7 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
           FilledButton.icon(
             onPressed: () {
               final res = signContract(
-                league: ref.read(gameControllerProvider).league,
+                league: ref.read(gameControllerProvider).league!,
                 offer: widget.offer,
                 agreedSalary: salary.round(),
                 agreedYears: years,

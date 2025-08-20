@@ -115,65 +115,70 @@ class _MarketScreenState extends State<MarketScreen> {
           // Barre filtres
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 10, 12, 6),
-            child: Row(
+            child: Column(
               children: [
-                // Recherche
-                Expanded(
-                  flex: 2,
-                  child: TextField(
-                    onChanged: (v) {
-                      _query = v;
-                      _applyFilters();
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Rechercher un joueur…',
-                      prefixIcon: const Icon(Icons.search),
-                      isDense: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                // Première ligne : Recherche
+                TextField(
+                  onChanged: (v) {
+                    _query = v;
+                    _applyFilters();
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Rechercher un joueur…',
+                    prefixIcon: const Icon(Icons.search),
+                    isDense: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   ),
                 ),
-                const SizedBox(width: 8),
-                // Poste
-                Expanded(
-                  child: _Dropdown(
-                    value: _pos,
-                    items: _posOptions,
-                    onChanged: (v) {
-                      _pos = v!;
-                      _applyFilters();
-                    },
-                    label: 'Poste',
-                  ),
-                ),
-                const SizedBox(width: 8),
-                // Équipe
-                Expanded(
-                  child: _Dropdown(
-                    value: _team,
-                    items: _teamOptions,
-                    onChanged: (v) {
-                      _team = v!;
-                      _applyFilters();
-                    },
-                    label: 'Équipe',
-                  ),
-                ),
-                const SizedBox(width: 8),
-                // Tri
-                Expanded(
-                  child: _Dropdown(
-                    value: _sort,
-                    items: const ['OVR ↓', 'OVR ↑', 'POT ↓', 'Âge ↓', 'Âge ↑'],
-                    onChanged: (v) {
-                      _sort = v!;
-                      _applyFilters();
-                    },
-                    label: 'Tri',
-                  ),
+                const SizedBox(height: 8),
+                // Deuxième ligne : Filtres en Row
+                Row(
+                  children: [
+                    // Poste
+                    Expanded(
+                      flex: 1,
+                      child: _Dropdown(
+                        value: _pos,
+                        items: _posOptions,
+                        onChanged: (v) {
+                          _pos = v!;
+                          _applyFilters();
+                        },
+                        label: 'Poste',
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    // Équipe (plus de place)
+                    Expanded(
+                      flex: 2,
+                      child: _Dropdown(
+                        value: _team,
+                        items: _teamOptions,
+                        onChanged: (v) {
+                          _team = v!;
+                          _applyFilters();
+                        },
+                        label: 'Équipe',
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    // Tri
+                    Expanded(
+                      flex: 1,
+                      child: _Dropdown(
+                        value: _sort,
+                        items: const ['OVR ↓', 'OVR ↑', 'POT ↓', 'Âge ↓', 'Âge ↑'],
+                        onChanged: (v) {
+                          _sort = v!;
+                          _applyFilters();
+                        },
+                        label: 'Tri',
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -229,7 +234,14 @@ class _Dropdown extends StatelessWidget {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       ),
-      items: items.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+      items: items.map((e) => DropdownMenuItem(
+        value: e, 
+        child: Text(
+          e, 
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
+      )).toList(),
     );
   }
 }

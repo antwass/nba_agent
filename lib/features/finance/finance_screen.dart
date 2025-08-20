@@ -8,8 +8,16 @@ class FinanceScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final league = ref.watch(gameControllerProvider).league;
-
+    final game = ref.watch(gameControllerProvider);
+    
+    if (game.league == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Finances')),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    
+    final league = game.league!;
     final entries = [...league.ledger]
       ..sort((a, b) => b.week.compareTo(a.week)); // plus récents en haut
 

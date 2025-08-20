@@ -9,8 +9,16 @@ class OffersScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final league = ref.watch(gameControllerProvider).league;
-
+    final game = ref.watch(gameControllerProvider);
+    
+    if (game.league == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Offres')),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    
+    final league = game.league!;
     final clientIds = league.agent.clients.toSet();
     final clientOffers = league.offers
         .where((o) => clientIds.contains(o.playerId))

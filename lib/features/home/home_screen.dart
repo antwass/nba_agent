@@ -24,7 +24,7 @@ class HomeScreen extends ConsumerWidget {
       final meta = SaveGameMeta(
         id: slotId,
         name: 'Agent', // TODO: stocker nom dans LeagueState.agent si tu veux l’afficher
-        week: ref.read(gameControllerProvider).league.week,
+        week: ref.read(gameControllerProvider).league?.week ?? 1,
         updatedAt: DateTime.now(),
       );
       await svc.upsertSlot(meta);
@@ -40,7 +40,25 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameControllerProvider);
-    final isFAWindow = (game.league.week >= 18 && game.league.week <= 28);
+    
+    // Écran de chargement si league n'est pas encore initialisé
+    if (game.isLoading || game.league == null) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              Text(game.lastSummary.isNotEmpty ? game.lastSummary : 'Chargement...'),
+            ],
+          ),
+        ),
+      );
+    }
+    
+    final league = game.league!;
+    final isFAWindow = (league.week >= 18 && league.week <= 28);
 
     return Scaffold(
       appBar: AppBar(
@@ -63,10 +81,10 @@ class HomeScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   _HeaderStats(
-                    week: game.league.week,
-                    cash: game.league.agent.cash,
-                    reputation: game.league.agent.reputation,
-                    clients: game.league.agent.clients.length,
+                    week: league.week,
+                    cash: league.agent.cash,
+                    reputation: league.agent.reputation,
+                    clients: league.agent.clients.length,
                   ),
                   const SizedBox(height: 16),
                   if (game.lastSummary.isNotEmpty)
@@ -98,7 +116,7 @@ class HomeScreen extends ConsumerWidget {
                   Text('Événements récents',
                       style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 8),
-                  _RecentEvents(items: game.league.recentEvents),
+                  _RecentEvents(items: league.recentEvents),
                   const SizedBox(height: 80), // espace pour le FAB
                 ],
               ),
