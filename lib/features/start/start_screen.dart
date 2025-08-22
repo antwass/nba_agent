@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/game_calendar.dart';
 import '../home/game_controller.dart';
 import '../home/home_screen.dart';
 
@@ -294,7 +295,7 @@ class _SavesSheet extends StatelessWidget {
                   child: ListTile(
                     leading: const Icon(Icons.save_outlined),
                     title: Text(s.name),
-                    subtitle: Text('Semaine ${s.week} • ${_fmtDate(s.updatedAt)}'),
+                    subtitle: Text('${GameCalendar.weekToDisplay(s.week)} • ${_fmtDate(s.updatedAt)}'),
                     trailing: Wrap(
                       spacing: 6,
                       children: [

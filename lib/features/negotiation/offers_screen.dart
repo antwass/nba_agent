@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/game_calendar.dart';
 import '../home/game_controller.dart';
 import '../../domain/entities.dart';
 import '../negotiation/negotiation_screen.dart';
@@ -40,8 +41,34 @@ class OffersScreen extends ConsumerWidget {
           return ListTile(
             leading: const Icon(Icons.mark_chat_read_outlined),
             title: Text('${p.name} (${p.pos.name})'),
-            subtitle: Text(
-              '${t.city} ${t.name} • ${o.salary ~/ 1000}k€/an x${o.years} • exp. S${o.expiresWeek}',
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${t.city} ${t.name} • ${o.salary ~/ 1000}k€/an x${o.years}'),
+                if (p.teamId == null)
+                  Text(
+                    'Free Agent • Commission: ${(o.salary * 0.07) ~/ 1000}k€',
+                    style: TextStyle(
+                      color: Colors.green[700],
+                      fontSize: 12,
+                    ),
+                  )
+                else if (p.teamId == o.teamId)
+                  Text(
+                    'Extension • Commission: ${(o.salary * 0.05) ~/ 1000}k€',
+                    style: TextStyle(
+                      color: Colors.blue[700],
+                      fontSize: 12,
+                    ),
+                  ),
+                Text(
+                  'Expire: ${GameCalendar.weekToDisplay(o.expiresWeek)}',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 12,
+                  ),
+                ),
+              ],
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {

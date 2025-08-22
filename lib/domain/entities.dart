@@ -101,10 +101,14 @@ class LeagueState {
 
   List<Offer> offers;
   List<Contract> contracts;
-  List<String> recentEvents;
+  List<String> recentEvents;  // Garde pour compatibilité
 
   // 👇 nouveau : journal de mouvements financiers
   List<FinanceEntry> ledger;
+  
+  // 👇 nouveau : système de notifications séparées
+  List<GameNotification> notifications;  // Notifications personnelles
+  List<String> marketNews;          // News globales du marché
 
   LeagueState({
     required this.week,
@@ -113,17 +117,53 @@ class LeagueState {
     required this.agent,
     List<Offer>? offers,
     List<Contract>? contracts,
-    List<String>? recentEvents,
+    List<String>? recentEvents,  // Garde pour compatibilité
+    List<GameNotification>? notifications,
+    List<String>? marketNews,
     List<FinanceEntry>? ledger,
   })  : offers = offers ?? [],
         contracts = contracts ?? [],
-        recentEvents = recentEvents ?? [],
+        recentEvents = recentEvents ?? [],  // Garde pour compatibilité
+        notifications = notifications ?? [],
+        marketNews = marketNews ?? [],
         ledger = ledger ?? [];
 }
 
 class FinanceEntry {
-  final int week;      // semaine où l’évènement a eu lieu
+  final int week;      // semaine où l'évènement a eu lieu
   final String label;  // ex: "Commission: J. Doe (2 ans)"
   final int amount;    // en € (positif = revenu, négatif = dépense)
   const FinanceEntry({required this.week, required this.label, required this.amount});
+}
+
+enum NotificationType {
+  offerReceived,      // Nouvelle offre pour un client
+  offerExpiring,      // Offre qui expire bientôt
+  contractSigned,     // Contrat signé
+  tradeRumor,         // Rumeur de trade
+  extensionOffer,     // Offre d'extension
+  clientMood,         // Changement d'humeur client
+}
+
+// Renommé de Notification à GameNotification pour éviter conflit avec Flutter
+class GameNotification {
+  final String id;
+  final NotificationType type;
+  final String title;
+  final String message;
+  final int week;
+  final bool isRead;
+  final int? relatedPlayerId;
+  final int? relatedOfferId;
+  
+  GameNotification({
+    required this.id,
+    required this.type,
+    required this.title,
+    required this.message,
+    required this.week,
+    this.isRead = false,
+    this.relatedPlayerId,
+    this.relatedOfferId,
+  });
 }

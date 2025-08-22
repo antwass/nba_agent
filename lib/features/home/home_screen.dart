@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/game_calendar.dart';
+import '../../domain/entities.dart' show NotificationType, GameNotification;
 import 'game_controller.dart';
 import '../start/start_screen.dart' show currentSlotIdProvider, saveServiceProvider;
 import '../start/save_game_meta.dart';
@@ -58,8 +60,9 @@ class HomeScreen extends ConsumerWidget {
 
     // Feedback
     if (context.mounted) {
+      final week = ref.read(gameControllerProvider).league?.week ?? 1;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Un mois s\'est écoulé (+4 semaines)')),
+        SnackBar(content: Text('Un mois s\'est écoulé - ${GameCalendar.weekToDisplay(week)}')),
       );
     }
   }
@@ -85,7 +88,7 @@ class HomeScreen extends ConsumerWidget {
     }
     
     final league = game.league!;
-    final isFAWindow = (league.week >= 18 && league.week <= 28);
+    final isFAWindow = GameCalendar.getPhase(league.week) == "Free Agency";
 
     return Scaffold(
       appBar: AppBar(
@@ -126,6 +129,7 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   const SizedBox(height: 12),
                   _QuickActions(
+                    notifications: league.notifications,
                     onOpenClients: () {
                       Navigator.push(context, MaterialPageRoute(builder: (_) => const ClientsScreen()));
                     },
@@ -140,10 +144,23 @@ class HomeScreen extends ConsumerWidget {
                     },
                   ),
                   const SizedBox(height: 16),
-                  Text('Événements récents',
-                      style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  _RecentEvents(items: league.recentEvents),
+                  _NotificationsSection(
+                    notifications: league.notifications
+                        .where((n) => n.week >= league.week - 4)  // Dernières 4 semaines
+                        .toList()
+                      ..sort((a, b) => b.week.compareTo(a.week)),  // Plus récentes en premier
+                    marketNews: league.marketNews.take(10).toList(),
+                    onNotificationTap: (notification) {
+                      // Pour l'instant on ne fait que naviguer
+                      if (notification.type == NotificationType.offerReceived && 
+                          notification.relatedOfferId != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const OffersScreen()),
+                        );
+                      }
+                    },
+                  ),
                   const SizedBox(height: 80), // espace pour le FAB
                 ],
               ),
@@ -203,17 +220,32 @@ class HomeScreen extends ConsumerWidget {
           } else if (i == 3) {
             Navigator.push(
                 context,
+                MaterialPageRoute(builder: (_) => const OffersScreen()),
+            );
+          } else if (i == 4) {
+            Navigator.push(
+                context,
                 MaterialPageRoute(builder: (_) => const FinanceScreen()),
             );
           } else {
             // i == 0 => Accueil (déjà dessus)
           }
         },
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Accueil'),
-          NavigationDestination(icon: Icon(Icons.people_outline), label: 'Clients'),
-          NavigationDestination(icon: Icon(Icons.storefront_outlined), label: 'Marché'),
-          NavigationDestination(icon: Icon(Icons.attach_money_outlined), label: 'Finances'),
+        destinations: [
+          const NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Accueil'),
+          const NavigationDestination(icon: Icon(Icons.people_outline), label: 'Clients'),
+          const NavigationDestination(icon: Icon(Icons.storefront_outlined), label: 'Marché'),
+          NavigationDestination(
+            icon: Badge(
+              label: Text('${league.notifications.where((n) => 
+                n.type == NotificationType.offerReceived && !n.isRead).length}'),
+              isLabelVisible: league.notifications.any((n) => 
+                n.type == NotificationType.offerReceived && !n.isRead),
+              child: const Icon(Icons.mark_chat_read_outlined),
+            ),
+            label: 'Offres',
+          ),
+          const NavigationDestination(icon: Icon(Icons.attach_money_outlined), label: 'Finances'),
         ],
       ),
     );
@@ -261,7 +293,53 @@ class _HeaderStats extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Semaine $week', style: textTheme.headlineMedium),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  GameCalendar.weekToDisplay(week),
+                  style: textTheme.headlineMedium,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  '${GameCalendar.getYear(week)}',
+                  style: textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondaryContainer,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    GameCalendar.getPhase(week),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'Saison ${GameCalendar.getSeason(week)}',
+                  style: textTheme.bodySmall?.copyWith(
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,
@@ -294,12 +372,14 @@ class _StatChip extends StatelessWidget {
 
 class _QuickActions extends StatelessWidget {
   const _QuickActions({
+    required this.notifications,
     required this.onOpenClients,
     required this.onOpenMarket,
     required this.onOpenOffers,
     required this.onOpenFinance,
   });
 
+  final List<GameNotification> notifications;
   final VoidCallback onOpenClients;
   final VoidCallback onOpenMarket;
   final VoidCallback onOpenOffers;
@@ -331,6 +411,8 @@ class _QuickActions extends StatelessWidget {
           title: 'Offres',
           subtitle: 'Négocier et signer',
           onTap: onOpenOffers,
+          badgeCount: notifications.where((n) => 
+            n.type == NotificationType.offerReceived && !n.isRead).length,
         ),
         _ActionCard(
           icon: Icons.stacked_line_chart_outlined,
@@ -349,12 +431,14 @@ class _ActionCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onTap,
+    this.badgeCount = 0,
   });
 
   final IconData icon;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
+  final int badgeCount;
 
   @override
   Widget build(BuildContext context) {
@@ -366,7 +450,36 @@ class _ActionCard extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           child: Row(
             children: [
-              Icon(icon, size: 28),
+              Stack(
+                children: [
+                  Icon(icon, size: 28),
+                  if (badgeCount > 0)
+                    Positioned(
+                      right: -2,
+                      top: -2,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          '$badgeCount',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -417,6 +530,159 @@ class _RecentEvents extends StatelessWidget {
         itemCount: items.length,
       ),
     );
+  }
+}
+
+class _NotificationsSection extends StatelessWidget {
+  const _NotificationsSection({
+    required this.notifications,
+    required this.marketNews,
+    required this.onNotificationTap,
+  });
+  
+  final List<GameNotification> notifications;
+  final List<String> marketNews;
+  final Function(GameNotification) onNotificationTap;
+  
+  @override
+  Widget build(BuildContext context) {
+    final unreadCount = notifications.where((n) => !n.isRead).length;
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Section Notifications personnelles
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Notifications',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            if (unreadCount > 0)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  '$unreadCount',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        
+        Card(
+          child: notifications.isEmpty
+              ? const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Center(
+                    child: Text('Aucune notification'),
+                  ),
+                )
+              : LimitedBox(
+                  maxHeight: 200,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: notifications.take(5).length,
+                    separatorBuilder: (_, __) => const Divider(height: 1),
+                    itemBuilder: (context, i) {
+                      final notif = notifications[i];
+                      return ListTile(
+                        dense: true,
+                        leading: _getNotificationIcon(notif.type),
+                        title: Text(
+                          notif.title,
+                          style: TextStyle(
+                            fontWeight: notif.isRead ? FontWeight.normal : FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          notif.message,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        trailing: !notif.isRead
+                            ? Container(
+                                width: 8,
+                                height: 8,
+                                decoration: const BoxDecoration(
+                                  color: Colors.blue,
+                                  shape: BoxShape.circle,
+                                ),
+                              )
+                            : null,
+                        onTap: () => onNotificationTap(notif),
+                      );
+                    },
+                  ),
+                ),
+        ),
+        
+        if (notifications.length > 5)
+          TextButton(
+            onPressed: () {
+              // TODO: Ouvrir page toutes les notifications
+            },
+            child: Text('Voir toutes les notifications (${notifications.length})'),
+          ),
+        
+        const SizedBox(height: 16),
+        
+        // Section News du marché
+        Text(
+          'News du marché',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 8),
+        
+        Card(
+          child: marketNews.isEmpty
+              ? const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Center(
+                    child: Text('Aucune actualité du marché'),
+                  ),
+                )
+              : ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: marketNews.take(5).length,
+                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  itemBuilder: (_, i) => ListTile(
+                    dense: true,
+                    leading: const Icon(Icons.fiber_manual_record, size: 8),
+                    title: Text(marketNews[i]),
+                  ),
+                ),
+        ),
+      ],
+    );
+  }
+  
+  Widget _getNotificationIcon(NotificationType type) {
+    switch (type) {
+      case NotificationType.offerReceived:
+        return const Icon(Icons.mail, color: Colors.blue, size: 20);
+      case NotificationType.offerExpiring:
+        return const Icon(Icons.timer, color: Colors.orange, size: 20);
+      case NotificationType.contractSigned:
+        return const Icon(Icons.check_circle, color: Colors.green, size: 20);
+      case NotificationType.tradeRumor:
+        return const Icon(Icons.swap_horiz, color: Colors.purple, size: 20);
+      case NotificationType.extensionOffer:
+        return const Icon(Icons.refresh, color: Colors.blue, size: 20);
+      case NotificationType.clientMood:
+        return const Icon(Icons.mood, color: Colors.amber, size: 20);
+    }
   }
 }
 

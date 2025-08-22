@@ -109,7 +109,14 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
       agreedSalary: salary.round(),
       agreedYears: years,
       agreedBonus: bonus.round(),
-      commissionRate: 0.07,
+      // Commission uniquement pour les nouveaux contrats (FA) et extensions
+      // Pas de commission sur les trades
+      commissionRate: widget.offer.playerId != null && 
+                      ref.read(gameControllerProvider).league!.players
+                         .firstWhere((p) => p.id == widget.offer.playerId)
+                         .teamId == null 
+                      ? 0.07  // 7% pour les FA
+                      : 0.05, // 5% pour les extensions (si c'est la même équipe)
     );
     ref.read(gameControllerProvider.notifier).refreshAfterSign(res.summary);
     if (context.mounted) Navigator.pop(context);

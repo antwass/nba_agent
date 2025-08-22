@@ -1,6 +1,8 @@
 // lib/domain/usecases/advance_week.dart
 import 'dart:math';
 import '../entities.dart';
+import '../../core/game_calendar.dart';
+import 'generate_client_offers.dart';
 
 class AdvanceWeekResult {
   final int newWeek;
@@ -93,14 +95,52 @@ AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
     generated++;
   }
 
-  // 4) Événements
-  if (generated > 0) events.add('$generated nouvelles offres au marché.');
+  // 4) Événements du marché
+  if (generated > 0) s.marketNews.add('📊 $generated nouvelles offres sur le marché cette semaine');
   if (r.nextDouble() < 0.20) {
-    events.add('Rumeurs: besoin de meneurs cette semaine.');
+    s.marketNews.add('💬 Rumeur: Les équipes cherchent des meneurs cette semaine');
   }
+
+  // Générer des offres pour les clients de l'agent
+  generateOffersForClients(s, r);
 
   // 5) Avancer le temps + publier les events
   s.week += 1;
+  
+  // Vérifier les événements spéciaux
+  final specialEvent = GameCalendar.getSpecialEvent(s.week);
+  if (specialEvent != null) {
+    s.marketNews.insert(0, specialEvent);  // Mettre en premier
+  }
+  
+  // Événement spécial nouvelle année
+  if (GameCalendar.isNewYear(s.week)) {
+    s.marketNews.add("🎊 Bonne année ${GameCalendar.getYear(s.week)} !");
+  }
+  
+  // Événement nouvelle saison
+  if (GameCalendar.isNewSeason(s.week)) {
+    s.marketNews.add("📅 Nouvelle saison NBA ${GameCalendar.getSeason(s.week)} commence !");
+  }
+  
+  // Faire vieillir les joueurs une fois par an (semaine 52)
+  if ((s.week - 1) % 52 == 51) {
+    for (final p in s.players) {
+      p.age += 1;
+      // Décliner les vieux joueurs
+      if (p.age >= 34) {
+        p.overall = (p.overall - 2).clamp(60, 99);
+      }
+    }
+    s.marketNews.add("📆 Les joueurs ont vieilli d'un an");
+  }
+  
+  // Adapter la génération d'offres selon la phase
+  if (GameCalendar.getPhase(s.week) == "Intersaison") {
+    // Pas d'offres pendant l'intersaison
+    generated = 0;
+  }
+  
   s.recentEvents = events;
 
   return AdvanceWeekResult(s.week, generated, events);

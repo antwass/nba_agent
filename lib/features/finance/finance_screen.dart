@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/game_calendar.dart';
 import '../home/game_controller.dart';
 import '../../domain/entities.dart';
 
@@ -63,7 +64,7 @@ class FinanceScreen extends ConsumerWidget {
                     e.amount >= 0 ? Icons.add_circle_outline : Icons.remove_circle_outline,
                   ),
                   title: Text(e.label),
-                  subtitle: Text('Semaine ${e.week}'),
+                  subtitle: Text(GameCalendar.weekToDisplay(e.week)),
                   trailing: Text(
                     (e.amount >= 0 ? '+ ' : '- ') + _fmtMoney(e.amount.abs()),
                     style: TextStyle(
