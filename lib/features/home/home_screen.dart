@@ -37,6 +37,33 @@ class HomeScreen extends ConsumerWidget {
     }
   }
 
+  Future<void> nextMonthWithAutosave(BuildContext context, WidgetRef ref) async {
+    // Avancer 4 semaines d'un coup
+    for (int i = 0; i < 4; i++) {
+      ref.read(gameControllerProvider.notifier).nextWeek();
+    }
+
+    // Autosave meta du slot courant
+    final slotId = ref.read(currentSlotIdProvider);
+    if (slotId != null) {
+      final svc = ref.read(saveServiceProvider);
+      final meta = SaveGameMeta(
+        id: slotId,
+        name: 'Agent',
+        week: ref.read(gameControllerProvider).league?.week ?? 1,
+        updatedAt: DateTime.now(),
+      );
+      await svc.upsertSlot(meta);
+    }
+
+    // Feedback
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Un mois s\'est écoulé (+4 semaines)')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameControllerProvider);
@@ -124,10 +151,38 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: FilledButton.icon(
-        onPressed: () => nextWeekWithAutosave(context, ref),
-        icon: const Icon(Icons.fast_forward),
-        label: const Text('Semaine suivante'),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Bouton Mois suivant (à gauche)
+            Expanded(
+              flex: 2,
+              child: FilledButton.tonalIcon(
+                onPressed: () => nextMonthWithAutosave(context, ref),
+                icon: const Icon(Icons.fast_forward),
+                label: const Text('Mois suivant'),
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                ),
+              ),
+            ),
+            const SizedBox(width: 16), // Espace entre les boutons
+            // Bouton Semaine suivante (à droite)
+            Expanded(
+              flex: 3,
+              child: FilledButton.icon(
+                onPressed: () => nextWeekWithAutosave(context, ref),
+                icon: const Icon(Icons.play_arrow),
+                label: const Text('Semaine suivante'),
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 

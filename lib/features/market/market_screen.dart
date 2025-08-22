@@ -332,67 +332,23 @@ class _PlayerTile extends ConsumerWidget {
       subtitle: Text('Âge ${age ?? '-'}  •  $tName'),
       trailing: TextButton(
         child: Text('Approcher ($probability%)'),
-        onPressed: game.league == null ? null : () async {
-          // Dialog de confirmation
-          final confirm = await showDialog<bool>(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text('Approcher $name'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Voulez-vous proposer vos services à ce joueur ?'),
-                  const SizedBox(height: 12),
-                  Text('Probabilité de succès : $probability%'),
-                  Text('OVR : $ovr'),
-                  if (game.league!.agent.clients.length >= 8)
-                    const Text(
-                      '\nAttention : Vous approchez de la limite de 10 clients.',
-                      style: TextStyle(color: Colors.orange),
-                    ),
-                ],
+        onPressed: game.league == null ? null : () {
+          // Trouver le joueur dans la league
+          final leaguePlayer = game.league!.players.firstWhere(
+            (p) => p.name == name && p.overall == ovr,
+            orElse: () => game.league!.players.first,
+          );
+          
+          // Ouvrir l'écran email
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ApproachEmailScreen(
+                player: leaguePlayer,
+                probability: probability,
               ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context, false),
-                  child: const Text('Annuler'),
-                ),
-                FilledButton(
-                  onPressed: () => Navigator.pop(context, true),
-                  child: const Text('Approcher'),
-                ),
-              ],
             ),
           );
-
-          if (confirm == true && context.mounted) {
-            // Trouver l'ID du joueur dans la league
-            final leaguePlayer = game.league!.players.firstWhere(
-              (p) => p.name == name && p.overall == ovr,
-              orElse: () => game.league!.players.first,
-            );
-            
-            final result = approachPlayer(
-              league: game.league!,
-              playerId: leaguePlayer.id,
-            );
-            
-            ref.read(gameControllerProvider.notifier).approachPlayer(
-              leaguePlayer.id,
-              result,
-            );
-            
-            // Afficher le résultat
-            if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(result.message),
-                  backgroundColor: result.success ? Colors.green : Colors.orange,
-                ),
-              );
-            }
-          }
         },
       ),
     );
