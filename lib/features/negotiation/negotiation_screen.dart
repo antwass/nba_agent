@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities.dart';
 import '../../domain/usecases/sign_contract.dart';
 import '../../domain/usecases/negotiate_contract.dart';
+import '../../core/commission_rates.dart';
 import '../home/game_controller.dart';
 
 class NegotiationScreen extends ConsumerStatefulWidget {
@@ -103,20 +104,26 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
   }
 
   void _finalizeContract() {
+    final player = ref.read(gameControllerProvider).league!.players
+        .firstWhere((p) => p.id == widget.offer.playerId);
+    
+    // Déterminer le type de commission
+    double commissionRate;
+    if (player.teamId == null) {
+      commissionRate = CommissionRates.freeAgent;  // Free agent
+    } else if (player.teamId == widget.offer.teamId) {
+      commissionRate = CommissionRates.extension;  // Extension
+    } else {
+      commissionRate = CommissionRates.trade;  // Trade
+    }
+    
     final res = signContract(
       league: ref.read(gameControllerProvider).league!,
       offer: widget.offer,
       agreedSalary: salary.round(),
       agreedYears: years,
       agreedBonus: bonus.round(),
-      // Commission uniquement pour les nouveaux contrats (FA) et extensions
-      // Pas de commission sur les trades
-      commissionRate: widget.offer.playerId != null && 
-                      ref.read(gameControllerProvider).league!.players
-                         .firstWhere((p) => p.id == widget.offer.playerId)
-                         .teamId == null 
-                      ? 0.07  // 7% pour les FA
-                      : 0.05, // 5% pour les extensions (si c'est la même équipe)
+      commissionRate: commissionRate,
     );
     ref.read(gameControllerProvider.notifier).refreshAfterSign(res.summary);
     if (context.mounted) Navigator.pop(context);

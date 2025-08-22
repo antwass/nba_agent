@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../domain/entities.dart';
 import '../../domain/usecases/approach_player.dart';
+import '../../core/position_utils.dart';
 import '../home/game_controller.dart';
 import '../negotiation/approach_email_screen.dart';
 
@@ -66,31 +68,12 @@ class _MarketScreenState extends ConsumerState<MarketScreen> {
 
     if (_pos != 'Tous') {
       res = res.where((p) {
-        final prim = (p['position_primary'] ?? '').toString().toUpperCase();
-        final sec = (p['position_secondary'] ?? '').toString().toUpperCase();
+        final prim = (p['position_primary'] ?? '').toString();
+        final sec = (p['position_secondary'] ?? '').toString();
+        final targetPos = Pos.values.firstWhere((pos) => pos.name == _pos);
         
-        // Gestion des formats variés de positions
-        bool matchesPosition(String position) {
-          // Nettoyer et normaliser
-          position = position.replaceAll('-', '').trim();
-          
-          switch (_pos) {
-            case 'PG':
-              return position.contains('PG') || position == 'G' || position.contains('POINT');
-            case 'SG':
-              return position.contains('SG') || (position == 'G' && !prim.contains('P')) || position.contains('SHOOT');
-            case 'SF':
-              return position.contains('SF') || position == 'F' || position.contains('SMALL');
-            case 'PF':
-              return position.contains('PF') || (position == 'F' && !prim.contains('S')) || position.contains('POWER');
-            case 'C':
-              return position.contains('C') || position == 'CENTER';
-            default:
-              return false;
-          }
-        }
-        
-        return matchesPosition(prim) || matchesPosition(sec);
+        return PositionUtils.matchesPosition(prim, targetPos) || 
+               PositionUtils.matchesPosition(sec, targetPos);
       });
     }
 

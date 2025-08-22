@@ -23,7 +23,7 @@ class OffersScreen extends ConsumerWidget {
     final clientIds = league.agent.clients.toSet();
     final clientOffers = league.offers
         .where((o) => clientIds.contains(o.playerId))
-        .where((o) => o.expiresWeek > league.week - 1)
+        .where((o) => o.expiresWeek >= league.week)
         .toList();
 
     return Scaffold(

@@ -2,6 +2,8 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import '../domain/entities.dart';
+import '../core/id_generator.dart';
+import '../core/position_utils.dart';
 
 /// Charge 'assets/data/nba_database_final.json'
 /// et le mappe vers ton modèle Player.
@@ -15,20 +17,7 @@ class NbaRepository {
     final raw = await rootBundle.loadString(assetPath);
     final List list = jsonDecode(raw) as List;
 
-    int nextId = 300000; // évite collision avec tes IDs existants
 
-    Pos _mapPos(String? prim, String? sec) {
-      String s = (prim ?? sec ?? '').toUpperCase();
-      if (s.contains('PG')) return Pos.PG;
-      if (s.contains('SG')) return Pos.SG;
-      if (s.contains('SF')) return Pos.SF;
-      if (s.contains('PF')) return Pos.PF;
-      if (s.contains('C'))  return Pos.C;
-      // fallback si la BDD a "G", "F", "C"
-      if (s == 'G') return Pos.SG;
-      if (s == 'F') return Pos.SF;
-      return Pos.SG;
-    }
 
     int _clampInt(num? v, int lo, int hi, {int def = 75}) {
       if (v == null) return def;
@@ -53,10 +42,10 @@ class NbaRepository {
       else if (age >= 33) pot = pot.clamp(ov, 85);
 
       return Player(
-        id: nextId++,
+        id: IdGenerator.nextPlayerId(),
         name: name,
         age: age,
-        pos: _mapPos(posPrim, posSec),
+        pos: PositionUtils.parsePosition(posPrim, posSec),
         overall: ov,
         potential: pot,
         form: 0,
