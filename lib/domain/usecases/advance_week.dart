@@ -39,30 +39,31 @@ Player? _pickCandidate(List<Player> fa, Pos pos) {
 }
 
 AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
-  final r = rng ?? Random(s.week);
+  final leagueCopy = s.deepCopy();
+  final r = rng ?? Random(leagueCopy.week);
   final events = <String>[];
 
   // 1) Progression légère (placeholder)
-  for (final p in s.players) {
+  for (final p in leagueCopy.players) {
     final delta = ((p.potential - p.overall) / 200.0) + (p.form * 0.02);
     p.overall = (p.overall + delta).clamp(40, 99).round();
   }
 
   // 2) Expirer les offres arrivées à terme
-  s.offers.removeWhere((o) => o.expiresWeek <= s.week);
+  leagueCopy.offers.removeWhere((o) => o.expiresWeek <= leagueCopy.week);
 
   // 3) Générer de nouvelles offres
   //    Boost pendant la fenêtre FA (semaines 18..28)
-  final faBoost = (s.week >= 18 && s.week <= 28) ? 5 : 2;
+  final faBoost = (leagueCopy.week >= 18 && leagueCopy.week <= 28) ? 5 : 2;
   int generated = 0;
 
-  final teamsShuffled = [...s.teams]..shuffle(r);
-  final freeAgents = s.players.where((p) => p.teamId == null).toList()
+  final teamsShuffled = [...leagueCopy.teams]..shuffle(r);
+  final freeAgents = leagueCopy.players.where((p) => p.teamId == null).toList()
     ..sort((a, b) => b.overall.compareTo(a.overall));
 
   for (final team in teamsShuffled.take(faBoost)) {
     // Poste le moins fourni
-    final depth = _teamDepth(s, team);
+    final depth = _teamDepth(leagueCopy, team);
     final needPos = (Pos.values.toList()
       ..sort((a, b) => (depth[a]!).compareTo(depth[b]!)))
         .first;
@@ -84,65 +85,65 @@ AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
     final years = 1 + r.nextInt(4);
     final bonus = (salary * (0.05 + r.nextDouble() * 0.10)).toInt();
 
-    s.offers.add(Offer(
+    leagueCopy.offers.add(Offer(
       teamId: team.id,
       playerId: candidate.id,
       salary: salary,
       years: years,
       bonus: bonus,
-      createdWeek: s.week,
-      expiresWeek: s.week + 2,
+      createdWeek: leagueCopy.week,
+      expiresWeek: leagueCopy.week + 2,
     ));
     generated++;
   }
 
   // 4) Événements du marché
-  if (generated > 0) s.marketNews.add('📊 $generated nouvelles offres sur le marché cette semaine');
+  if (generated > 0) leagueCopy.marketNews.add('📊 $generated nouvelles offres sur le marché cette semaine');
   if (r.nextDouble() < 0.20) {
-    s.marketNews.add('💬 Rumeur: Les équipes cherchent des meneurs cette semaine');
+    leagueCopy.marketNews.add('💬 Rumeur: Les équipes cherchent des meneurs cette semaine');
   }
 
   // Générer des offres pour les clients de l'agent
-  generateOffersForClients(s, r);
+  generateOffersForClients(leagueCopy, r);
 
   // 5) Avancer le temps + publier les events
-  s.week += 1;
+  leagueCopy.week += 1;
   
   // Vérifier les événements spéciaux
-  final specialEvent = GameCalendar.getSpecialEvent(s.week);
+  final specialEvent = GameCalendar.getSpecialEvent(leagueCopy.week);
   if (specialEvent != null) {
-    s.marketNews.insert(0, specialEvent);  // Mettre en premier
+    leagueCopy.marketNews.insert(0, specialEvent);  // Mettre en premier
   }
   
   // Événement spécial nouvelle année
-  if (GameCalendar.isNewYear(s.week)) {
-    s.marketNews.add("🎊 Bonne année ${GameCalendar.getYear(s.week)} !");
+  if (GameCalendar.isNewYear(leagueCopy.week)) {
+    leagueCopy.marketNews.add("🎊 Bonne année ${GameCalendar.getYear(leagueCopy.week)} !");
   }
   
   // Événement nouvelle saison
-  if (GameCalendar.isNewSeason(s.week)) {
-    s.marketNews.add("📅 Nouvelle saison NBA ${GameCalendar.getSeason(s.week)} commence !");
+  if (GameCalendar.isNewSeason(leagueCopy.week)) {
+    leagueCopy.marketNews.add("📅 Nouvelle saison NBA ${GameCalendar.getSeason(leagueCopy.week)} commence !");
   }
   
   // Faire vieillir les joueurs une fois par an (semaine 52)
-  if ((s.week - 1) % 52 == 51) {
-    for (final p in s.players) {
+  if ((leagueCopy.week - 1) % 52 == 51) {
+    for (final p in leagueCopy.players) {
       p.age += 1;
       // Décliner les vieux joueurs
       if (p.age >= 34) {
         p.overall = (p.overall - 2).clamp(60, 99);
       }
     }
-    s.marketNews.add("📆 Les joueurs ont vieilli d'un an");
+    leagueCopy.marketNews.add("📆 Les joueurs ont vieilli d'un an");
   }
   
   // Adapter la génération d'offres selon la phase
-  if (GameCalendar.getPhase(s.week) == "Intersaison") {
+  if (GameCalendar.getPhase(leagueCopy.week) == "Intersaison") {
     // Pas d'offres pendant l'intersaison
     generated = 0;
   }
   
-  s.recentEvents = events;
+  leagueCopy.recentEvents = events;
 
-  return AdvanceWeekResult(s, s.week, generated, events);
+  return AdvanceWeekResult(leagueCopy, leagueCopy.week, generated, events);
 }

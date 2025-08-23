@@ -19,13 +19,14 @@ ApproachResult approachPlayer({
   required LeagueState league,
   required int playerId,
 }) {
-  final player = league.players.firstWhere((p) => p.id == playerId);
-  final agent = league.agent;
+  final leagueCopy = league.deepCopy();
+  final player = leagueCopy.players.firstWhere((p) => p.id == playerId);
+  final agent = leagueCopy.agent;
   
   // Vérifications
   if (player.representativeId != null) {
     return ApproachResult(
-      league: league,
+      league: leagueCopy,
       success: false,
       message: '${player.name} a déjà un agent.',
     );
@@ -33,7 +34,7 @@ ApproachResult approachPlayer({
   
   if (agent.clients.length >= 10) {
     return ApproachResult(
-      league: league,
+      league: leagueCopy,
       success: false,
       message: 'Vous avez atteint la limite de 10 clients.',
     );
@@ -66,7 +67,7 @@ ApproachResult approachPlayer({
     agent.reputation = (agent.reputation + 1).clamp(0, 100);
     
     return ApproachResult(
-      league: league,
+      league: leagueCopy,
       success: true,
       message: '${player.name} accepte de devenir votre client !',
       reputationChange: 1,
@@ -76,7 +77,7 @@ ApproachResult approachPlayer({
     agent.reputation = (agent.reputation - 0).clamp(0, 100);
     
     return ApproachResult(
-      league: league,
+      league: leagueCopy,
       success: false,
       message: '${player.name} refuse votre offre.',
       reputationChange: 0,

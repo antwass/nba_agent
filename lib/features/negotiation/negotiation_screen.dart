@@ -104,7 +104,13 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
   }
 
   void _finalizeContract() {
-    final player = ref.read(gameControllerProvider).league!.players
+    final league = ref.read(gameControllerProvider).league;
+    if (league == null) {
+      print("Action impossible: l'état de la ligue est indisponible.");
+      return;
+    }
+
+    final player = league.players
         .firstWhere((p) => p.id == widget.offer.playerId);
     
     // Déterminer le type de commission
@@ -118,7 +124,7 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
     }
     
     final res = signContract(
-      league: ref.read(gameControllerProvider).league!,
+      league: league,
       offer: widget.offer,
       agreedSalary: salary.round(),
       agreedYears: years,

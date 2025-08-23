@@ -15,42 +15,41 @@ SignResult signContract({
   required int agreedBonus,
   required double commissionRate, // ex: 0.07
 }) {
-  // 1) Créer le contrat
+  // 1. CRÉER UNE COPIE PROFONDE DE L'ÉTAT
+  final leagueCopy = league.deepCopy();
+
+  // 2. APPLIQUER LES MODIFICATIONS SUR LA COPIE
   final c = Contract(
     playerId: offer.playerId,
     teamId: offer.teamId,
     salaryPerYear: List.filled(agreedYears, agreedSalary),
     signingBonus: agreedBonus,
-    startWeek: league.week,
+    startWeek: leagueCopy.week,
   );
-  league.contracts.add(c);
+  leagueCopy.contracts.add(c);
 
-  // 2) Mettre à jour team & player
-  final team = league.teams.firstWhere((t) => t.id == offer.teamId);
-  final player = league.players.firstWhere((p) => p.id == offer.playerId);
+  final team = leagueCopy.teams.firstWhere((t) => t.id == offer.teamId);
+  final player = leagueCopy.players.firstWhere((p) => p.id == offer.playerId);
   player.teamId = team.id;
   team.roster.add(player.id);
   team.capUsed += agreedSalary; // MVP: année 1
 
-  // 3) Commission
   final commission = (agreedSalary * commissionRate).round();
-  league.agent.cash += commission;
+  leagueCopy.agent.cash += commission;
 
-  // 3bis) ✨ Ledger (journal)
-  league.ledger.add(FinanceEntry(
-    week: league.week,
+  leagueCopy.ledger.add(FinanceEntry(
+    week: leagueCopy.week,
     label: 'Commission: ${player.name} (${agreedYears} an${agreedYears > 1 ? "s" : ""})',
     amount: commission,
   ));
 
-  // 4) Nettoyer les offres de ce joueur
-  league.offers.removeWhere((o) => o.playerId == player.id);
+  leagueCopy.offers.removeWhere((o) => o.playerId == player.id);
 
-  // 5) Résumé
   final summary =
       '${player.name} signe ${agreedYears} ans à ${agreedSalary ~/ 1000}k€ (bonus ${agreedBonus ~/ 1000}k). '
       'Commission +$commission€';
-  league.recentEvents = [summary];
+  leagueCopy.recentEvents = [summary];
 
-  return SignResult(league, c, summary);
+  // 3. RETOURNER LA COPIE MODIFIÉE
+  return SignResult(leagueCopy, c, summary);
 }

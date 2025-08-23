@@ -36,6 +36,38 @@ class Player {
     this.representativeId,
     this.teamNameFromJson,
   });
+
+  Player copyWith({
+    int? id,
+    String? name,
+    int? age,
+    Pos? pos,
+    int? overall,
+    int? potential,
+    int? form,
+    double? greed,
+    int? marketability,
+    int? teamId,
+    String? extId,
+    int? representativeId,
+    String? teamNameFromJson,
+  }) {
+    return Player(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      age: age ?? this.age,
+      pos: pos ?? this.pos,
+      overall: overall ?? this.overall,
+      potential: potential ?? this.potential,
+      form: form ?? this.form,
+      greed: greed ?? this.greed,
+      marketability: marketability ?? this.marketability,
+      teamId: teamId ?? this.teamId,
+      extId: extId ?? this.extId,
+      representativeId: representativeId ?? this.representativeId,
+      teamNameFromJson: teamNameFromJson ?? this.teamNameFromJson,
+    );
+  }
 }
 
 class Team {
@@ -52,6 +84,22 @@ class Team {
     this.capUsed = 0,
     List<int>? roster,
   }) : roster = roster ?? [];
+
+  Team copyWith({
+    int? id,
+    String? name,
+    String? city,
+    int? capUsed,
+    List<int>? roster,
+  }) {
+    return Team(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      city: city ?? this.city,
+      capUsed: capUsed ?? this.capUsed,
+      roster: roster != null ? List.from(roster) : this.roster,
+    );
+  }
 }
 
 class Offer {
@@ -72,6 +120,26 @@ class Offer {
     required this.createdWeek,
     required this.expiresWeek,
   });
+
+  Offer copyWith({
+    int? teamId,
+    int? playerId,
+    int? salary,
+    int? years,
+    int? bonus,
+    int? createdWeek,
+    int? expiresWeek,
+  }) {
+    return Offer(
+      teamId: teamId ?? this.teamId,
+      playerId: playerId ?? this.playerId,
+      salary: salary ?? this.salary,
+      years: years ?? this.years,
+      bonus: bonus ?? this.bonus,
+      createdWeek: createdWeek ?? this.createdWeek,
+      expiresWeek: expiresWeek ?? this.expiresWeek,
+    );
+  }
 }
 
 class Contract {
@@ -88,6 +156,22 @@ class Contract {
     required this.signingBonus,
     required this.startWeek,
   });
+
+  Contract copyWith({
+    int? playerId,
+    int? teamId,
+    List<int>? salaryPerYear,
+    int? signingBonus,
+    int? startWeek,
+  }) {
+    return Contract(
+      playerId: playerId ?? this.playerId,
+      teamId: teamId ?? this.teamId,
+      salaryPerYear: salaryPerYear != null ? List.from(salaryPerYear) : this.salaryPerYear,
+      signingBonus: signingBonus ?? this.signingBonus,
+      startWeek: startWeek ?? this.startWeek,
+    );
+  }
 }
 
 class AgentProfile {
@@ -96,6 +180,18 @@ class AgentProfile {
   List<int> clients; // player ids
   AgentProfile({this.cash = 0, this.reputation = 10, List<int>? clients})
       : clients = clients ?? [];
+
+  AgentProfile copyWith({
+    int? cash,
+    int? reputation,
+    List<int>? clients,
+  }) {
+    return AgentProfile(
+      cash: cash ?? this.cash,
+      reputation: reputation ?? this.reputation,
+      clients: clients != null ? List.from(clients) : this.clients,
+    );
+  }
 }
 class LeagueState {
   int week;
@@ -131,6 +227,20 @@ class LeagueState {
         notifications = notifications ?? [],
         marketNews = marketNews ?? [],
         ledger = ledger ?? [];
+
+  LeagueState deepCopy() {
+    return LeagueState(
+      week: week,
+      players: players.map((p) => p.copyWith()).toList(),
+      teams: teams.map((t) => t.copyWith()).toList(),
+      agent: agent.copyWith(),
+      offers: offers.map((o) => o.copyWith()).toList(),
+      contracts: contracts.map((c) => c.copyWith()).toList(),
+      ledger: List.from(ledger),
+      notifications: notifications.map((n) => n.copyWith()).toList(),
+      marketNews: List.from(marketNews),
+    );
+  }
 }
 
 class FinanceEntry {
@@ -170,4 +280,26 @@ class GameNotification {
     this.relatedPlayerId,
     this.relatedOfferId,
   });
+
+  GameNotification copyWith({
+    String? id,
+    NotificationType? type,
+    String? title,
+    String? message,
+    int? week,
+    bool? isRead,
+    int? relatedPlayerId,
+    int? relatedOfferId,
+  }) {
+    return GameNotification(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      title: title ?? this.title,
+      message: message ?? this.message,
+      week: week ?? this.week,
+      isRead: isRead ?? this.isRead,
+      relatedPlayerId: relatedPlayerId ?? this.relatedPlayerId,
+      relatedOfferId: relatedOfferId ?? this.relatedOfferId,
+    );
+  }
 }
