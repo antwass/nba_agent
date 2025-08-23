@@ -300,7 +300,7 @@ class _SliderTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('$label : ${formatter(value)}'),
-            Slider(value: value, min: min, max: max, onChanged: onChanged),
+            Slider(value: value.clamp(min, max), min: min, max: max, onChanged: onChanged),
           ],
         ),
       ),
