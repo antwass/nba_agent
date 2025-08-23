@@ -4,9 +4,9 @@ class GameCalendar {
     'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
   ];
   
-  // On démarre en Juillet 2024 (début Free Agency NBA)
+  // On démarre en Juillet 2025 (début Free Agency NBA)
   static const int startMonth = 7; // Juillet
-  static const int startYear = 2024;
+  static const int startYear = 2025;
   static const int weeksPerYear = 52;
   
   // Convertit un numéro de semaine global en date affichable
@@ -42,7 +42,7 @@ class GameCalendar {
     return startYear + yearOffset;
   }
   
-  // Retourne la saison NBA (ex: "2024-25")
+  // Retourne la saison NBA (ex: "2025-26")
   static String getSeason(int week) {
     final yearOffset = (week - 1) ~/ weeksPerYear;
     final baseYear = startYear + yearOffset;

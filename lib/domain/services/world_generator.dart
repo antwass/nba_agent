@@ -21,16 +21,19 @@ class WorldGenerator {
     try {
       players = await repo.loadPlayers();
       
-      // S'assurer qu'on a assez de joueurs (minimum 240 pour 20 équipes)
-      if (players.length < 240) {
-        final needed = 240 - players.length;
+      // S'assurer qu'on a assez de joueurs (minimum 320 pour avoir plus de FA disponibles)
+      if (players.length < 320) {
+        final needed = 320 - players.length;
         players.addAll(_generateFallbackPlayers(needed));
       }
     } catch (e) {
       print('Erreur chargement joueurs NBA: $e');
       // En cas d'erreur, générer tous les joueurs
-      players = _generateFallbackPlayers(240);
+      players = _generateFallbackPlayers(320);
     }
+
+    // Debug - Log du chargement des joueurs
+    print('Joueurs chargés: ${players.length} dont ${players.where((p) => p.extId != null).length} NBA');
 
     // Répartition simple : 12 joueurs / équipe, le reste FA
     final shuffled = [...players]..shuffle(rng);

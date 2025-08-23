@@ -316,9 +316,10 @@ class _PlayerTile extends ConsumerWidget {
       trailing: TextButton(
         child: Text('Approcher ($probability%)'),
         onPressed: game.league == null ? null : () {
-          // Trouver le joueur dans la league
+          // Trouver le joueur dans la league via extId ou name+ovr
+          final playerId = player['player_id']?.toString();
           final leaguePlayer = game.league!.players.firstWhere(
-            (p) => p.name == name && p.overall == ovr,
+            (p) => p.extId == playerId || (p.name == name && p.overall == ovr),
             orElse: () => game.league!.players.first,
           );
           
