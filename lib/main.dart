@@ -9,6 +9,7 @@ import 'features/home/game_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  print('🚀 DÉMARRAGE NBA AGENT - Version de test');
   runApp(const ProviderScope(child: App()));
 }
 

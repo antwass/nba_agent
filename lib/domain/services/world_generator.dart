@@ -11,34 +11,35 @@ class WorldGenerator {
     // Équipes
     final teams = List.generate(
       20,
-          (i) => Team(id: i + 1, name: 'Club ${i + 1}', city: 'City ${i + 1}'),
+      (i) => Team(id: i + 1, name: 'Club ${i + 1}', city: 'City ${i + 1}'),
     );
 
-    // Charger les joueurs depuis le repository
+    // FORCER le chargement des joueurs NBA
     final repo = NbaRepository();
-    List<Player> players;
+    List<Player> nbaPlayers = [];
     
     try {
-      players = await repo.loadPlayers();
-      print('DEBUG: ${players.length} joueurs NBA chargés');
-      
-      // Si pas assez de joueurs NBA, compléter avec des générés
-      if (players.length < 320) {
-        final needed = 320 - players.length;
-        print('DEBUG: Ajout de $needed joueurs générés');
-        players.addAll(_generateFallbackPlayers(needed));
-      }
+      nbaPlayers = await repo.loadPlayers();
+      print('✅ NBA: ${nbaPlayers.length} joueurs chargés depuis la BDD');
     } catch (e) {
-      print('ERREUR chargement NBA: $e');
-      // UNIQUEMENT si erreur, générer tous les joueurs
-      players = _generateFallbackPlayers(320);
+      print('❌ ERREUR NBA: $e');
     }
+    
+    // Si on n'a pas assez de joueurs NBA, on complète
+    List<Player> players = [...nbaPlayers];
+    
+    if (players.length < 320) {
+      final needed = 320 - players.length;
+      print('➕ Ajout de $needed joueurs générés (total NBA: ${players.length})');
+      
+      // Générer SEULEMENT le complément
+      final generated = _generateFallbackPlayers(needed);
+      players.addAll(generated);
+    }
+    
+    print('📊 TOTAL: ${nbaPlayers.length} NBA + ${players.length - nbaPlayers.length} générés');
 
-    // Vérifier qu'on a des vrais joueurs NBA
-    final nbaCount = players.where((p) => p.extId != null).length;
-    print('DEBUG FINAL: $nbaCount joueurs NBA, ${players.length - nbaCount} générés');
-
-    // Répartition simple : 12 joueurs / équipe, le reste FA
+    // Mélanger et répartir
     final shuffled = [...players]..shuffle(rng);
     int cursor = 0;
     for (final team in teams) {

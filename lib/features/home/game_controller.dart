@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities.dart';
 import '../../domain/usecases/advance_week.dart';
@@ -36,13 +37,25 @@ class GameController extends StateNotifier<GameState> {
 
   Future<void> _initializeGame() async {
     try {
+      // TEST: Vérifier si le fichier JSON existe
+      print('🧪 TEST: Vérification du fichier JSON...');
+      try {
+        final content = await rootBundle.loadString('assets/data/nba_database_final.json');
+        print('✅ Fichier JSON trouvé, taille: ${content.length} caractères');
+        if (content.length < 100) {
+          print('❌ PROBLÈME: Fichier trop petit!');
+        }
+      } catch (e) {
+        print('❌ ERREUR: Fichier JSON introuvable: $e');
+      }
+      
       final world = await WorldGenerator(Random(42)).generate();
       // Vérifier qu'on a des joueurs NBA
       final nbaPlayers = world.players.where((p) => p.extId != null).length;
-      print('Partie initialisée avec $nbaPlayers joueurs NBA');
+      print('🎮 Partie initialisée avec $nbaPlayers joueurs NBA');
       state = GameState(league: world, lastSummary: 'Jeu initialisé');
     } catch (e) {
-      print('ERREUR INIT: $e');
+      print('❌ ERREUR INIT: $e');
       state = GameState(lastSummary: 'Erreur lors du chargement: $e');
     }
   }
