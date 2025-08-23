@@ -14,8 +14,16 @@ class NbaRepository {
   });
 
   Future<List<Player>> loadPlayers() async {
-    final raw = await rootBundle.loadString(assetPath);
-    final List list = jsonDecode(raw) as List;
+    try {
+      final raw = await rootBundle.loadString(assetPath);
+      final List list = jsonDecode(raw) as List;
+      
+      if (list.isEmpty) {
+        print('ERREUR: Fichier JSON vide');
+        return [];
+      }
+      
+      print('Chargement de ${list.length} joueurs depuis JSON');
 
 
 
@@ -56,5 +64,9 @@ class NbaRepository {
         representativeId: null, // par défaut: "sans agent" → onglet 2 fonctionnera
       );
     }).toList();
+    } catch (e) {
+      print('ERREUR loadPlayers: $e');
+      return [];
+    }
   }
 }

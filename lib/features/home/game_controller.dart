@@ -37,8 +37,12 @@ class GameController extends StateNotifier<GameState> {
   Future<void> _initializeGame() async {
     try {
       final world = await WorldGenerator(Random(42)).generate();
+      // Vérifier qu'on a des joueurs NBA
+      final nbaPlayers = world.players.where((p) => p.extId != null).length;
+      print('Partie initialisée avec $nbaPlayers joueurs NBA');
       state = GameState(league: world, lastSummary: 'Jeu initialisé');
     } catch (e) {
+      print('ERREUR INIT: $e');
       state = GameState(lastSummary: 'Erreur lors du chargement: $e');
     }
   }

@@ -20,20 +20,23 @@ class WorldGenerator {
     
     try {
       players = await repo.loadPlayers();
+      print('DEBUG: ${players.length} joueurs NBA chargés');
       
-      // S'assurer qu'on a assez de joueurs (minimum 320 pour avoir plus de FA disponibles)
+      // Si pas assez de joueurs NBA, compléter avec des générés
       if (players.length < 320) {
         final needed = 320 - players.length;
+        print('DEBUG: Ajout de $needed joueurs générés');
         players.addAll(_generateFallbackPlayers(needed));
       }
     } catch (e) {
-      print('Erreur chargement joueurs NBA: $e');
-      // En cas d'erreur, générer tous les joueurs
+      print('ERREUR chargement NBA: $e');
+      // UNIQUEMENT si erreur, générer tous les joueurs
       players = _generateFallbackPlayers(320);
     }
 
-    // Debug - Log du chargement des joueurs
-    print('Joueurs chargés: ${players.length} dont ${players.where((p) => p.extId != null).length} NBA');
+    // Vérifier qu'on a des vrais joueurs NBA
+    final nbaCount = players.where((p) => p.extId != null).length;
+    print('DEBUG FINAL: $nbaCount joueurs NBA, ${players.length - nbaCount} générés');
 
     // Répartition simple : 12 joueurs / équipe, le reste FA
     final shuffled = [...players]..shuffle(rng);
@@ -41,7 +44,7 @@ class WorldGenerator {
     for (final team in teams) {
       final slice = shuffled.skip(cursor).take(12);
       for (final p in slice) {
-        p.teamId = team.id;     // ✅ évite l’erreur setter teamId
+        p.teamId = team.id;
         team.roster.add(p.id);
       }
       cursor += 12;
@@ -50,7 +53,7 @@ class WorldGenerator {
     final agent = AgentProfile(
       cash: 0,
       reputation: 10,
-      clients: [], // Démarre sans clients
+      clients: [],
     );
 
     return LeagueState(
@@ -58,7 +61,7 @@ class WorldGenerator {
       players: players,
       teams: teams,
       agent: agent,
-      offers: [],        // ✅ présents pour la sim/market
+      offers: [],
       contracts: [],
       recentEvents: [],
     );
