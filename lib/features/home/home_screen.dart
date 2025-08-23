@@ -35,7 +35,7 @@ class HomeScreen extends ConsumerWidget {
     // 3) petit feedback
     if (context.mounted) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Semaine suivante…')));
+          .showSnackBar(const SnackBar(content: Text('Semaine suivante...')));
     }
   }
 
@@ -62,7 +62,7 @@ class HomeScreen extends ConsumerWidget {
     if (context.mounted) {
       final week = ref.read(gameControllerProvider).league?.week ?? 1;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Un mois s\'est écoulé - ${GameCalendar.weekToDisplay(week)}')),
+        SnackBar(content: Text('Un mois s\'est ecoule - ${GameCalendar.weekToDisplay(week)}')),
       );
     }
   }
@@ -92,19 +92,18 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('NBA Agent — Accueil'),
+        title: const Text('NBA Agent - Accueil'),
         centerTitle: true,
       ),
-      body: CustomScrollView(
-        slivers: [
+      body: Column(
+        children: [
           if (isFAWindow)
-            const SliverToBoxAdapter(
-              child: _BannerInfo(
-                text: 'Fenêtre Free Agency ouverte — attendez plus d’offres !',
-                icon: Icons.campaign_outlined,
-              ),
+            const _BannerInfo(
+              text: 'Fenêtre Free Agency ouverte - attendez plus d\'offres !',
+              icon: Icons.campaign_outlined,
             ),
-          SliverToBoxAdapter(
+          
+          Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -116,42 +115,15 @@ class HomeScreen extends ConsumerWidget {
                     reputation: league.agent.reputation,
                     clients: league.agent.clients.length,
                   ),
-                  const SizedBox(height: 16),
-                  if (game.lastSummary.isNotEmpty)
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          game.lastSummary,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                    ),
                   const SizedBox(height: 12),
-                  _QuickActions(
-                    notifications: league.notifications,
-                    onOpenClients: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const ClientsScreen()));
-                    },
-                    onOpenMarket: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const MarketScreen()));
-                    },
-                    onOpenOffers: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const OffersScreen()));
-                    },
-                    onOpenFinance: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const FinanceScreen()));
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  _NotificationsSection(
+                  
+                  // Notifications compactes (remplace "Nouvelle partie")
+                  _CompactNotifications(
                     notifications: league.notifications
-                        .where((n) => n.week >= league.week - 4)  // Dernières 4 semaines
+                        .where((n) => n.week >= league.week - 4)
                         .toList()
-                      ..sort((a, b) => b.week.compareTo(a.week)),  // Plus récentes en premier
-                    marketNews: league.marketNews.take(10).toList(),
+                      ..sort((a, b) => b.week.compareTo(a.week)),
                     onNotificationTap: (notification) {
-                      // Pour l'instant on ne fait que naviguer
                       if (notification.type == NotificationType.offerReceived && 
                           notification.relatedOfferId != null) {
                         Navigator.push(
@@ -161,7 +133,23 @@ class HomeScreen extends ConsumerWidget {
                       }
                     },
                   ),
-                  const SizedBox(height: 80), // espace pour le FAB
+                  const SizedBox(height: 12),
+                  
+                  Expanded(
+                    child: _QuickActions(
+                      notifications: league.notifications,
+                      onOpenClients: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ClientsScreen())),
+                      onOpenMarket: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MarketScreen())),
+                      onOpenOffers: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const OffersScreen())),
+                      onOpenFinance: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FinanceScreen())),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  
+                  _CompactMarketNews(
+                    marketNews: league.marketNews.take(5).toList(),
+                  ),
+                  const SizedBox(height: 80),
                 ],
               ),
             ),
@@ -391,7 +379,7 @@ class _QuickActions extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 1.6,
+        crossAxisCount: 2, mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 1.5,
       ),
       children: [
         _ActionCard(
@@ -500,189 +488,100 @@ class _ActionCard extends StatelessWidget {
   }
 }
 
-class _RecentEvents extends StatelessWidget {
-  const _RecentEvents({required this.items});
-  final List<String> items;
 
-  @override
-  Widget build(BuildContext context) {
-    if (items.isEmpty) {
-      return Card(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Text(
-            'Aucun événement récent. Avance la semaine !',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ),
-      );
-    }
-    return Card(
-      child: ListView.separated(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (_, i) => ListTile(
-          dense: true,
-          leading: const Icon(Icons.fiber_manual_record, size: 12),
-          title: Text(items[i]),
-        ),
-        separatorBuilder: (_, __) => const Divider(height: 1),
-        itemCount: items.length,
-      ),
-    );
-  }
-}
 
-class _NotificationsSection extends StatelessWidget {
-  const _NotificationsSection({
+class _CompactNotifications extends StatelessWidget {
+  const _CompactNotifications({
     required this.notifications,
-    required this.marketNews,
     required this.onNotificationTap,
   });
   
   final List<GameNotification> notifications;
-  final List<String> marketNews;
   final Function(GameNotification) onNotificationTap;
   
   @override
   Widget build(BuildContext context) {
     final unreadCount = notifications.where((n) => !n.isRead).length;
     
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Section Notifications personnelles
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'Notifications',
-              style: Theme.of(context).textTheme.titleMedium,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Notifications', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                if (unreadCount > 0)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                    decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(10)),
+                    child: Text('$unreadCount', style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                  ),
+              ],
             ),
-            if (unreadCount > 0)
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  '$unreadCount',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
+            const SizedBox(height: 8),
+            if (notifications.isEmpty)
+              Text('Aucune notification', style: Theme.of(context).textTheme.bodySmall)
+            else
+              ...notifications.take(2).map((notif) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: InkWell(
+                  onTap: () => onNotificationTap(notif),
+                  child: Row(
+                    children: [
+                      Icon(Icons.mail_outline, color: Colors.blue, size: 16),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(notif.title, style: TextStyle(fontSize: 13, fontWeight: notif.isRead ? FontWeight.normal : FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      ),
+                      if (!notif.isRead) Container(width: 6, height: 6, margin: const EdgeInsets.only(left: 4), decoration: const BoxDecoration(color: Colors.blue, shape: BoxShape.circle)),
+                    ],
                   ),
                 ),
-              ),
+              )),
           ],
         ),
-        const SizedBox(height: 8),
-        
-        Card(
-          child: notifications.isEmpty
-              ? const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Center(
-                    child: Text('Aucune notification'),
-                  ),
-                )
-              : LimitedBox(
-                  maxHeight: 200,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: notifications.take(5).length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
-                    itemBuilder: (context, i) {
-                      final notif = notifications[i];
-                      return ListTile(
-                        dense: true,
-                        leading: _getNotificationIcon(notif.type),
-                        title: Text(
-                          notif.title,
-                          style: TextStyle(
-                            fontWeight: notif.isRead ? FontWeight.normal : FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: Text(
-                          notif.message,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        trailing: !notif.isRead
-                            ? Container(
-                                width: 8,
-                                height: 8,
-                                decoration: const BoxDecoration(
-                                  color: Colors.blue,
-                                  shape: BoxShape.circle,
-                                ),
-                              )
-                            : null,
-                        onTap: () => onNotificationTap(notif),
-                      );
-                    },
-                  ),
-                ),
-        ),
-        
-        if (notifications.length > 5)
-          TextButton(
-            onPressed: () {
-              // TODO: Ouvrir page toutes les notifications
-            },
-            child: Text('Voir toutes les notifications (${notifications.length})'),
-          ),
-        
-        const SizedBox(height: 16),
-        
-        // Section News du marché
-        Text(
-          'News du marché',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        const SizedBox(height: 8),
-        
-        Card(
-          child: marketNews.isEmpty
-              ? const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Center(
-                    child: Text('Aucune actualité du marché'),
-                  ),
-                )
-              : ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: marketNews.take(5).length,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
-                  itemBuilder: (_, i) => ListTile(
-                    dense: true,
-                    leading: const Icon(Icons.fiber_manual_record, size: 8),
-                    title: Text(marketNews[i]),
-                  ),
-                ),
-        ),
-      ],
+      ),
     );
   }
+}
+
+class _CompactMarketNews extends StatelessWidget {
+  const _CompactMarketNews({required this.marketNews});
+  final List<String> marketNews;
   
-  Widget _getNotificationIcon(NotificationType type) {
-    switch (type) {
-      case NotificationType.offerReceived:
-        return const Icon(Icons.mail, color: Colors.blue, size: 20);
-      case NotificationType.offerExpiring:
-        return const Icon(Icons.timer, color: Colors.orange, size: 20);
-      case NotificationType.contractSigned:
-        return const Icon(Icons.check_circle, color: Colors.green, size: 20);
-      case NotificationType.tradeRumor:
-        return const Icon(Icons.swap_horiz, color: Colors.purple, size: 20);
-      case NotificationType.extensionOffer:
-        return const Icon(Icons.refresh, color: Colors.blue, size: 20);
-      case NotificationType.clientMood:
-        return const Icon(Icons.mood, color: Colors.amber, size: 20);
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('News du marché', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+            const SizedBox(height: 8),
+            if (marketNews.isEmpty)
+              Text('Aucune actualité du marché', style: Theme.of(context).textTheme.bodySmall)
+            else
+              ...marketNews.take(3).map((news) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.fiber_manual_record, size: 6),
+                    const SizedBox(width: 6),
+                    Expanded(child: Text(news, style: const TextStyle(fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                  ],
+                ),
+              )),
+          ],
+        ),
+      ),
+    );
   }
 }
 
