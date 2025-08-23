@@ -125,7 +125,7 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
       agreedBonus: bonus.round(),
       commissionRate: commissionRate,
     );
-    ref.read(gameControllerProvider.notifier).refreshAfterSign(res.summary);
+    ref.read(gameControllerProvider.notifier).refreshAfterSign(res.league, res.summary);
     if (context.mounted) Navigator.pop(context);
   }
 
@@ -169,6 +169,43 @@ class _NegotiationScreenState extends ConsumerState<NegotiationScreen> {
             ),
             const SizedBox(height: 12),
           ],
+
+          // Bloc récapitulatif de l'offre actuelle
+          Card(
+            elevation: 4,
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Votre proposition',
+                    style: Theme.of(context).textTheme.titleLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    '€${salary.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} / an',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Durée: $years an(s)',
+                    style: Theme.of(context).textTheme.titleMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Total: €${(salary * years).toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.grey[700]),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
 
           _SliderTile(
             label: 'Salaire/an',

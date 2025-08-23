@@ -74,16 +74,20 @@ class GameController extends StateNotifier<GameState> {
   void nextWeek() {
     if (state.league == null) return;
     final res = advanceWeek(state.league!, rng: Random(state.league!.week));
-    state = state.copyWith(lastSummary: 'Offres générées: ${res.offersGenerated}');
+    // Il faut passer la ligue MISE À JOUR au nouvel état
+    state = state.copyWith(
+      league: res.league,
+      lastSummary: 'Offres générées: ${res.offersGenerated}',
+    );
   }
 
   // (utilisé par NegotiationScreen)
-  void refreshAfterSign(String summary) {
-    state = state.copyWith(lastSummary: summary);
+  void refreshAfterSign(LeagueState newLeagueState, String summary) {
+    state = state.copyWith(league: newLeagueState, lastSummary: summary);
   }
 
-  void approachPlayer(int playerId, ApproachResult result) {
-    state = state.copyWith(lastSummary: result.message);
+  void approachPlayer(LeagueState newLeagueState, ApproachResult result) {
+    state = state.copyWith(league: newLeagueState, lastSummary: result.message);
   }
 }
 

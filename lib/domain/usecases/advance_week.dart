@@ -5,10 +5,11 @@ import '../../core/game_calendar.dart';
 import 'generate_client_offers.dart';
 
 class AdvanceWeekResult {
+  final LeagueState league;
   final int newWeek;
   final int offersGenerated;
   final List<String> events;
-  AdvanceWeekResult(this.newWeek, this.offersGenerated, this.events);
+  AdvanceWeekResult(this.league, this.newWeek, this.offersGenerated, this.events);
 }
 
 /// Estimation simple de l'ask salaire d'un joueur (MVP)
@@ -143,5 +144,5 @@ AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
   
   s.recentEvents = events;
 
-  return AdvanceWeekResult(s.week, generated, events);
+  return AdvanceWeekResult(s, s.week, generated, events);
 }

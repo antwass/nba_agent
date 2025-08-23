@@ -1,9 +1,10 @@
 import '../entities.dart';
 
 class SignResult {
+  final LeagueState league;
   final Contract contract;
   final String summary;
-  SignResult(this.contract, this.summary);
+  SignResult(this.league, this.contract, this.summary);
 }
 
 SignResult signContract({
@@ -51,5 +52,5 @@ SignResult signContract({
       'Commission +$commission€';
   league.recentEvents = [summary];
 
-  return SignResult(c, summary);
+  return SignResult(league, c, summary);
 }

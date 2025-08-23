@@ -54,6 +54,15 @@ void _generateFAOffersForClients(LeagueState league, Random rng) {
     
     for (int i = 0; i < offerCount && i < interestedTeams.length; i++) {
       final team = interestedTeams[i];
+
+      // VÉRIFICATION : L'équipe a-t-elle déjà une offre pour ce joueur ?
+      final bool alreadyHasOffer = league.offers.any(
+        (existingOffer) => 
+            existingOffer.teamId == team.id && 
+            existingOffer.playerId == player.id
+      );
+
+      if (alreadyHasOffer) continue; // Passe à l'équipe suivante si une offre existe déjà
       
       // Calculer l'offre basée sur l'OVR
       final baseSalary = player.overall * player.overall * 4000;
@@ -113,6 +122,15 @@ void _generateExtensionOffers(LeagueState league, Random rng) {
     // Pour le MVP, on fait une extension random avec 20% de chance
     if (rng.nextDouble() < 0.20) {
       final team = league.teams.firstWhere((t) => t.id == player.teamId);
+
+      // VÉRIFICATION : L'équipe a-t-elle déjà une offre pour ce joueur ?
+      final bool alreadyHasOffer = league.offers.any(
+        (existingOffer) => 
+            existingOffer.teamId == team.id && 
+            existingOffer.playerId == player.id
+      );
+
+      if (alreadyHasOffer) return; // Ne pas créer d'offre d'extension si une existe déjà
       
       // Extension généralement moins que la valeur marché
       final marketValue = player.overall * player.overall * 4000;

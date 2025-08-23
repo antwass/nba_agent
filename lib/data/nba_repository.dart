@@ -63,6 +63,8 @@ class NbaRepository {
         if (age >= 36) pot = pot.clamp(ov, ov + 1);
         else if (age >= 33) pot = pot.clamp(ov, 85);
 
+        final teamData = (e['team'] as Map?) ?? const {};
+
         final player = Player(
           id: IdGenerator.nextPlayerId(),
           name: finalName,  // Utiliser finalName au lieu de name
@@ -76,6 +78,7 @@ class NbaRepository {
           teamId: null,          // ton monde fictif gère ses teams
           extId: (e['player_id']?.toString()),
           representativeId: null, // par défaut: "sans agent" → onglet 2 fonctionnera
+          teamNameFromJson: teamData['team_name'] as String?,
         );
         
         validPlayers.add(player);

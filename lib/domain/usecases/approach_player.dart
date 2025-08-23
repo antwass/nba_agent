@@ -2,11 +2,13 @@ import 'dart:math';
 import '../entities.dart';
 
 class ApproachResult {
+  final LeagueState league;
   final bool success;
   final String message;
   final int reputationChange;
   
   ApproachResult({
+    required this.league,
     required this.success,
     required this.message,
     this.reputationChange = 0,
@@ -23,6 +25,7 @@ ApproachResult approachPlayer({
   // Vérifications
   if (player.representativeId != null) {
     return ApproachResult(
+      league: league,
       success: false,
       message: '${player.name} a déjà un agent.',
     );
@@ -30,6 +33,7 @@ ApproachResult approachPlayer({
   
   if (agent.clients.length >= 10) {
     return ApproachResult(
+      league: league,
       success: false,
       message: 'Vous avez atteint la limite de 10 clients.',
     );
@@ -62,6 +66,7 @@ ApproachResult approachPlayer({
     agent.reputation = (agent.reputation + 1).clamp(0, 100);
     
     return ApproachResult(
+      league: league,
       success: true,
       message: '${player.name} accepte de devenir votre client !',
       reputationChange: 1,
@@ -71,6 +76,7 @@ ApproachResult approachPlayer({
     agent.reputation = (agent.reputation - 0).clamp(0, 100);
     
     return ApproachResult(
+      league: league,
       success: false,
       message: '${player.name} refuse votre offre.',
       reputationChange: 0,

@@ -8,47 +8,61 @@ class WorldGenerator {
   WorldGenerator(this.rng);
 
   Future<LeagueState> generate() async {
-    // Équipes
-    final teams = List.generate(
-      20,
-      (i) => Team(id: i + 1, name: 'Club ${i + 1}', city: 'City ${i + 1}'),
-    );
+    // --- NOUVELLE LOGIQUE ---
 
-    // FORCER le chargement des joueurs NBA
+    // 1. Charger tous les joueurs depuis la BDD NBA
     final repo = NbaRepository();
     List<Player> nbaPlayers = [];
-    
     try {
       nbaPlayers = await repo.loadPlayers();
       print('✅ NBA: ${nbaPlayers.length} joueurs chargés depuis la BDD');
     } catch (e) {
-      print('❌ ERREUR NBA: $e');
+      print('❌ ERREUR CHARGEMENT NBA: $e');
     }
-    
-    // Si on n'a pas assez de joueurs NBA, on complète
+
+    // 2. Créer les équipes réelles à partir des données des joueurs
+    final teamsMap = <String, Team>{};
+    int nextTeamId = 1;
+    for (final player in nbaPlayers) {
+      final teamName = player.teamNameFromJson;
+      if (teamName != null && !teamsMap.containsKey(teamName)) {
+        teamsMap[teamName] = Team(
+          id: nextTeamId++,
+          name: teamName,
+          city: '', // Le JSON ne fournit pas la ville, on laisse vide
+        );
+      }
+    }
+    final teams = teamsMap.values.toList();
+    print('✅ ${teams.length} équipes uniques créées.');
+
+    // 3. Associer chaque joueur à son équipe réelle
+    for (final player in nbaPlayers) {
+      final teamName = player.teamNameFromJson;
+      if (teamName != null && teamsMap.containsKey(teamName)) {
+        final team = teamsMap[teamName]!;
+        player.teamId = team.id;
+        team.roster.add(player.id);
+      }
+      // On peut maintenant supprimer le nom temporaire
+      player.teamNameFromJson = null;
+    }
+    print('✅ Joueurs NBA associés à leurs équipes respectives.');
+
+    // 4. Gérer les joueurs générés (si nécessaire)
     List<Player> players = [...nbaPlayers];
-    
     if (players.length < 320) {
       final needed = 320 - players.length;
-      print('➕ Ajout de $needed joueurs générés (total NBA: ${players.length})');
-      
-      // Générer SEULEMENT le complément
+      print('➕ Ajout de $needed joueurs générés');
       final generated = _generateFallbackPlayers(needed);
-      players.addAll(generated);
-    }
-    
-    print('📊 TOTAL: ${nbaPlayers.length} NBA + ${players.length - nbaPlayers.length} générés');
-
-    // Mélanger et répartir
-    final shuffled = [...players]..shuffle(rng);
-    int cursor = 0;
-    for (final team in teams) {
-      final slice = shuffled.skip(cursor).take(12);
-      for (final p in slice) {
+      
+      // Répartir les joueurs générés dans les équipes existantes
+      for (final p in generated) {
+        final team = teams[rng.nextInt(teams.length)];
         p.teamId = team.id;
         team.roster.add(p.id);
       }
-      cursor += 12;
+      players.addAll(generated);
     }
 
     final agent = AgentProfile(

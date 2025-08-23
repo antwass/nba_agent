@@ -58,7 +58,7 @@ Agent''';
     );
 
     ref.read(gameControllerProvider.notifier).approachPlayer(
-      widget.player.id,
+      result.league, // On passe la ligue mise à jour depuis le résultat
       result,
     );
 

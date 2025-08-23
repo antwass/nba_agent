@@ -18,6 +18,9 @@ class Player {
   String? extId;           // id externe (id BDD NBA)
   int? representativeId;   // null = sans agent, sinon id de l’agent (toi)
 
+  // Champ temporaire pour le world generator
+  String? teamNameFromJson;
+
   Player({
     required this.id,
     required this.name,
@@ -31,6 +34,7 @@ class Player {
     this.teamId,
     this.extId,
     this.representativeId,
+    this.teamNameFromJson,
   });
 }
 
