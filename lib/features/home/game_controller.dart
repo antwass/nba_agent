@@ -5,6 +5,8 @@ import '../../domain/entities.dart';
 import '../../domain/usecases/advance_week.dart';
 import '../../domain/usecases/approach_player.dart';
 import '../../domain/services/world_generator.dart';
+import '../start/save_service.dart';
+import '../start/start_screen.dart';
 
 
 class GameState {
@@ -31,7 +33,9 @@ class GameState {
 }
 
 class GameController extends StateNotifier<GameState> {
-  GameController() : super(const GameState(isLoading: true)) {
+  final Ref ref;
+  
+  GameController(this.ref) : super(const GameState(isLoading: true)) {
     _initializeGame();
   }
 
@@ -89,8 +93,42 @@ class GameController extends StateNotifier<GameState> {
   void approachPlayer(LeagueState newLeagueState, ApproachResult result) {
     state = state.copyWith(league: newLeagueState, lastSummary: result.message);
   }
+
+  Future<void> saveGame() async {
+    if (state.league == null) return;
+    
+    final slotId = ref.read(currentSlotIdProvider);
+    if (slotId == null) {
+      // Créer un nouveau slot si nécessaire
+      final newSlotId = 'slot-${DateTime.now().millisecondsSinceEpoch}';
+      ref.read(currentSlotIdProvider.notifier).state = newSlotId;
+    }
+    
+    final saveService = ref.read(saveServiceProvider);
+    await saveService.saveGameState(
+      ref.read(currentSlotIdProvider)!,
+      state.league!,
+    );
+  }
+  
+  Future<void> loadGame(String slotId) async {
+    state = state.copyWith(isLoading: true);
+    
+    try {
+      final saveService = ref.read(saveServiceProvider);
+      final loadedState = await saveService.loadGameState(slotId);
+      
+      if (loadedState != null) {
+        state = GameState(league: loadedState, lastSummary: 'Partie chargée');
+      } else {
+        state = GameState(lastSummary: 'Erreur: sauvegarde introuvable');
+      }
+    } catch (e) {
+      state = state.copyWith(isLoading: false, lastSummary: 'Erreur chargement: $e');
+    }
+  }
 }
 
 final gameControllerProvider =
-StateNotifierProvider<GameController, GameState>((ref) => GameController());
+StateNotifierProvider<GameController, GameState>((ref) => GameController(ref));
 

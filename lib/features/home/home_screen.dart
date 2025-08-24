@@ -32,10 +32,25 @@ class HomeScreen extends ConsumerWidget {
       await svc.upsertSlot(meta);
     }
 
-    // 3) petit feedback
-    if (context.mounted) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Semaine suivante...')));
+    // 3) sauvegarde automatique
+    try {
+      await ref.read(gameControllerProvider.notifier).saveGame();
+      // Feedback avec mention de la sauvegarde
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Semaine suivante... ✅ Sauvegarde auto'),
+            duration: Duration(seconds: 1),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Erreur sauvegarde auto: $e');
+      // Fallback sans sauvegarde
+      if (context.mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Semaine suivante...')));
+      }
     }
   }
 
@@ -94,6 +109,46 @@ class HomeScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('NBA Agent - Accueil'),
         centerTitle: true,
+        actions: [
+          // Bouton de sauvegarde
+          IconButton(
+            icon: const Icon(Icons.save),
+            tooltip: 'Sauvegarder',
+            onPressed: () async {
+              try {
+                await ref.read(gameControllerProvider.notifier).saveGame();
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('✅ Partie sauvegardée'),
+                      backgroundColor: Colors.green[700],
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('❌ Erreur sauvegarde: $e'),
+                      backgroundColor: Colors.red[700],
+                    ),
+                  );
+                }
+              }
+            },
+          ),
+          // Bouton paramètres (optionnel pour plus tard)
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: 'Paramètres',
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Paramètres à venir')),
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -104,11 +159,12 @@ class HomeScreen extends ConsumerWidget {
             ),
           
           Expanded(
-            child: Padding(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  // Header avec date et stats
                   _HeaderStats(
                     week: league.week,
                     cash: league.agent.cash,
@@ -117,7 +173,7 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   
-                  // Notifications compactes (remplace "Nouvelle partie")
+                  // Notifications
                   _CompactNotifications(
                     notifications: league.notifications
                         .where((n) => n.week >= league.week - 4)
@@ -135,7 +191,9 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   
-                  Expanded(
+                  // Grille des actions AVEC hauteur fixe
+                  SizedBox(
+                    height: 180, // Hauteur fixe pour 2x2 grille
                     child: _QuickActions(
                       notifications: league.notifications,
                       onOpenClients: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ClientsScreen())),
@@ -146,10 +204,13 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                   
+                  // News du marché en dernier
                   _CompactMarketNews(
-                    marketNews: league.marketNews.take(5).toList(),
+                    marketNews: league.marketNews.take(10).toList(),
                   ),
-                  const SizedBox(height: 80),
+                  
+                  // Espace pour les boutons flottants
+                  const SizedBox(height: 70),
                 ],
               ),
             ),
@@ -375,12 +436,13 @@ class _QuickActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 1.5,
-      ),
+    return GridView.count(
+      physics: const NeverScrollableScrollPhysics(), // Pas de scroll
+      shrinkWrap: false, // Important : false pour utiliser la hauteur du parent
+      crossAxisCount: 2,
+      mainAxisSpacing: 12,
+      crossAxisSpacing: 12,
+      childAspectRatio: 1.6,
       children: [
         _ActionCard(
           icon: Icons.people_alt_outlined,
@@ -549,37 +611,117 @@ class _CompactNotifications extends StatelessWidget {
   }
 }
 
-class _CompactMarketNews extends StatelessWidget {
+class _CompactMarketNews extends StatefulWidget {
   const _CompactMarketNews({required this.marketNews});
   final List<String> marketNews;
   
   @override
+  State<_CompactMarketNews> createState() => _CompactMarketNewsState();
+}
+
+class _CompactMarketNewsState extends State<_CompactMarketNews> {
+  bool _isExpanded = false;
+  
+  @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('News du marché', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-            const SizedBox(height: 8),
-            if (marketNews.isEmpty)
-              Text('Aucune actualité du marché', style: Theme.of(context).textTheme.bodySmall)
-            else
-              ...marketNews.take(3).map((news) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.fiber_manual_record, size: 6),
-                    const SizedBox(width: 6),
-                    Expanded(child: Text(news, style: const TextStyle(fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
-                  ],
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () => setState(() => _isExpanded = !_isExpanded),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  Icon(
+                    _isExpanded ? Icons.expand_less : Icons.expand_more,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'News du marché',
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600
+                    ),
+                  ),
+                  const Spacer(),
+                  if (!_isExpanded && widget.marketNews.isNotEmpty)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        '${widget.marketNews.length}',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          
+          // Contenu collapsible
+          AnimatedCrossFade(
+            firstChild: const SizedBox.shrink(),
+            secondChild: Column(
+              children: [
+                const Divider(height: 1),
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (widget.marketNews.isEmpty)
+                        Text(
+                          'Aucune actualité du marché',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        )
+                      else
+                        ...widget.marketNews.take(5).map((news) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 3),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Icon(Icons.fiber_manual_record, size: 6),
+                              const SizedBox(width: 6),
+                              Expanded(
+                                child: Text(
+                                  news,
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+                      if (widget.marketNews.length > 5)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            '... et ${widget.marketNews.length - 5} autres',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey[600],
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
-              )),
-          ],
-        ),
+              ],
+            ),
+            crossFadeState: _isExpanded 
+              ? CrossFadeState.showSecond 
+              : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 200),
+          ),
+        ],
       ),
     );
   }

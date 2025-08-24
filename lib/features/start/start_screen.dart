@@ -178,10 +178,19 @@ class StartScreen extends ConsumerWidget {
     }
   }
 
-  void _enterGame(BuildContext context, WidgetRef ref, SaveGameMeta slot) {
-    ref.read(gameControllerProvider.notifier).newGame(agentName: slot.name);
+  void _enterGame(BuildContext context, WidgetRef ref, SaveGameMeta slot) async {
+    // Essayer de charger la sauvegarde
+    await ref.read(gameControllerProvider.notifier).loadGame(slot.id);
+    
+    // Si pas de sauvegarde trouvée, créer une nouvelle partie
+    if (ref.read(gameControllerProvider).league == null) {
+      await ref.read(gameControllerProvider.notifier).newGame(agentName: slot.name);
+    }
+    
     ref.read(currentSlotIdProvider.notifier).state = slot.id;
-    Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    if (context.mounted) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+    }
   }
 }
 
