@@ -73,12 +73,22 @@ class HomeScreen extends ConsumerWidget {
       await svc.upsertSlot(meta);
     }
 
-    // Feedback
-    if (context.mounted) {
-      final week = ref.read(gameControllerProvider).league?.week ?? 1;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Un mois s\'est ecoule - ${GameCalendar.weekToDisplay(week)}')),
-      );
+    // Sauvegarde automatique
+    try {
+      await ref.read(gameControllerProvider.notifier).saveGame();
+      if (context.mounted) {
+        final week = ref.read(gameControllerProvider).league?.week ?? 1;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Un mois s\'est écoulé – ${GameCalendar.weekToDisplay(week)} ✅ Sauvegarde auto')),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        final week = ref.read(gameControllerProvider).league?.week ?? 1;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Un mois s\'est écoulé – ${GameCalendar.weekToDisplay(week)}')),
+        );
+      }
     }
   }
 

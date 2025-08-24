@@ -103,6 +103,7 @@ class Team {
 }
 
 class Offer {
+  int id;            // identifiant unique
   int teamId;
   int playerId;
   int salary;        // /an
@@ -112,6 +113,7 @@ class Offer {
   int expiresWeek;
 
   Offer({
+    required this.id,
     required this.teamId,
     required this.playerId,
     required this.salary,
@@ -122,6 +124,7 @@ class Offer {
   });
 
   Offer copyWith({
+    int? id,
     int? teamId,
     int? playerId,
     int? salary,
@@ -131,6 +134,7 @@ class Offer {
     int? expiresWeek,
   }) {
     return Offer(
+      id: id ?? this.id,
       teamId: teamId ?? this.teamId,
       playerId: playerId ?? this.playerId,
       salary: salary ?? this.salary,

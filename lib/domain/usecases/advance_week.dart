@@ -3,6 +3,7 @@ import 'dart:math';
 import '../entities.dart';
 import '../../core/game_calendar.dart';
 import 'generate_client_offers.dart';
+import '../../core/id_generator.dart';
 
 class AdvanceWeekResult {
   final LeagueState league;
@@ -86,6 +87,7 @@ AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
     final bonus = (salary * (0.05 + r.nextDouble() * 0.10)).toInt();
 
     leagueCopy.offers.add(Offer(
+      id: IdGenerator.nextOfferId(),
       teamId: team.id,
       playerId: candidate.id,
       salary: salary,

@@ -94,6 +94,19 @@ class GameController extends StateNotifier<GameState> {
     state = state.copyWith(league: newLeagueState, lastSummary: result.message);
   }
 
+  void markOfferNotificationsRead() {
+    final league = state.league;
+    if (league == null) return;
+    final copy = league.deepCopy();
+    for (int i = 0; i < copy.notifications.length; i++) {
+      final n = copy.notifications[i];
+      if (n.type == NotificationType.offerReceived && !n.isRead) {
+        copy.notifications[i] = n.copyWith(isRead: true);
+      }
+    }
+    state = state.copyWith(league: copy);
+  }
+
   Future<void> saveGame() async {
     if (state.league == null) return;
     
@@ -131,4 +144,3 @@ class GameController extends StateNotifier<GameState> {
 
 final gameControllerProvider =
 StateNotifierProvider<GameController, GameState>((ref) => GameController(ref));
-

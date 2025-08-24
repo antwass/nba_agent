@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'save_game_meta.dart';
 import '../../domain/entities.dart';
+import '../../core/id_generator.dart';
 
 class SaveService {
   static const _kKey = 'save_slots'; // liste des métadonnées
@@ -83,6 +84,7 @@ class SaveService {
           'roster': t.roster,
         }).toList(),
         'offers': state.offers.map((o) => {
+          'id': o.id,
           'teamId': o.teamId,
           'playerId': o.playerId,
           'salary': o.salary,
@@ -174,6 +176,7 @@ class SaveService {
       );
       
       final offers = (stateJson['offers'] as List).map((o) => Offer(
+        id: (o as Map).containsKey('id') ? o['id'] : IdGenerator.nextOfferId(),
         teamId: o['teamId'],
         playerId: o['playerId'],
         salary: o['salary'],

@@ -5,11 +5,26 @@ import '../home/game_controller.dart';
 import '../../domain/entities.dart';
 import '../negotiation/negotiation_screen.dart';
 
-class OffersScreen extends ConsumerWidget {
+class OffersScreen extends ConsumerStatefulWidget {
   const OffersScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OffersScreen> createState() => _OffersScreenState();
+}
+
+class _OffersScreenState extends ConsumerState<OffersScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Marquer comme lues les notifications liées aux offres
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(gameControllerProvider.notifier).markOfferNotificationsRead();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final WidgetRef ref = this.ref;
     final game = ref.watch(gameControllerProvider);
     
     if (game.league == null) {

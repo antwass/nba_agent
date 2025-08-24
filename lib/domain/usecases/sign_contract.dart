@@ -31,7 +31,9 @@ SignResult signContract({
   final team = leagueCopy.teams.firstWhere((t) => t.id == offer.teamId);
   final player = leagueCopy.players.firstWhere((p) => p.id == offer.playerId);
   player.teamId = team.id;
-  team.roster.add(player.id);
+  if (!team.roster.contains(player.id)) {
+    team.roster.add(player.id);
+  }
   team.capUsed += agreedSalary; // MVP: année 1
 
   final commission = (agreedSalary * commissionRate).round();

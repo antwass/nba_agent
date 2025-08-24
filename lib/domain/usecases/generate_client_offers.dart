@@ -1,6 +1,7 @@
 import 'dart:math';
 import '../entities.dart';
 import '../../core/game_calendar.dart';
+import '../../core/id_generator.dart';
 
 // Génère des offres pour les clients de l'agent selon la phase de la saison
 void generateOffersForClients(LeagueState league, Random rng) {
@@ -81,7 +82,8 @@ void _generateFAOffersForClients(LeagueState league, Random rng) {
       
       final bonus = (salary * 0.1 * rng.nextDouble()).round();
       
-      league.offers.add(Offer(
+      final offer = Offer(
+        id: IdGenerator.nextOfferId(),
         teamId: team.id,
         playerId: player.id,
         salary: salary,
@@ -89,7 +91,8 @@ void _generateFAOffersForClients(LeagueState league, Random rng) {
         bonus: bonus,
         createdWeek: league.week,
         expiresWeek: league.week + 2,
-      ));
+      );
+      league.offers.add(offer);
       
       // Notification personnelle
       league.notifications.add(GameNotification(
@@ -99,7 +102,7 @@ void _generateFAOffersForClients(LeagueState league, Random rng) {
         message: '${team.city} ${team.name} propose ${salary ~/ 1000000}M€/an sur $years ans',
         week: league.week,
         relatedPlayerId: player.id,
-        relatedOfferId: league.offers.length - 1,
+        relatedOfferId: offer.id,
       ));
       
       // News globale du marché (visible par tous)
@@ -130,14 +133,15 @@ void _generateExtensionOffers(LeagueState league, Random rng) {
             existingOffer.playerId == player.id
       );
 
-      if (alreadyHasOffer) return; // Ne pas créer d'offre d'extension si une existe déjà
+      if (alreadyHasOffer) continue; // Ne pas créer d'offre d'extension si une existe déjà
       
       // Extension généralement moins que la valeur marché
       final marketValue = player.overall * player.overall * 4000;
       final extensionSalary = (marketValue * 0.9).round();  // 90% de la valeur
       final years = 2 + rng.nextInt(2);  // 2-3 ans
       
-      league.offers.add(Offer(
+      final offer = Offer(
+        id: IdGenerator.nextOfferId(),
         teamId: team.id,
         playerId: player.id,
         salary: extensionSalary,
@@ -145,7 +149,8 @@ void _generateExtensionOffers(LeagueState league, Random rng) {
         bonus: 0,  // Pas de bonus sur les extensions généralement
         createdWeek: league.week,
         expiresWeek: league.week + 4,  // Plus de temps pour décider
-      ));
+      );
+      league.offers.add(offer);
       
       // Notification personnelle pour extension
       league.notifications.add(GameNotification(
@@ -155,7 +160,7 @@ void _generateExtensionOffers(LeagueState league, Random rng) {
         message: '${team.name} propose une extension de ${extensionSalary ~/ 1000000}M€/an sur $years ans',
         week: league.week,
         relatedPlayerId: player.id,
-        relatedOfferId: league.offers.length - 1,
+        relatedOfferId: offer.id,
       ));
       
       // News du marché
