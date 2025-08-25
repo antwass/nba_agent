@@ -115,7 +115,10 @@ class SaveService {
           'relatedPlayerId': n.relatedPlayerId,
           'relatedOfferId': n.relatedOfferId,
         }).toList(),
-        'marketNews': state.marketNews,
+        'marketNews': state.marketNews.map((n) => {
+          'week': n.week,
+          'message': n.message,
+        }).toList(),
       };
       
       final jsonString = json.encode(stateJson);
@@ -220,7 +223,12 @@ class SaveService {
         contracts: contracts,
         ledger: ledger,
         notifications: notifications,
-        marketNews: List<String>.from(stateJson['marketNews']),
+        marketNews: (stateJson['marketNews'] as List)
+            .map((n) => MarketNewsEntry(
+              week: n['week'] ?? 1,
+              message: n['message'] ?? '',
+            ))
+            .toList(),
       );
       
     } catch (e) {

@@ -99,32 +99,52 @@ AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
     generated++;
   }
 
-  // 4) Événements du marché
-  if (generated > 0) leagueCopy.marketNews.add('📊 $generated nouvelles offres sur le marché cette semaine');
+  // 4) Expiration automatique des news après 4 semaines
+  leagueCopy.marketNews.removeWhere((news) => leagueCopy.week - news.week >= 4);
+  
+  // 5) Événements du marché
+  if (generated > 0) {
+    leagueCopy.marketNews.add(MarketNewsEntry(
+      week: leagueCopy.week,
+      message: '📊 $generated nouvelles offres sur le marché cette semaine'
+    ));
+  }
   if (r.nextDouble() < 0.20) {
-    leagueCopy.marketNews.add('💬 Rumeur: Les équipes cherchent des meneurs cette semaine');
+    leagueCopy.marketNews.add(MarketNewsEntry(
+      week: leagueCopy.week,
+      message: '💬 Rumeur: Les équipes cherchent des meneurs cette semaine'
+    ));
   }
 
   // Générer des offres pour les clients de l'agent
   generateOffersForClients(leagueCopy, r);
 
-  // 5) Avancer le temps + publier les events
+  // 6) Avancer le temps + publier les events
   leagueCopy.week += 1;
   
   // Vérifier les événements spéciaux
   final specialEvent = GameCalendar.getSpecialEvent(leagueCopy.week);
   if (specialEvent != null) {
-    leagueCopy.marketNews.insert(0, specialEvent);  // Mettre en premier
+    leagueCopy.marketNews.insert(0, MarketNewsEntry(
+      week: leagueCopy.week,
+      message: specialEvent
+    ));  // Mettre en premier
   }
   
   // Événement spécial nouvelle année
   if (GameCalendar.isNewYear(leagueCopy.week)) {
-    leagueCopy.marketNews.add("🎊 Bonne année ${GameCalendar.getYear(leagueCopy.week)} !");
+    leagueCopy.marketNews.add(MarketNewsEntry(
+      week: leagueCopy.week,
+      message: "🎊 Bonne année ${GameCalendar.getYear(leagueCopy.week)} !"
+    ));
   }
   
   // Événement nouvelle saison
   if (GameCalendar.isNewSeason(leagueCopy.week)) {
-    leagueCopy.marketNews.add("📅 Nouvelle saison NBA ${GameCalendar.getSeason(leagueCopy.week)} commence !");
+    leagueCopy.marketNews.add(MarketNewsEntry(
+      week: leagueCopy.week,
+      message: "📅 Nouvelle saison NBA ${GameCalendar.getSeason(leagueCopy.week)} commence !"
+    ));
   }
   
   // Faire vieillir les joueurs une fois par an (semaine 52)
@@ -136,7 +156,10 @@ AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
         p.overall = (p.overall - 2).clamp(60, 99);
       }
     }
-    leagueCopy.marketNews.add("📆 Les joueurs ont vieilli d'un an");
+    leagueCopy.marketNews.add(MarketNewsEntry(
+      week: leagueCopy.week,
+      message: "📆 Les joueurs ont vieilli d'un an"
+    ));
   }
   
   // Adapter la génération d'offres selon la phase

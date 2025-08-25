@@ -212,7 +212,7 @@ class LeagueState {
   
   // 👇 nouveau : système de notifications séparées
   List<GameNotification> notifications;  // Notifications personnelles
-  List<String> marketNews;          // News globales du marché
+  List<MarketNewsEntry> marketNews;      // News globales du marché avec timestamp
 
   LeagueState({
     required this.week,
@@ -223,7 +223,7 @@ class LeagueState {
     List<Contract>? contracts,
     List<String>? recentEvents,  // Garde pour compatibilité
     List<GameNotification>? notifications,
-    List<String>? marketNews,
+    List<MarketNewsEntry>? marketNews,
     List<FinanceEntry>? ledger,
   })  : offers = offers ?? [],
         contracts = contracts ?? [],
@@ -242,7 +242,7 @@ class LeagueState {
       contracts: contracts.map((c) => c.copyWith()).toList(),
       ledger: List.from(ledger),
       notifications: notifications.map((n) => n.copyWith()).toList(),
-      marketNews: List.from(marketNews),
+      marketNews: marketNews.map((n) => n.copyWith()).toList(),
     );
   }
 }
@@ -252,6 +252,23 @@ class FinanceEntry {
   final String label;  // ex: "Commission: J. Doe (2 ans)"
   final int amount;    // en € (positif = revenu, négatif = dépense)
   const FinanceEntry({required this.week, required this.label, required this.amount});
+}
+
+class MarketNewsEntry {
+  final int week;      // semaine où la news a été créée
+  final String message; // contenu de la news
+  
+  const MarketNewsEntry({required this.week, required this.message});
+  
+  MarketNewsEntry copyWith({
+    int? week,
+    String? message,
+  }) {
+    return MarketNewsEntry(
+      week: week ?? this.week,
+      message: message ?? this.message,
+    );
+  }
 }
 
 enum NotificationType {

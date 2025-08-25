@@ -106,9 +106,10 @@ void _generateFAOffersForClients(LeagueState league, Random rng) {
       ));
       
       // News globale du marché (visible par tous)
-      league.marketNews.add(
-        '💼 ${team.name} fait une offre à ${player.name}'
-      );
+      league.marketNews.add(MarketNewsEntry(
+        week: league.week,
+        message: '💼 ${team.name} fait une offre à ${player.name}'
+      ));
     }
   }
 }
@@ -164,9 +165,10 @@ void _generateExtensionOffers(LeagueState league, Random rng) {
       ));
       
       // News du marché
-      league.marketNews.add(
-        '📝 ${team.name} négocie une extension avec ${player.name}'
-      );
+      league.marketNews.add(MarketNewsEntry(
+        week: league.week,
+        message: '📝 ${team.name} négocie une extension avec ${player.name}'
+      ));
     }
   }
 }
@@ -205,9 +207,10 @@ void _generateTradeRumors(LeagueState league, Random rng) {
   ));
   
   // News du marché
-  league.marketNews.add(
-    '🔄 Rumeur: ${currentTeam.name} et ${targetTeam.name} discutent d\'un échange'
-  );
+  league.marketNews.add(MarketNewsEntry(
+    week: league.week,
+    message: '🔄 Rumeur: ${currentTeam.name} et ${targetTeam.name} discutent d\'un échange'
+  ));
   
   // Note: Pour le MVP, on ne fait pas le trade réel, juste la rumeur
   // Dans une V2, on pourrait stocker cette rumeur et la concrétiser plus tard

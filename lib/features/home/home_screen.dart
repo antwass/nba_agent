@@ -32,25 +32,11 @@ class HomeScreen extends ConsumerWidget {
       await svc.upsertSlot(meta);
     }
 
-    // 3) sauvegarde automatique
+    // 3) sauvegarde automatique silencieuse
     try {
       await ref.read(gameControllerProvider.notifier).saveGame();
-      // Feedback avec mention de la sauvegarde
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Semaine suivante... ✅ Sauvegarde auto'),
-            duration: Duration(seconds: 1),
-          ),
-        );
-      }
     } catch (e) {
       print('Erreur sauvegarde auto: $e');
-      // Fallback sans sauvegarde
-      if (context.mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Semaine suivante...')));
-      }
     }
   }
 
@@ -73,22 +59,11 @@ class HomeScreen extends ConsumerWidget {
       await svc.upsertSlot(meta);
     }
 
-    // Sauvegarde automatique
+    // Sauvegarde automatique silencieuse
     try {
       await ref.read(gameControllerProvider.notifier).saveGame();
-      if (context.mounted) {
-        final week = ref.read(gameControllerProvider).league?.week ?? 1;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Un mois s\'est écoulé – ${GameCalendar.weekToDisplay(week)} ✅ Sauvegarde auto')),
-        );
-      }
     } catch (e) {
-      if (context.mounted) {
-        final week = ref.read(gameControllerProvider).league?.week ?? 1;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Un mois s\'est écoulé – ${GameCalendar.weekToDisplay(week)}')),
-        );
-      }
+      print('Erreur sauvegarde auto: $e');
     }
   }
 
@@ -247,7 +222,7 @@ class HomeScreen extends ConsumerWidget {
                         
                         // News du marché collapsibles
                         _CompactMarketNews(
-                          marketNews: league.marketNews.take(10).toList(),
+                          marketNews: league.marketNews.map((entry) => entry.message).take(10).toList(),
                         ),
                       ],
                     ),
@@ -753,7 +728,7 @@ class _CompactMarketNewsState extends State<_CompactMarketNews> {
             ),
           ),
           
-          // Contenu collapsible
+          // Contenu collapsible vers le BAS
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Column(
