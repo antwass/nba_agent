@@ -160,107 +160,144 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          if (isFAWindow)
-            const _BannerInfo(
-              text: 'Fenêtre Free Agency ouverte - attendez plus d\'offres !',
-              icon: Icons.campaign_outlined,
-            ),
-          
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Header avec date et stats
-                  _HeaderStats(
-                    week: league.week,
-                    cash: league.agent.cash,
-                    reputation: league.agent.reputation,
-                    clients: league.agent.clients.length,
+          // Contenu principal avec padding bottom pour les boutons
+          Positioned.fill(
+            child: Column(
+              children: [
+                if (isFAWindow)
+                  const _BannerInfo(
+                    text: 'Fenêtre Free Agency ouverte - attendez plus d\'offres !',
+                    icon: Icons.campaign_outlined,
                   ),
-                  const SizedBox(height: 12),
-                  
-                  // Notifications
-                  _CompactNotifications(
-                    notifications: league.notifications
-                        .where((n) => n.week >= league.week - 4)
-                        .toList()
-                      ..sort((a, b) => b.week.compareTo(a.week)),
-                    onNotificationTap: (notification) {
-                      if (notification.type == NotificationType.offerReceived && 
-                          notification.relatedOfferId != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const OffersScreen()),
-                        );
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  
-                  // Grille des actions AVEC hauteur fixe
-                  SizedBox(
-                    height: 180, // Hauteur fixe pour 2x2 grille
-                    child: _QuickActions(
-                      notifications: league.notifications,
-                      onOpenClients: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ClientsScreen())),
-                      onOpenMarket: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MarketScreen())),
-                      onOpenOffers: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const OffersScreen())),
-                      onOpenFinance: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FinanceScreen())),
+                
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 100), // Padding bottom pour les boutons
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Header stats
+                        _HeaderStats(
+                          week: league.week,
+                          cash: league.agent.cash,
+                          reputation: league.agent.reputation,
+                          clients: league.agent.clients.length,
+                        ),
+                        const SizedBox(height: 16),
+                        
+                        // Notifications collapsibles
+                        _CompactNotifications(
+                          notifications: league.notifications
+                              .where((n) => n.week >= league.week - 4)
+                              .toList()
+                            ..sort((a, b) => b.week.compareTo(a.week)),
+                          onNotificationTap: (notification) {
+                            if (notification.type == NotificationType.offerReceived && 
+                                notification.relatedOfferId != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => const OffersScreen()),
+                              );
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        
+                        // Grille des 4 boutons d'action
+                        GridView.count(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 1.6,
+                          children: [
+                            _ActionCard(
+                              icon: Icons.people_alt_outlined,
+                              title: 'Mes clients',
+                              subtitle: 'Statut, humeur, contrats',
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ClientsScreen())),
+                            ),
+                            _ActionCard(
+                              icon: Icons.store_mall_directory_outlined,
+                              title: 'Marché',
+                              subtitle: 'Free agents & intérêts',
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MarketScreen())),
+                            ),
+                            _ActionCard(
+                              icon: Icons.mark_chat_read_outlined,
+                              title: 'Offres',
+                              subtitle: 'Négocier et signer',
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const OffersScreen())),
+                              badgeCount: league.notifications.where((n) => 
+                                n.type == NotificationType.offerReceived && !n.isRead).length,
+                            ),
+                            _ActionCard(
+                              icon: Icons.stacked_line_chart_outlined,
+                              title: 'Finances',
+                              subtitle: 'Commissions & dépenses',
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FinanceScreen())),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        
+                        // News du marché collapsibles
+                        _CompactMarketNews(
+                          marketNews: league.marketNews.take(10).toList(),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  
-                  // News du marché en dernier
-                  _CompactMarketNews(
-                    marketNews: league.marketNews.take(10).toList(),
+                ),
+              ],
+            ),
+          ),
+          
+          // Boutons flottants positionnés en bas
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 8,
+                    offset: const Offset(0, -2),
                   ),
-                  
-                  // Espace pour les boutons flottants
-                  const SizedBox(height: 70),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: FilledButton.tonalIcon(
+                      onPressed: () => nextMonthWithAutosave(context, ref),
+                      icon: const Icon(Icons.fast_forward),
+                      label: const Text('Mois suivant'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    flex: 3,
+                    child: FilledButton.icon(
+                      onPressed: () => nextWeekWithAutosave(context, ref),
+                      icon: const Icon(Icons.play_arrow),
+                      label: const Text('Semaine suivante'),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         ],
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Bouton Mois suivant (à gauche)
-            Expanded(
-              flex: 2,
-              child: FilledButton.tonalIcon(
-                onPressed: () => nextMonthWithAutosave(context, ref),
-                icon: const Icon(Icons.fast_forward),
-                label: const Text('Mois suivant'),
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                ),
-              ),
-            ),
-            const SizedBox(width: 16), // Espace entre les boutons
-            // Bouton Semaine suivante (à droite)
-            Expanded(
-              flex: 3,
-              child: FilledButton.icon(
-                onPressed: () => nextWeekWithAutosave(context, ref),
-                icon: const Icon(Icons.play_arrow),
-                label: const Text('Semaine suivante'),
-                style: FilledButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
       // ✅ Un SEUL onDestinationSelected qui gère tous les cas
       bottomNavigationBar: NavigationBar(
@@ -429,61 +466,6 @@ class _StatChip extends StatelessWidget {
   }
 }
 
-class _QuickActions extends StatelessWidget {
-  const _QuickActions({
-    required this.notifications,
-    required this.onOpenClients,
-    required this.onOpenMarket,
-    required this.onOpenOffers,
-    required this.onOpenFinance,
-  });
-
-  final List<GameNotification> notifications;
-  final VoidCallback onOpenClients;
-  final VoidCallback onOpenMarket;
-  final VoidCallback onOpenOffers;
-  final VoidCallback onOpenFinance;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.count(
-      physics: const NeverScrollableScrollPhysics(), // Pas de scroll
-      shrinkWrap: false, // Important : false pour utiliser la hauteur du parent
-      crossAxisCount: 2,
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-      childAspectRatio: 1.6,
-      children: [
-        _ActionCard(
-          icon: Icons.people_alt_outlined,
-          title: 'Mes clients',
-          subtitle: 'Statut, humeur, contrats',
-          onTap: onOpenClients,
-        ),
-        _ActionCard(
-          icon: Icons.store_mall_directory_outlined,
-          title: 'Marché',
-          subtitle: 'Free agents & intérêts',
-          onTap: onOpenMarket,
-        ),
-        _ActionCard(
-          icon: Icons.mark_chat_read_outlined,
-          title: 'Offres',
-          subtitle: 'Négocier et signer',
-          onTap: onOpenOffers,
-          badgeCount: notifications.where((n) => 
-            n.type == NotificationType.offerReceived && !n.isRead).length,
-        ),
-        _ActionCard(
-          icon: Icons.stacked_line_chart_outlined,
-          title: 'Finances',
-          subtitle: 'Commissions & dépenses',
-          onTap: onOpenFinance,
-        ),
-      ],
-    );
-  }
-}
 
 class _ActionCard extends StatelessWidget {
   const _ActionCard({
@@ -562,7 +544,7 @@ class _ActionCard extends StatelessWidget {
 
 
 
-class _CompactNotifications extends StatelessWidget {
+class _CompactNotifications extends StatefulWidget {
   const _CompactNotifications({
     required this.notifications,
     required this.onNotificationTap,
@@ -572,50 +554,127 @@ class _CompactNotifications extends StatelessWidget {
   final Function(GameNotification) onNotificationTap;
   
   @override
+  State<_CompactNotifications> createState() => _CompactNotificationsState();
+}
+
+class _CompactNotificationsState extends State<_CompactNotifications> {
+  bool _isExpanded = false;
+  
+  @override
   Widget build(BuildContext context) {
-    final unreadCount = notifications.where((n) => !n.isRead).length;
+    final unreadCount = widget.notifications.where((n) => !n.isRead).length;
     
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Notifications', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-                if (unreadCount > 0)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
-                    decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(10)),
-                    child: Text('$unreadCount', style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () => setState(() => _isExpanded = !_isExpanded),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  Icon(
+                    _isExpanded ? Icons.expand_less : Icons.expand_more,
+                    size: 20,
                   ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            if (notifications.isEmpty)
-              Text('Aucune notification', style: Theme.of(context).textTheme.bodySmall)
-            else
-              ...notifications.take(2).map((notif) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: InkWell(
-                  onTap: () => onNotificationTap(notif),
-                  child: Row(
-                    children: [
-                      Icon(Icons.mail_outline, color: Colors.blue, size: 16),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(notif.title, style: TextStyle(fontSize: 13, fontWeight: notif.isRead ? FontWeight.normal : FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Notifications',
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  if (unreadCount > 0)
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      if (!notif.isRead) Container(width: 6, height: 6, margin: const EdgeInsets.only(left: 4), decoration: const BoxDecoration(color: Colors.blue, shape: BoxShape.circle)),
-                    ],
+                      child: Text(
+                        '$unreadCount',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  const Spacer(),
+                  if (!_isExpanded && widget.notifications.isNotEmpty)
+                    Text(
+                      '${widget.notifications.length} total',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          
+          // Contenu collapsible vers le BAS
+          AnimatedCrossFade(
+            firstChild: const SizedBox.shrink(),
+            secondChild: Column(
+              children: [
+                const Divider(height: 1),
+                Container(
+                  constraints: const BoxConstraints(maxHeight: 150),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(8),
+                    itemCount: widget.notifications.length,
+                    itemBuilder: (context, i) {
+                      final notif = widget.notifications[i];
+                      return InkWell(
+                        onTap: () => widget.onNotificationTap(notif),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.mail_outline,
+                                color: notif.isRead ? Colors.grey : Colors.blue,
+                                size: 16,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  notif.title,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: notif.isRead ? FontWeight.normal : FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              if (!notif.isRead)
+                                Container(
+                                  width: 6,
+                                  height: 6,
+                                  margin: const EdgeInsets.only(left: 4),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.blue,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-              )),
-          ],
-        ),
+              ],
+            ),
+            crossFadeState: _isExpanded 
+              ? CrossFadeState.showSecond 
+              : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 200),
+          ),
+        ],
       ),
     );
   }
