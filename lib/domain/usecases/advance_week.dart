@@ -87,6 +87,57 @@ bool _playerAcceptsOffer(Player player, Offer offer, Random rng) {
   return rng.nextDouble() < acceptanceProb.clamp(0.1, 0.9);
 }
 
+/// Vérifie et traite les expirations de contrats
+void _checkContractExpirations(LeagueState league) {
+  final contractsToExpire = <Contract>[];
+  
+  for (final contract in league.contracts) {
+    // Calculer la fin du contrat : startWeek + (durée * 52 semaines)
+    final contractEndWeek = contract.startWeek + (contract.salaryPerYear.length * 52);
+    
+    if (league.week >= contractEndWeek) {
+      contractsToExpire.add(contract);
+    }
+  }
+  
+  for (final contract in contractsToExpire) {
+    final player = league.players.firstWhere((p) => p.id == contract.playerId);
+    final team = league.teams.firstWhere((t) => t.id == contract.teamId);
+    
+    // Libérer le joueur
+    player.teamId = null;
+    team.roster.remove(player.id);
+    team.capUsed -= contract.salaryPerYear.isNotEmpty ? contract.salaryPerYear.first : 0;
+    
+    // News du marché pour les joueurs notables (75+ OVR)
+    if (player.overall >= 75) {
+      league.marketNews.add(MarketNewsEntry(
+        week: league.week,
+        message: '🆓 ${player.name} devient Free Agent (contrat expiré)'
+      ));
+    }
+    
+    // Notification si c'est un client de l'agent
+    if (league.agent.clients.contains(player.id)) {
+      league.notifications.add(GameNotification(
+        id: 'contract_expired_${player.id}_${league.week}',
+        type: NotificationType.contractExpired,
+        title: 'Contrat expiré : ${player.name}',
+        message: 'Le contrat avec ${team.name} a expiré. ${player.name} devient Free Agent.',
+        week: league.week,
+        relatedPlayerId: player.id,
+      ));
+    }
+  }
+  
+  // Supprimer les contrats expirés
+  league.contracts.removeWhere((c) => contractsToExpire.contains(c));
+  
+  if (contractsToExpire.isNotEmpty) {
+    print('✅ ${contractsToExpire.length} contrats expirés à la semaine ${league.week}');
+  }
+}
+
 /// Signe automatiquement un joueur avec une équipe
 void _signPlayerAutomatically(LeagueState league, Offer offer, Player player) {
   final team = league.teams.firstWhere((t) => t.id == offer.teamId);
@@ -123,15 +174,20 @@ AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
     p.overall = (p.overall + delta).clamp(40, 99).round();
   }
 
-  // 2) Résoudre automatiquement les offres pour les joueurs non-clients
+  // 2) Vérifier l'expiration des contrats (mensuellement)
+  if (leagueCopy.week % 4 == 0) {
+    _checkContractExpirations(leagueCopy);
+  }
+
+  // 3) Résoudre automatiquement les offres pour les joueurs non-clients
   _resolveNonClientOffers(leagueCopy, r);
   
-  // 3) Expirer les offres arrivées à terme (maintenant seulement celles des clients)
+  // 4) Expirer les offres arrivées à terme (maintenant seulement celles des clients)
   leagueCopy.offers.removeWhere((o) => o.expiresWeek <= leagueCopy.week);
 
-  // 4) Générer de nouvelles offres
-  //    Boost pendant la fenêtre FA (semaines 18..28)
-  final faBoost = (leagueCopy.week >= 18 && leagueCopy.week <= 28) ? 5 : 2;
+  // 5) Générer de nouvelles offres
+  //    Boost pendant la fenêtre FA (semaines 1..12)
+  final faBoost = (leagueCopy.week >= 1 && leagueCopy.week <= 12) ? 5 : 2;
   int generated = 0;
 
   final teamsShuffled = [...leagueCopy.teams]..shuffle(r);
@@ -195,7 +251,7 @@ AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
   // Générer des offres pour les clients de l'agent
   generateOffersForClients(leagueCopy, r);
 
-  // 6) Avancer le temps + publier les events
+  // 7) Avancer le temps + publier les events
   leagueCopy.week += 1;
   
   // Vérifier les événements spéciaux

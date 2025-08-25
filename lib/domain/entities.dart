@@ -275,6 +275,7 @@ enum NotificationType {
   offerReceived,      // Nouvelle offre pour un client
   offerExpiring,      // Offre qui expire bientôt
   contractSigned,     // Contrat signé
+  contractExpired,    // Contrat expiré
   tradeRumor,         // Rumeur de trade
   extensionOffer,     // Offre d'extension
   clientMood,         // Changement d'humeur client
