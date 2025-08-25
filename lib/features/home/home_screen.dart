@@ -189,6 +189,7 @@ class HomeScreen extends ConsumerWidget {
                         
                         // Notifications collapsibles
                         _CompactNotifications(
+                          ref: ref,
                           notifications: league.notifications
                               .where((n) => n.week >= league.week - 4)
                               .toList()
@@ -281,6 +282,11 @@ class HomeScreen extends ConsumerWidget {
                       onPressed: () => nextMonthWithAutosave(context, ref),
                       icon: const Icon(Icons.fast_forward),
                       label: const Text('Mois suivant'),
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        minimumSize: const Size(0, 48),
+                        alignment: Alignment.center,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -290,6 +296,11 @@ class HomeScreen extends ConsumerWidget {
                       onPressed: () => nextWeekWithAutosave(context, ref),
                       icon: const Icon(Icons.play_arrow),
                       label: const Text('Semaine suivante'),
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        minimumSize: const Size(0, 48),
+                        alignment: Alignment.center,
+                      ),
                     ),
                   ),
                 ],
@@ -546,10 +557,12 @@ class _ActionCard extends StatelessWidget {
 
 class _CompactNotifications extends StatefulWidget {
   const _CompactNotifications({
+    required this.ref,
     required this.notifications,
     required this.onNotificationTap,
   });
   
+  final WidgetRef ref;
   final List<GameNotification> notifications;
   final Function(GameNotification) onNotificationTap;
   
@@ -630,7 +643,12 @@ class _CompactNotificationsState extends State<_CompactNotifications> {
                     itemBuilder: (context, i) {
                       final notif = widget.notifications[i];
                       return InkWell(
-                        onTap: () => widget.onNotificationTap(notif),
+                        onTap: () {
+                          // 1. Marquer comme lue d'abord
+                          widget.ref.read(gameControllerProvider.notifier).markNotificationAsRead(notif.id);
+                          // 2. Exécuter l'action existante
+                          widget.onNotificationTap(notif);
+                        },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                           child: Row(

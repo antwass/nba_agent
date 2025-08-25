@@ -107,6 +107,21 @@ class GameController extends StateNotifier<GameState> {
     state = state.copyWith(league: copy);
   }
 
+  void markNotificationAsRead(String notificationId) {
+    final league = state.league;
+    if (league == null) return;
+    
+    final copy = league.deepCopy();
+    for (int i = 0; i < copy.notifications.length; i++) {
+      final n = copy.notifications[i];
+      if (n.id == notificationId && !n.isRead) {
+        copy.notifications[i] = n.copyWith(isRead: true);
+        break; // Sortir de la boucle une fois trouvé
+      }
+    }
+    state = state.copyWith(league: copy);
+  }
+
   Future<void> saveGame() async {
     if (state.league == null) return;
     
