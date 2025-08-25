@@ -39,6 +39,79 @@ Player? _pickCandidate(List<Player> fa, Pos pos) {
   return fa.isNotEmpty ? fa.first : null;
 }
 
+/// Résout automatiquement les offres pour les joueurs non-clients
+void _resolveNonClientOffers(LeagueState leagueCopy, Random rng) {
+  // Identifier les offres expirantes pour les non-clients
+  final nonClientExpiringOffers = leagueCopy.offers
+      .where((o) => o.expiresWeek <= leagueCopy.week)
+      .where((o) => !leagueCopy.agent.clients.contains(o.playerId))
+      .toList();
+
+  for (final offer in nonClientExpiringOffers) {
+    final player = leagueCopy.players.firstWhere((p) => p.id == offer.playerId);
+    
+    // Logique de décision du joueur
+    if (_playerAcceptsOffer(player, offer, rng)) {
+      _signPlayerAutomatically(leagueCopy, offer, player);
+      leagueCopy.marketNews.add(MarketNewsEntry(
+        week: leagueCopy.week,
+        message: '✍️ ${player.name} signe avec une équipe'
+      ));
+    } else {
+      leagueCopy.marketNews.add(MarketNewsEntry(
+        week: leagueCopy.week,
+        message: '❌ ${player.name} refuse une offre'
+      ));
+    }
+  }
+}
+
+/// Détermine si un joueur accepte une offre
+bool _playerAcceptsOffer(Player player, Offer offer, Random rng) {
+  // Calculer si l'offre est attractive pour le joueur
+  final playerAsk = _salaryAsk(player);
+  final offerRatio = offer.salary / playerAsk;
+  
+  // Probabilité d'acceptation basée sur l'attrait de l'offre
+  double acceptanceProb = 0.3; // Base 30%
+  
+  if (offerRatio >= 1.2) acceptanceProb = 0.8;      // Très généreuse
+  else if (offerRatio >= 1.0) acceptanceProb = 0.6; // Correcte
+  else if (offerRatio >= 0.8) acceptanceProb = 0.4; // Acceptable
+  else acceptanceProb = 0.2;                        // Faible
+  
+  // Facteur d'âge et cupidité
+  if (player.age > 30) acceptanceProb += 0.1; // Vétérans moins difficiles
+  acceptanceProb -= (player.greed * 0.2);     // Cupidité réduit l'acceptation
+  
+  return rng.nextDouble() < acceptanceProb.clamp(0.1, 0.9);
+}
+
+/// Signe automatiquement un joueur avec une équipe
+void _signPlayerAutomatically(LeagueState league, Offer offer, Player player) {
+  final team = league.teams.firstWhere((t) => t.id == offer.teamId);
+  
+  // Créer le contrat
+  final contract = Contract(
+    playerId: offer.playerId,
+    teamId: offer.teamId,
+    salaryPerYear: List.filled(offer.years, offer.salary),
+    signingBonus: offer.bonus,
+    startWeek: league.week,
+  );
+  league.contracts.add(contract);
+  
+  // Assigner à l'équipe
+  player.teamId = team.id;
+  if (!team.roster.contains(player.id)) {
+    team.roster.add(player.id);
+  }
+  team.capUsed += offer.salary;
+  
+  // Supprimer TOUTES les offres pour ce joueur (il n'est plus disponible)
+  league.offers.removeWhere((o) => o.playerId == player.id);
+}
+
 AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
   final leagueCopy = s.deepCopy();
   final r = rng ?? Random(leagueCopy.week);
@@ -50,10 +123,13 @@ AdvanceWeekResult advanceWeek(LeagueState s, {Random? rng}) {
     p.overall = (p.overall + delta).clamp(40, 99).round();
   }
 
-  // 2) Expirer les offres arrivées à terme
+  // 2) Résoudre automatiquement les offres pour les joueurs non-clients
+  _resolveNonClientOffers(leagueCopy, r);
+  
+  // 3) Expirer les offres arrivées à terme (maintenant seulement celles des clients)
   leagueCopy.offers.removeWhere((o) => o.expiresWeek <= leagueCopy.week);
 
-  // 3) Générer de nouvelles offres
+  // 4) Générer de nouvelles offres
   //    Boost pendant la fenêtre FA (semaines 18..28)
   final faBoost = (leagueCopy.week >= 18 && leagueCopy.week <= 28) ? 5 : 2;
   int generated = 0;
